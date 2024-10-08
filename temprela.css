@@ -1,0 +1,91 @@
+body {
+    background-color: #F4F4F4;
+}
+
+#sidebar {
+    background-color: #DFF0D8;
+    min-height: 100vh;
+}
+
+.sidebar-header img {
+    max-width: 120px;
+    height: auto;
+}
+
+.nav-link {
+    font-size: 18px;
+    padding: 15px;
+}
+
+.nav-link:hover {
+    background-color: #C8E0B1;
+}
+
+.btn-danger {
+    font-size: 18px;
+    padding: 10px 20px;
+}
+
+h1, h3 {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.thermometer-wrapper {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.scale {
+    margin-right: 15px;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 400px;
+}
+
+.percent-label {
+    font-size: 14px;
+    line-height: normal;
+}
+
+.thermometer-container {
+    text-align: center;
+    position: relative;
+    height: 400px;
+}
+
+.thermometer {
+    width: 60px;
+    height: 100%;
+    background-color: #eee;
+    border-radius: 30px;
+    border: 2px solid #555;
+    position: relative;
+    overflow: hidden;
+}
+
+#thermometer-fill {
+    width: 100%;
+    height: 0%; /* Inicializado vazio */
+    background: linear-gradient(to top, #e74c3c, #ff6b6b);
+    position: absolute;
+    bottom: 0;
+    border-radius: 30px;
+    transition: height 0.5s ease-in-out;
+}
+
+#temperature-value {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}

@@ -1,36 +1,98 @@
+/* Estilo geral */
 body {
     background-color: #F4F4F4;
 }
 
+/* Sidebar */
 #sidebar {
     background-color: #DFF0D8;
     min-height: 100vh;
 }
 
+/* Imagem do cabeçalho da sidebar */
 .sidebar-header img {
     max-width: 120px;
     height: auto;
 }
 
+/* Links de navegação da sidebar */
 .nav-link {
     font-size: 18px;
     padding: 15px;
+    color: #000;
+    transition: background-color 0.3s ease;
 }
 
+/* Efeito hover nos links de navegação */
 .nav-link:hover {
     background-color: #C8E0B1;
 }
 
+/* Botão de sair */
 .btn-danger {
     font-size: 18px;
     padding: 10px 20px;
+    transition: background-color 0.3s ease;
 }
 
+/* Efeito hover no botão de sair */
+.btn-danger:hover {
+    background-color: #C82333;
+}
+
+/* Estilo dos cabeçalhos principais (h1) */
 h1 {
     font-family: 'Arial', sans-serif;
     font-weight: bold;
+    color: #333;
 }
 
+/* Estilo dos títulos menores (h3) */
+h3 {
+    font-family: 'Arial', sans-serif;
+    font-weight: normal;
+    color: #333;
+}
+
+/* Estilo dos cards */
 .card {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    transition: box-shadow 0.3s ease;
+}
+
+/* Efeito hover nos cards */
+.card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Centralização do conteúdo do card */
+.card-body {
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Estilo do termômetro */
+
+
+/* Adicionando transições suaves em vários elementos */
+.nav-link, .btn-danger, .card {
+    transition: all 0.3s ease;
+}
+
+/* Responsividade - oculta a sidebar em telas pequenas */
+@media (max-width: 768px) {
+    #sidebar {
+        display: none;
+    }
+}
+
+/* Centralização para garantir alinhamento visual agradável */
+.d-flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
