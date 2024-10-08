@@ -1,0 +1,28 @@
+body {
+    background-color: #F4F4F4;
+}
+
+.container {
+    max-width: 900px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+form input {
+    border-radius: 10px;
+}
+
+form button {
+    border-radius: 10px;
+}
+
+form button:hover {
+    background-color: #567d1e;
+}
+
+a:hover {
+    text-decoration: underline;
+}

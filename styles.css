@@ -1,0 +1,36 @@
+body {
+    background-color: #F4F4F4;
+}
+
+#sidebar {
+    background-color: #DFF0D8;
+    min-height: 100vh;
+}
+
+.sidebar-header img {
+    max-width: 120px;
+    height: auto;
+}
+
+.nav-link {
+    font-size: 18px;
+    padding: 15px;
+}
+
+.nav-link:hover {
+    background-color: #C8E0B1;
+}
+
+.btn-danger {
+    font-size: 18px;
+    padding: 10px 20px;
+}
+
+h1 {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
