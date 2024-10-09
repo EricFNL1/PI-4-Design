@@ -1,98 +1,243 @@
-/* Estilo geral */
+/* Ajustes para os botões de controle */
+.control-buttons .btn {
+    margin-right: 10px;
+}
+
+#mobileMenuButton {
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    color: #333;
+}
+
+#mobileMenuButton .menu-icon {
+    width: 30px;
+    height: 3px;
+    background: #333;
+    margin: 4px 0;
+    border-radius: 2px;
+}
+
+/* Estilo para dropdown mobile */
+.collapse#mobileMenu {
+    background-color: #f8f9fa;
+    box-shadow: 0px 4px 5px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    margin-top: 10px;
+    z-index: 1001;
+}
+
+/* Ajuste para controle-bar para dispositivos móveis */
+@media (max-width: 768px) {
+    .control-buttons {
+        display: block !important;
+        margin-top: 10px;
+    }
+}
+
 body {
-    background-color: #F4F4F4;
+    background-color: #ebaaaa2f;
+    font-family: 'Arial', sans-serif;
+    color: #333;
 }
 
-/* Sidebar */
+.main-content {
+    margin-left: 250px;
+    padding-top: 60px;
+}
+
 #sidebar {
-    background-color: #DFF0D8;
+    background-color: #ffffff;
     min-height: 100vh;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    z-index: 1000;
+    padding-top: 20px;
 }
 
-/* Imagem do cabeçalho da sidebar */
 .sidebar-header img {
-    max-width: 120px;
-    height: auto;
+    max-width: 150px;
+    border-radius: 50%;
+    margin-bottom: 20px;
 }
 
-/* Links de navegação da sidebar */
 .nav-link {
     font-size: 18px;
+    color: #333;
     padding: 15px;
-    color: #000;
-    transition: background-color 0.3s ease;
-}
-
-/* Efeito hover nos links de navegação */
-.nav-link:hover {
-    background-color: #C8E0B1;
-}
-
-/* Botão de sair */
-.btn-danger {
-    font-size: 18px;
-    padding: 10px 20px;
-    transition: background-color 0.3s ease;
-}
-
-/* Efeito hover no botão de sair */
-.btn-danger:hover {
-    background-color: #C82333;
-}
-
-/* Estilo dos cabeçalhos principais (h1) */
-h1 {
-    font-family: 'Arial', sans-serif;
-    font-weight: bold;
-    color: #333;
-}
-
-/* Estilo dos títulos menores (h3) */
-h3 {
-    font-family: 'Arial', sans-serif;
-    font-weight: normal;
-    color: #333;
-}
-
-/* Estilo dos cards */
-.card {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    transition: box-shadow 0.3s ease;
-}
-
-/* Efeito hover nos cards */
-.card:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-/* Centralização do conteúdo do card */
-.card-body {
-    min-height: 500px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-}
-
-/* Estilo do termômetro */
-
-
-/* Adicionando transições suaves em vários elementos */
-.nav-link, .btn-danger, .card {
     transition: all 0.3s ease;
 }
 
-/* Responsividade - oculta a sidebar em telas pequenas */
+.nav-link:hover, .nav-link.active {
+    background-color: #f0f0f0;
+    border-left: 4px solid #ff6b6b;
+    color: #ff6b6b;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.control-bar {
+    background-color: #f8f9fa;
+    padding: 15px;
+    position: fixed;
+    top: 0;
+    left: 250px;
+    width: calc(100% - 250px);
+    z-index: 999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+/* Responsivo */
 @media (max-width: 768px) {
     #sidebar {
         display: none;
     }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .control-bar {
+        left: 0;
+        width: 100%;
+    }
+
+    #mobileMenuButton {
+        display: block;
+    }
 }
 
-/* Centralização para garantir alinhamento visual agradável */
-.d-flex-center {
+/* Tema escuro */
+.dark-theme {
+    background-color: #333;
+    color: #fff;
+}
+
+.dark-theme #sidebar {
+    background-color: #444;
+}
+
+.dark-theme .card {
+    background-color: #555;
+    color: #fff;
+    border: 1px solid #666;
+}
+
+.dark-theme .nav-link {
+    color: #ddd;
+}
+
+.dark-theme .nav-link:hover, 
+.dark-theme .nav-link.active {
+    background-color: #555;
+    border-left: 4px solid #ff6b6b;
+    color: #ff6b6b;
+}
+
+.dark-theme .control-bar {
+    background-color: #444;
+    border-bottom: 2px solid #555;
+}
+
+.dark-theme .btn-secondary {
+    background-color: #555;
+    color: #ddd;
+    border-color: #666;
+}
+
+.dark-theme .btn-secondary:hover {
+    background-color: #666;
+    border-color: #777;
+}
+
+.dark-theme .btn-success {
+    background-color: #4caf50;
+    border-color: #45a049;
+}
+
+.dark-theme .btn-danger {
+    background-color: #e74c3c;
+    border-color: #c0392b;
+}
+
+
+#teste{
+    background-color: white;
+}
+
+
+.icon-light-on {
+    display: block;
+}
+
+.icon-light-off {
+    display: none;
+}
+
+
+.icon-light-on:hover, .icon-light-off:hover {
+    transform: scale(1.1);
+}
+
+.theme-toggle-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ffffff; /* Cor inicial (branco) */
+    border: 2px solid #333; /* Borda para contraste */
+    transition: background-color 0.3s, border 0.3s;
+    cursor: pointer;
+}
+
+.theme-toggle-btn.dark {
+    background-color: #000000; /* Cor para o tema escuro (preto) */
+    border: 2px solid #fff;
+}
+
+#fanToggle {
+    background-color: #17a2b8;
+    color: white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#fanToggle.active {
+    background-color: #ffc107;
+}
+
+#fanToggle.active i {
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+
+.titulo{
+
+color: #000000;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 26px;
 }

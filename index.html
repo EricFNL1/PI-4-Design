@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controle de Estufa</title>
+    <title>SMARTGROW</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="temprela.css">
 </head>
 <body>
     <div class="container-fluid">
@@ -21,47 +21,72 @@
                     <!-- Menu Items -->
                     <ul class="nav flex-column text-center">
                         <li class="nav-item">
-                            <a class="nav-link active text-dark" href="#">
-                                Home
-                            </a>
+                            <a class="nav-link active text-dark" href="#">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="#">
-                                Dashboard
-                            </a>
+                            <a class="nav-link text-dark" href="#">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="#">
-                                Opção 1
-                            </a>
+                            <a class="nav-link text-dark" href="#">Opção 1</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="login.html">
-                                Login
-                            </a>
+                            <a class="nav-link text-dark" href="login.html">Login</a>
                         </li>
                     </ul>
-
-                    <!-- Configuração -->
                     <div class="text-center mt-5">
-                        <a href="#" class="text-dark">
-                            Configuração <i class="bi bi-gear-fill"></i>
-                        </a>
+                        <a href="#" class="text-dark">Configuração <i class="bi bi-gear-fill"></i></a>
                     </div>
-
                     <!-- Botão de Sair -->
                     <div class="text-center mt-3">
-                        <a href="#" class="btn btn-danger w-75">
-                            Sair <i class="bi bi-box-arrow-right"></i>
-                        </a>
+                        <a href="#" class="btn btn-danger w-75">Sair <i class="bi bi-box-arrow-right"></i></a>
+                    </div>
+                    <!-- Botões de controle -->
+                    <div class="control-buttons text-center mt-3">
+                        <div class="text-center mt-3">
+                            <button id="themeToggle" class="theme-toggle-btn"></button>
+                        </div>
+                        
+                        <div class="text-center mt-3">
+                            <a href="#" id="lightsOn" class="icon-light-on" style="display: block;">
+                                <span class="iconify" data-icon="mdi:lightbulb-on" data-width="40" data-height="40"></span>
+                            </a>
+                            <a href="#" id="lightsOff" class="icon-light-off" style="display: none;">
+                                <span class="iconify" data-icon="mdi:lightbulb-off" data-width="40" data-height="40"></span>
+                            </a>
+                        </div>
+                        
+                        
+                        <div class="d-flex justify-content-center mt-3">
+                            <button id="fanToggle" class="btn btn-info rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                                <i class="fas fa-fan" id="fanIcon" style="font-size: 24px;"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </nav>
 
             <!-- Conteúdo Principal -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div class="d-flex justify-content-center align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2 text-success">Controle de Estufa</h1>
+                <div id="teste" class="d-flex justify-content-center align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="titulo">SMARTGROW <span class="iconify" data-icon="twemoji:strawberry" data-width="30" data-height="30"></span></h1>
+                    <div class="dropdown ms-auto d-md-none">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="img/fundologin.jpg" class="img-fluid rounded-circle" style="width: 30px;" alt="Menu">
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="#" data-action="themeToggle">Alternar Tema</a></li>
+                            <li><a class="dropdown-item" href="#" data-action="lightsOn">Ligar Luzes</a></li>
+                            <li><a class="dropdown-item" href="#" data-action="lightsOff">Desligar Luzes</a></li>
+                            <li><a class="dropdown-item" href="#" data-action="fanToggle">Ligar/Desligar Ventoinha</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Home</a></li>
+                            <li><a class="dropdown-item" href="#">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="#">Opção 1</a></li>
+                            <li><a class="dropdown-item" href="login.html">Login</a></li>
+                            <li><a class="dropdown-item text-danger" href="#">Sair</a></li>
+                        </ul>
+                        
+                    </div>
                 </div>
 
                 <!-- Cards de Conteúdo -->
@@ -69,35 +94,8 @@
                     <div class="col-md-4">
                         <div class="card mb-4">
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h3 class="text-center">Relatório de Temperatura</h3>
-                                        <div class="d-flex justify-content-center align-items-center">
-                                            <div class="thermometer-wrapper">
-                                                <div class="scale">
-                                                    <div class="percent-label">100°C</div>
-                                                    <div class="percent-label">90°C</div>
-                                                    <div class="percent-label">80°C</div>
-                                                    <div class="percent-label">70°C</div>
-                                                    <div class="percent-label">60°C</div>
-                                                    <div class="percent-label">50°C</div>
-                                                    <div class="percent-label">40°C</div>
-                                                    <div class="percent-label">30°C</div>
-                                                    <div class="percent-label">20°C</div>
-                                                    <div class="percent-label">10°C</div>
-                                                    <div class="percent-label">0°C</div>
-                                                </div>
-                                                <div class="thermometer-container">
-                                                    <div class="thermometer">
-                                                        <div id="thermometer-fill"></div>
-                                                    </div>
-                                                   
-                                                </div>
-                                                <div id="temperature-value">0°C</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <h3 class="text-center">Relatório de Temperatura</h3>
+                                <p class="text-center">Conteúdo do Termômetro</p>
                             </div>
                         </div>
                     </div>
@@ -120,10 +118,8 @@
         </div>
     </div>
 
-</main>
-</div>
-</div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
+    <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
 </body>
 </html>

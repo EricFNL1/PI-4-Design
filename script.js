@@ -1,20 +1,50 @@
-// Função para atualizar o termômetro com base na temperatura
-function updateThermometer(temperature) {
-    // Define a altura do preenchimento em porcentagem
-    const heightPercentage = (temperature / 100) * 100;
+// Alternar Tema
+document.querySelectorAll('#themeToggle, .dropdown-item[data-action="themeToggle"]').forEach(item => {
+    item.addEventListener('click', function() {
+        document.body.classList.toggle('dark-theme');
+        document.querySelector('#themeToggle').classList.toggle('dark');
+    });
+});
 
-    // Atualiza a altura do termômetro preenchido
-    const thermometerFill = document.getElementById('thermometer-fill');
-    thermometerFill.style.height = `${heightPercentage}%`;
 
-    // Atualiza o valor da temperatura exibido
-    const temperatureValue = document.getElementById('temperature-value');
-    temperatureValue.textContent = `${temperature.toFixed(1)}°C`;
+// Função para alternar entre os ícones de lâmpada ligada e desligada
+function toggleLights() {
+    const iconLightOn = document.querySelector('.icon-light-on');
+    const iconLightOff = document.querySelector('.icon-light-off');
+
+    // Se o ícone de lâmpada ligada estiver visível, ocultá-lo e mostrar o ícone de lâmpada desligada
+    if (iconLightOn.style.display === 'block' || iconLightOn.style.display === '') {
+        iconLightOn.style.display = 'none';
+        iconLightOff.style.display = 'block';
+        alert('Luzes Desligadas!');
+    } else {
+        // Caso contrário, mostrar o ícone de lâmpada ligada e ocultar o ícone de lâmpada desligada
+        iconLightOn.style.display = 'block';
+        iconLightOff.style.display = 'none';
+        alert('Luzes Ligadas!');
+    }
 }
 
-// Simulando atualização de temperatura (substitua essa lógica para usar dados reais)
-setInterval(() => {
-    // Gera uma temperatura aleatória entre 0°C e 100°C
-    const simulatedTemp = Math.floor(Math.random() * 101);
-    updateThermometer(simulatedTemp);
-}, 1000);
+// Adiciona os eventos de clique para os ícones de ligar e desligar
+document.getElementById('lightsOn').addEventListener('click', toggleLights);
+document.getElementById('lightsOff').addEventListener('click', toggleLights);
+
+
+
+document.querySelectorAll('#fanToggle, .dropdown-item[data-action="fanToggle"]').forEach(item => {
+    item.addEventListener('click', function() {
+        const fanButton = document.getElementById('fanToggle');
+        const fanIcon = document.getElementById('fanIcon');
+
+        // Alterna entre o estado ligado e desligado
+        fanButton.classList.toggle('active');
+
+        if (fanButton.classList.contains('active')) {
+            alert('Ventoinha Ligada!');
+            fanIcon.classList.replace('fa-fan', 'fa-fan'); // Atualize conforme necessário para mudar o ícone
+        } else {
+            alert('Ventoinha Desligada!');
+            fanIcon.classList.replace('fa-fan', 'fa-fan'); // Atualize conforme necessário para mudar o ícone
+        }
+    });
+});
