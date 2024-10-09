@@ -29,7 +29,23 @@ function toggleLights() {
 document.getElementById('lightsOn').addEventListener('click', toggleLights);
 document.getElementById('lightsOff').addEventListener('click', toggleLights);
 
+// Ligar Luzes
+document.querySelectorAll('[data-action="lightsOn"]').forEach(item => {
+    item.addEventListener('click', function() {
+        alert('Luzes Ligadas!');
+        document.querySelector('.icon-light-on').style.display = 'none';
+        document.querySelector('.icon-light-off').style.display = 'block';
+    });
+});
 
+// Desligar Luzes
+document.querySelectorAll('[data-action="lightsOff"]').forEach(item => {
+    item.addEventListener('click', function() {
+        alert('Luzes Desligadas!');
+        document.querySelector('.icon-light-on').style.display = 'block';
+        document.querySelector('.icon-light-off').style.display = 'none';
+    });
+});
 
 document.querySelectorAll('#fanToggle, .dropdown-item[data-action="fanToggle"]').forEach(item => {
     item.addEventListener('click', function() {
