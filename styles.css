@@ -103,9 +103,55 @@ body {
     border-bottom: 2px solid #e0e0e0;
 }
 
-.teste{
-    background-color: white;
+.teste {
+    background: linear-gradient(to right, #e6ffe6, #ccffcc); /* Gradiente suave relacionado à natureza */
+    padding: 10px 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* Necessário para o posicionamento dos pseudo-elementos */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+.teste::before,
+.teste::after {
+    font-size: 24px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%); /* Centraliza verticalmente */
+}
+
+.teste::before {
+    content: '🍓🍃'; /* Adiciona emojis de morangos e folhas à esquerda */
+    left: 10px; /* Alinhamento à esquerda */
+}
+
+.teste::after {
+    content: '🍃🍓'; /* Adiciona emojis de morangos e folhas à direita */
+    right: 10px; /* Alinhamento à direita */
+}
+
+@media (max-width: 768px) {
+    .teste {
+        padding: 5px 10px;
+    }
+
+    .teste::before,
+    .teste::after {
+        display: none;; /* Reduz o tamanho em telas menores */
+    }
+
+    h1.titulo {
+        font-size: 1.5rem; /* Reduz o tamanho do texto em telas menores */
+    }
+
+    .iconify {
+        width: 24px !important; /* Ajusta o tamanho do ícone de morango */
+        height: 24px !important;
+    }
+}
+
 /* Responsivo */
 @media (max-width: 768px) {
     #sidebar {
@@ -193,11 +239,13 @@ body {
 }
 
 
-.dark-theme .teste{
-    background-color: #222; 
+.dark-theme .teste {
+    background: linear-gradient(to right, #2c3e50, #34495e); /* Gradiente mais escuro para combinar com o tema */
 }
 
-
+.dark-theme .titulo {
+    color: #ecf0f1; /* Texto mais claro para contraste */
+}
 
 
 .icon-light-on {
@@ -254,24 +302,24 @@ body {
 
 
 .titulo {
-    font-family: 'Poppins', sans-serif; /* Fonte moderna e elegante */
+    font-family: 'Poppins', sans-serif;
     font-weight: 700;
-    color: #28a745; /* Verde vivo para combinar com a ideia de crescimento/planta */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Sombra suave para dar profundidade */
+    color: #28a745;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     display: flex;
     align-items: center;
-    gap: 8px; /* Espaço entre o texto e o ícone */
-    font-size: 2.5rem; /* Tamanho grande para destaque */
-    letter-spacing: 2px; /* Espaçamento entre as letras */
+    gap: 8px;
+    font-size: 2rem;
+    transition: color 0.3s ease;
 }
 
+/* Efeito de hover no ícone */
 .titulo span {
-    display: inline-block;
     transition: transform 0.3s ease;
 }
 
 .titulo:hover span {
-    transform: rotate(20deg) scale(1.1); /* Efeito de rotação e aumento ao passar o mouse */
+    transform: rotate(20deg) scale(1.1);
 }
 
 #config-card {
@@ -283,4 +331,16 @@ body {
 
 .dark-theme #config-card {
     background-color: #444;
+}
+
+
+@media (max-width: 768px) {
+    .teste {
+        padding: 10px;
+        justify-content: center;
+    }
+
+    .titulo {
+        font-size: 1.5rem; /* Diminui o tamanho do texto em dispositivos móveis */
+    }
 }
