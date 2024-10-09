@@ -274,5 +274,13 @@ body {
     transform: rotate(20deg) scale(1.1); /* Efeito de rotação e aumento ao passar o mouse */
 }
 
+#config-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
 
-
+.dark-theme #config-card {
+    background-color: #444;
+}
