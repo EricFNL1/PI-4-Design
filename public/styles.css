@@ -1,0 +1,456 @@
+/* Ajustes para os botões de controle */
+.control-buttons .btn {
+    margin-right: 10px;
+}
+
+#mobileMenuButton {
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    color: #333;
+}
+
+#mobileMenuButton .menu-icon {
+    width: 30px;
+    height: 3px;
+    background: #333;
+    margin: 4px 0;
+    border-radius: 2px;
+}
+
+/* Estilo para dropdown mobile */
+.collapse#mobileMenu {
+    background-color: #f8f9fa;
+    box-shadow: 0px 4px 5px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    margin-top: 10px;
+    z-index: 1001;
+}
+
+/* Ajuste para controle-bar para dispositivos móveis */
+@media (max-width: 768px) {
+    .control-buttons {
+        display: block !important;
+        margin-top: 10px;
+    }
+}
+
+body {
+    background-color: #ebaaaa2f;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+.main-content {
+    margin-left: 250px;
+    padding-top: 60px;
+}
+
+#sidebar {
+    background-color: #ffffff;
+    min-height: 100vh;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    z-index: 1000;
+    padding-top: 20px;
+}
+
+.sidebar-header img {
+    max-width: 150px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.nav-link {
+    font-size: 18px;
+    color: #333;
+    padding: 15px;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+    background-color: #f0f0f0;
+    border-left: 4px solid #ff6b6b;
+    color: #ff6b6b;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.control-bar {
+    background-color: #f8f9fa;
+    padding: 15px;
+    position: fixed;
+    top: 0;
+    left: 250px;
+    width: calc(100% - 250px);
+    z-index: 999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.teste {
+    background: linear-gradient(to right, #e6ffe6, #ccffcc); /* Gradiente suave relacionado à natureza */
+    padding: 10px 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* Necessário para o posicionamento dos pseudo-elementos */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.teste::before,
+.teste::after {
+    font-size: 24px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%); /* Centraliza verticalmente */
+}
+
+.teste::before {
+    content: '🍓🍃'; /* Adiciona emojis de morangos e folhas à esquerda */
+    left: 10px; /* Alinhamento à esquerda */
+}
+
+.teste::after {
+    content: '🍃🍓'; /* Adiciona emojis de morangos e folhas à direita */
+    right: 10px; /* Alinhamento à direita */
+}
+
+@media (max-width: 768px) {
+    .teste {
+        padding: 5px 10px;
+    }
+
+    .teste::before,
+    .teste::after {
+        display: none;; /* Reduz o tamanho em telas menores */
+    }
+
+    h1.titulo {
+        font-size: 1.5rem; /* Reduz o tamanho do texto em telas menores */
+    }
+
+    .iconify {
+        width: 24px !important; /* Ajusta o tamanho do ícone de morango */
+        height: 24px !important;
+    }
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    #sidebar {
+        display: none;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .control-bar {
+        left: 0;
+        width: 100%;
+    }
+
+    #mobileMenuButton {
+        display: block;
+    }
+}
+
+/* Ajustes para o tema escuro */
+.dark-theme {
+    background-color: #333;
+    color: #fff;
+}
+
+.dark-theme .control-bar {
+    background-color: #444; /* Cor escura para a barra de controle */
+    color: #fff;
+}
+
+.dark-theme #sidebar {
+    background-color: #222; /* Cor mais escura para a sidebar */
+    color: #fff;
+}
+
+.dark-theme .nav-link {
+    color: #ddd; /* Ajusta a cor dos links no modo escuro */
+}
+
+.dark-theme .nav-link:hover,
+.dark-theme .nav-link.active {
+    background-color: #555; /* Destaque para link ativo no modo escuro */
+    border-left-color: #28a745; /* Ajuste a cor da borda para combinar com a estética */
+    color: #fff;
+}
+
+.dark-theme .btn-danger {
+    background-color: #e74c3c;
+    border-color: #c0392b;
+    color: #fff; /* Mantém a cor do texto dos botões */
+}
+
+.dark-theme .btn-danger:hover {
+    background-color: #c0392b;
+}
+
+.dark-theme .dropdown-menu {
+    background-color: #444; /* Ajusta o fundo do dropdown para o tema escuro */
+    color: #fff;
+}
+
+.dark-theme .dropdown-item {
+    color: #ddd;
+}
+
+.dark-theme .dropdown-item:hover,
+.dark-theme .dropdown-item:focus {
+    background-color: #555;
+    color: #fff;
+}
+
+.dark-theme .text-dark {
+    color: #fff !important; /* Ajusta todos os textos que têm a classe .text-dark */
+}
+
+.dark-theme .sidebar-header img {
+    filter: brightness(0.9); /* Reduz um pouco o brilho da imagem no modo escuro */
+}
+
+.dark-theme .card {
+    background-color: #555;
+    color: #fff;
+    border: 1px solid #666;
+}
+
+
+.dark-theme .teste {
+    background: linear-gradient(to right, #2c3e50, #34495e); /* Gradiente mais escuro para combinar com o tema */
+}
+
+.dark-theme .titulo {
+    color: #ecf0f1; /* Texto mais claro para contraste */
+}
+
+
+
+.icon-light-on {
+    display: block;
+}
+
+.icon-light-off {
+    display: none;
+}
+
+
+.icon-light-on:hover, .icon-light-off:hover {
+    transform: scale(1.1);
+}
+
+
+
+.theme-toggle-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ffffff; /* Cor inicial (branco) */
+    border: 2px solid #333; /* Borda para contraste */
+    transition: background-color 0.3s, border 0.3s;
+    cursor: pointer;
+}
+
+.theme-toggle-btn.dark {
+    background-color: #000000; /* Cor para o tema escuro (preto) */
+    border: 2px solid #fff;
+}
+
+#fanToggle {
+    background-color: #17a2b8;
+    color: white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#fanToggle.active {
+    background-color: #ffc107;
+}
+
+#fanToggle.active i {
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+
+.titulo {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    color: #28a745;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 2rem;
+    transition: color 0.3s ease;
+}
+
+/* Efeito de hover no ícone */
+.titulo span {
+    transition: transform 0.3s ease;
+}
+
+.titulo:hover span {
+    transform: rotate(20deg) scale(1.1);
+}
+
+#config-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+.dark-theme #config-card {
+    background-color: #444;
+}
+
+
+@media (max-width: 768px) {
+    .teste {
+        padding: 10px;
+        justify-content: center;
+    }
+
+    .titulo {
+        font-size: 1.5rem; /* Diminui o tamanho do texto em dispositivos móveis */
+    }
+}
+
+
+
+.thermometer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 200px;
+}
+
+.thermometer {
+    width: 40px;
+    height: 150px;
+    background: #ddd;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.thermometer-fill {
+    background: #f44336;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    border-radius: 20px;
+    transition: height 0.5s ease;
+}
+
+.thermometer-bulb {
+    background: #f44336;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.aquarium-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 200px;
+}
+
+.aquarium {
+    width: 100px;
+    height: 150px;
+    background: #ddd;
+    border: 2px solid #007bff;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.water-level {
+    background: #007bff;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    transition: height 0.5s ease;
+}
+
+
+.humidity-meter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.gauge {
+    position: relative;
+    width: 100px;
+    height: 50px;
+    background: #ddd;
+    border-radius: 100px 100px 0 0;
+    overflow: hidden;
+    border: 2px solid #28a745;
+}
+
+.gauge-cover {
+    position: absolute;
+    width: 80%;
+    height: 50%;
+    background: #fff;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 100%;
+}
+
+.gauge-needle {
+    position: absolute;
+    width: 2px;
+    height: 45%;
+    background: #28a745;
+    top: 50%;
+    left: 50%;
+    transform-origin: bottom center;
+    transform: rotate(0deg);
+    transition: transform 0.5s ease;
+}
+
