@@ -129,31 +129,39 @@
 
     <!-- Card de Configurações -->
     <div class="col-md-4">
-        <div class="card mb-4" style="width: 100%;">
-            <div class="card-body text-center">
-                <h5 class="card-title">Configurações</h5>
-                <div class="d-flex justify-content-around">
-                    <div>
-                        <button id="themeToggle" class="theme-toggle-btn"></button>
-                    </div>
-                    <div>
-                        <a href="#" id="lightsOn" class="icon-light-on" style="display: block;">
-                            <span class="iconify" data-icon="mdi:lightbulb-on" data-width="40" data-height="40"></span>
-                        </a>
-                        <a href="#" id="lightsOff" class="icon-light-off" style="display: none;">
-                            <span class="iconify" data-icon="mdi:lightbulb-off" data-width="40" data-height="40"></span>
-                        </a>
-                    </div>
-                    <div>
-                        <button id="fanToggle" class="btn btn-info rounded-circle" style="width: 50px; height: 50px;">
-                            <i class="fas fa-fan" id="fanIcon"></i>
-                        </button>
-                    </div>
+    <div class="card mb-4" style="width: 100%;">
+        <div class="card-body text-center">
+            <h5 class="card-title">Configurações</h5>
+            <div class="d-flex justify-content-around">
+                <div>
+                    <button id="themeToggle" class="theme-toggle-btn"></button>
+                </div>
+                <div class="icon-container">
+                    <a href="#" id="lightsOn" class="icon-light-on" style="display: block;">
+                        <span class="iconify" data-icon="mdi:lightbulb-on" data-width="40" data-height="40"></span>
+                    </a>
+                    <a href="#" id="lightsOff" class="icon-light-off" style="display: none;">
+                        <span class="iconify" data-icon="mdi:lightbulb-off" data-width="40" data-height="40"></span>
+                    </a>
+                </div>
+                <div>
+                    <button id="fanToggle" class="btn btn-info rounded-circle" style="width: 50px; height: 50px;">
+                        <i class="fas fa-fan" id="fanIcon"></i>
+                    </button>
+                </div>
+                <div class="icon-container">
+                    <a href="#" id="waterPumpOn" class="icon-waterpump-on" style="display: block;">
+                        <span class="iconify" data-icon="mdi:water-pump" data-width="40" data-height="40"></span>
+                    </a>
+                    <a href="#" id="waterPumpOff" class="icon-waterpump-off" style="display: none;">
+                        <span class="iconify" data-icon="mdi:water-pump-off" data-width="40" data-height="40"></span>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
                     
             </main>

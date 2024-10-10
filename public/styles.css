@@ -249,6 +249,7 @@ body {
 
 
 
+
 .icon-light-on {
     display: block;
 }
@@ -302,6 +303,25 @@ body {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
+
+.icon-waterpump-on {
+    display: block;
+}
+
+.icon-waterpump-off {
+    display: none;
+}
+
+.icon-waterpump-on:hover, .icon-waterpump-off:hover {
+    transform: scale(1.1);
+}
+
+.icon-waterpump-on span, .icon-waterpump-off span {
+    font-size: 40px;
+    display: block;
+    margin: 0 auto;
+}
+
 
 
 .titulo {
@@ -454,3 +474,26 @@ body {
     transition: transform 0.5s ease;
 }
 
+
+.icon-container {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon-container span {
+    font-size: 30px; /* Ajusta o tamanho do ícone */
+}
+
+@media (max-width: 768px) {
+    .icon-container {
+        width: 40px;
+        height: 40px;
+    }
+
+    .icon-container span {
+        font-size: 24px; /* Ajusta o tamanho para telas menores */
+    }
+}

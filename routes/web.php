@@ -8,6 +8,8 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\WeatherInfoController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\TestEmailController;
+
 
 // Rota inicial redireciona para o login caso não esteja autenticado.
 Route::get('/', function () {
@@ -50,3 +52,10 @@ Route::get('/password/reset/{token}', [ResetPasswordController::class, 'showRese
 
 // Rota para processar a redefinição de senha
 Route::post('/password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+
+
+Route::get('/teste-email', [TestEmailController::class, 'sendTestEmail'])->middleware('auth');
+
+
+// Rota para injetar dados de teste nos sensores
+Route::get('/injetar-dados', [SensorController::class, 'injetarDadosTeste'])->middleware('auth');

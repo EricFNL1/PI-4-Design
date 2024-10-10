@@ -65,6 +65,25 @@ document.querySelectorAll('#fanToggle, .dropdown-item[data-action="fanToggle"]')
     });
 });
 
+//bomba d'agua
+
+document.querySelectorAll('#waterPumpOn, #waterPumpOff').forEach(item => {
+    item.addEventListener('click', function() {
+        const pumpOn = document.getElementById('waterPumpOn');
+        const pumpOff = document.getElementById('waterPumpOff');
+
+        // Alterna entre o estado ligado e desligado
+        pumpOn.style.display = pumpOn.style.display === 'none' ? 'block' : 'none';
+        pumpOff.style.display = pumpOff.style.display === 'none' ? 'block' : 'none';
+
+        if (pumpOn.style.display === 'none') {
+            alert('Bomba de Água Ligada!');
+        } else {
+            alert('Bomba de Água Desligada!');
+        }
+    });
+});
+
 
 
 //parte simulada, excluir mais tarde.
