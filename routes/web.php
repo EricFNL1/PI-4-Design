@@ -26,9 +26,9 @@ Route::middleware('guest')->group(function () {
 
 // Rotas para usuários autenticados
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/sensores', [SensorController::class, 'index']);
     Route::post('/sensores', [SensorController::class, 'store'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/weather-from-ip', [WeatherInfoController::class, 'getWeatherFromIP']);
     
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

@@ -136,3 +136,19 @@ setTimeout(() => {
         setTimeout(() => {
             updateAirHumidity(75); // Altere o valor conforme necessário para simular a umidade
         }, 1000);
+
+
+                // Função para obter o horário local do dispositivo e exibi-lo
+        function displayLocalTime() {
+            const now = new Date();
+            const formattedTime = now.toLocaleString(); // Formata a data e hora de acordo com o fuso horário local
+            document.getElementById('localTime').innerText = formattedTime; // Exibe o horário no elemento com id 'localTime'
+        }
+
+        // Chama a função ao carregar a página
+        window.onload = function() {
+            displayLocalTime();
+        };
+
+        // Atualiza o horário a cada segundo
+        setInterval(displayLocalTime, 1000);

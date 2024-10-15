@@ -34,8 +34,13 @@
                             <a class="nav-link text-dark" href="#">Status</a>
                         </li>
                     </ul>
+
+                    <div class="text-center mt-3 clock-container">
+        <h3>Horário Local:</h3>
+        <div class="time-display" id="localTime"></div>
+    </div>
                     <div class="text-center mt-5">
-                        <a href="#" class="text-dark">Configuração <i class="bi bi-gear-fill"></i></a>
+                        <a href="#" class="text-dark">Configurações Avançadas<i class="bi bi-gear-fill"></i></a>
                         <a  class="btn btn-danger w-75 mt-3" href="{{ url('/weather-from-ip') }}" class="btn btn-info">Obter Informações pelo IP</a>
                     </div>
                     <!-- Botão de Sair -->
@@ -71,7 +76,9 @@
                             <li><a class="dropdown-item" href="#">Detalhamento</a></li>
                             <li><a class="dropdown-item" href="#">Log & Histórico</a></li>
                             <li><a class="dropdown-item" href="#">Status</a></li>
-                            <li><a class="dropdown-item text-danger" href="#">Sair</a></li>
+                            <li class="text-center mt-3"><a href="#" class="btn btn-danger w-75" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+    Sair <i class="bi bi-box-arrow-right"></i>
+</a></li>
                         </ul>
                         
                     </div>
