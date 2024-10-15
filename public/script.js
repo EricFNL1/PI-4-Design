@@ -154,7 +154,7 @@ setTimeout(() => {
         setInterval(displayLocalTime, 1000);
 
 
-        
+
     document.addEventListener('DOMContentLoaded', function() {
         fetch('{{ url("/weather-from-ip") }}')
             .then(response => response.json())
@@ -178,3 +178,28 @@ setTimeout(() => {
             });
     });
 
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Faz a requisição para obter os dados do clima
+        fetch('{{ url("/weather-from-ip") }}')
+            .then(response => response.json())
+            .then(data => {
+                // Verifica se houve algum erro na resposta
+                if (data.error) {
+                    console.error(data.error);
+                    alert('Erro ao buscar informações de clima');
+                    return;
+                }
+
+                // Atualiza o card com as informações de clima
+                document.getElementById('temperature').innerText = data.temperature ?? 'N/A';
+                document.getElementById('weatherDescription').innerText = data.weather_description ?? 'N/A';
+                document.getElementById('latitude').innerText = data.latitude ?? 'N/A';
+                document.getElementById('longitude').innerText = data.longitude ?? 'N/A';
+            })
+            .catch(error => {
+                console.error('Erro ao buscar os dados de clima:', error);
+                alert('Erro ao buscar os dados de clima');
+            });
+    });

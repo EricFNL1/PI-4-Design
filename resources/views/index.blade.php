@@ -168,7 +168,7 @@
         </div>
     </div>
 
-   <div class="col-md-4">
+    <div class="col-md-4">
     <div class="card mb-4" id="weatherCard" style="width: 100%; height: auto;">
         <div class="card-body text-center">
             <h5 class="card-title">Informações do Clima</h5>
@@ -178,7 +178,7 @@
         </div>
     </div>
 </div>
-</div>
+
 
 
                     
