@@ -152,3 +152,29 @@ setTimeout(() => {
 
         // Atualiza o horário a cada segundo
         setInterval(displayLocalTime, 1000);
+
+
+        
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('{{ url("/weather-from-ip") }}')
+            .then(response => response.json())
+            .then(data => {
+                // Verifica se houve erro
+                if (data.error) {
+                    console.error(data.error);
+                    alert('Erro ao buscar informações de clima');
+                    return;
+                }
+
+                // Atualiza o card com as informações do clima
+                document.getElementById('temperature').innerText = data.temperature ?? 'N/A';
+                document.getElementById('weatherDescription').innerText = data.weather_description ?? 'N/A';
+                document.getElementById('latitude').innerText = data.latitude ?? 'N/A';
+                document.getElementById('longitude').innerText = data.longitude ?? 'N/A';
+            })
+            .catch(error => {
+                console.error('Erro ao buscar os dados de clima:', error);
+                alert('Erro ao buscar os dados de clima');
+            });
+    });
+

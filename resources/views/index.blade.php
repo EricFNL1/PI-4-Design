@@ -167,6 +167,17 @@
             </div>
         </div>
     </div>
+
+   <div class="col-md-4">
+    <div class="card mb-4" id="weatherCard" style="width: 100%; height: auto;">
+        <div class="card-body text-center">
+            <h5 class="card-title">Informações do Clima</h5>
+            <p class="card-text">Temperatura: <span id="temperature">N/A</span> °C</p>
+            <p class="card-text">Descrição: <span id="weatherDescription">N/A</span></p>
+            <p class="card-text">Localização: <span id="latitude">N/A</span>, <span id="longitude">N/A</span></p>
+        </div>
+    </div>
+</div>
 </div>
 
 
@@ -178,5 +189,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
     <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
+    <script src="{{ asset('js/app.js') }}?v={{ time() }}"></script>
 </body>
 </html>

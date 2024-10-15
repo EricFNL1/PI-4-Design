@@ -34,7 +34,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/sensores', [SensorController::class, 'index']);
     Route::post('/sensores', [SensorController::class, 'store'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/weather-from-ip', [WeatherInfoController::class, 'getWeatherFromIP']);
+    Route::get('/weather-from-ip', [WeatherInfoController::class, 'getWeatherFromIP'])->middleware('auth');
+
     
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
