@@ -12,9 +12,14 @@ use App\Http\Controllers\TestEmailController;
 
 
 // Rota inicial redireciona para o login caso não esteja autenticado.
+// Verifica se o usuário está autenticado
 Route::get('/', function () {
-    return redirect()->route('login');
+    if (Auth::check()) {
+        return redirect()->route('index'); // Redireciona para o index se autenticado
+    }
+    return redirect()->route('login'); // Redireciona para o login se não autenticado
 });
+
 
 // Rotas para usuários não autenticados
 Route::middleware('guest')->group(function () {

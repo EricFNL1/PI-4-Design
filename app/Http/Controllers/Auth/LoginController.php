@@ -22,13 +22,14 @@ class LoginController extends Controller
     
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('index'); // ou 'index', dependendo da sua rota
+            return redirect()->route('index'); // Verifique se está correto
         }
-        
     
         return back()->withErrors([
             'email' => 'Usuário ou senha inválidos.',
         ])->onlyInput('email');
+
+        
     }
     
 
