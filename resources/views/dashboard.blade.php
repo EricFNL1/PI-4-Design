@@ -9,13 +9,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <!-- Incluindo Chart.js -->
-     <link rel="stylesheet" href="styledashboard.css">
+    <link rel="stylesheet" href="styledashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    
 </head>
 <body>
-    <div class="container">
+    <div class="container page1">
         <h1 class="text-center my-4">Dashboard de Monitoramento</h1>
 
         <!-- Container para os gráficos -->
@@ -85,6 +84,19 @@
                     borderColor: 'rgba(75, 192, 192, 1)',
                     fill: false,
                 }]
+            }
+        });
+    </script>
+
+<script src="script.js"></script>
+
+    <!-- Script para gerenciar tema e salvar no localStorage -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const isDarkThemeEnabled = localStorage.getItem('dark-theme-enabled') === 'true';
+
+            if (isDarkThemeEnabled) {
+                document.body.classList.add('dark-theme');
             }
         });
     </script>

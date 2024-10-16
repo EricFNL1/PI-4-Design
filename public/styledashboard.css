@@ -1,6 +1,4 @@
-.chart-container {
-    padding: 20px;
-}
+/* Botão de Voltar */
 .back-button {
     background-color: green;
     color: white;
@@ -12,4 +10,49 @@
 
 .back-button:hover {
     background-color: darkgreen;
+}
+
+/* Geral para Containers de Gráficos */
+.chart-container {
+    padding: 20px;
+}
+
+/* Estilos para o Tema Escuro */
+.dark-theme {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.dark-theme .chart-container {
+    background-color: #1e1e1e;
+    border-color: #ffffff;
+}
+
+.table {
+    width: 100%;
+    background-color: #f8f9fa; /* Cor de fundo padrão */
+    color: #212529; /* Cor do texto padrão */
+}
+
+/* Cartões de Status no Tema Escuro */
+.dark-theme .card {
+    background-color: #2c2c2c; /* Fundo escuro dos cartões */
+    color: #fff; /* Texto branco nos cartões */
+    border: none; /* Remover borda */
+}
+
+.dark-theme .badge {
+    color: #fff; /* Texto branco nas badges */
+}
+
+.dark-theme .badge.bg-success {
+    background-color: #28a745; /* Badge de sucesso verde */
+}
+
+.dark-theme .badge.bg-warning {
+    background-color: #ffc107; /* Badge de atenção amarela */
+}
+
+.dark-theme .badge.bg-danger {
+    background-color: #dc3545; /* Badge de desligado vermelha */
 }

@@ -73,9 +73,9 @@
                             <li><a class="dropdown-item" href="#" data-action="fanToggle">Ligar/Desligar Ventoinha</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#">Home</a></li>
-                            <li><a class="dropdown-item" href="#">Detalhamento</a></li>
-                            <li><a class="dropdown-item" href="#">Log & Histórico</a></li>
-                            <li><a class="dropdown-item" href="#">Status</a></li>
+                            <li><a class="dropdown-item" href="{{ route('dashboard') }}">Detalhamento</a></li>
+                            <li><a class="dropdown-item" href="{{ route('logs') }}">Log & Histórico</a></li>
+                            <li><a class="dropdown-item" href="{{ route('status') }}">Status</a></li>
                             <li class="text-center mt-3"><a href="#" class="btn btn-danger w-75" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
     Sair <i class="bi bi-box-arrow-right"></i>
 </a></li>
@@ -184,6 +184,18 @@
             </main>
         </div>
     </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const isDarkThemeEnabled = localStorage.getItem('dark-theme-enabled') === 'true';
+
+        if (isDarkThemeEnabled) {
+            document.body.classList.add('dark-theme');
+            document.querySelector('#themeToggle').classList.add('dark');
+        }
+    });
+</script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>

@@ -10,10 +10,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<div class="text-center my-4">
-            <a href="/" class="back-button">Voltar para Home</a>
-        </div>
-    <div class="container my-4">
+    <div class="text-center my-4">
+        <a href="/" class="back-button">Voltar para Home</a>
+    </div>
+    
+    <div class="container my-4 page2">
         <h1 class="text-center">Logs de Monitoramento</h1>
 
         <!-- Filtro por Data -->
@@ -55,6 +56,19 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Script para aplicar o tema escuro -->
+    <script src="script.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const isDarkThemeEnabled = localStorage.getItem('dark-theme-enabled') === 'true';
+
+            if (isDarkThemeEnabled) {
+                document.body.classList.add('dark-theme');
+            }
+        });
+    </script>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

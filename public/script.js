@@ -1,8 +1,28 @@
-// Alternar Tema
+// Verifica o estado do tema salvo no localStorage
+document.addEventListener('DOMContentLoaded', function () {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+        document.querySelectorAll('#themeToggle, .dropdown-item[data-action="themeToggle"]').forEach(item => {
+            item.classList.add('dark');
+        });
+    }
+});
+
+// Alternar Tema e salvar no localStorage
 document.querySelectorAll('#themeToggle, .dropdown-item[data-action="themeToggle"]').forEach(item => {
-    item.addEventListener('click', function() {
-        document.body.classList.toggle('dark-theme');
-        document.querySelector('#themeToggle').classList.toggle('dark');
+    item.addEventListener('click', function () {
+        const isDarkTheme = document.body.classList.toggle('dark-theme');
+        document.querySelectorAll('#themeToggle, .dropdown-item[data-action="themeToggle"]').forEach(item => {
+            item.classList.toggle('dark');
+        });
+
+        // Salva o estado do tema no localStorage
+        if (isDarkTheme) {
+            localStorage.setItem('theme', 'dark');
+        } else {
+            localStorage.setItem('theme', 'light');
+        }
     });
 });
 
