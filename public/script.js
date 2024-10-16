@@ -177,4 +177,12 @@ setTimeout(() => {
                     console.error('Erro ao buscar os dados de clima:', error);
                     alert('Erro ao buscar os dados de clima');
                 });
+
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Chama a função imediatamente ao carregar a página
+                    fetchWeatherData();
+            
+                    // Atualiza as informações de clima a cada 10 minutos (600.000 ms)
+                    setInterval(fetchWeatherData, 600000); // 600.000 ms = 10 minutos
+                });
         });

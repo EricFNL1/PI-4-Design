@@ -25,7 +25,7 @@
                             <a class="nav-link active text-dark" href="#">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="#">Detalhamento</a>
+                            <a class="nav-link text-dark" href="{{ route('dashboard') }}">Detalhamento</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" href="#">Log & Histórico</a>
