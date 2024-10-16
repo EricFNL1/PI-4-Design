@@ -28,10 +28,10 @@
                             <a class="nav-link text-dark" href="{{ route('dashboard') }}">Detalhamento</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="#">Log & Histórico</a>
+                            <a class="nav-link text-dark" href="{{ route('logs') }}">Log & Histórico</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="#">Status</a>
+                            <a class="nav-link text-dark" href="{{ route('status') }}">Status</a>
                         </li>
                     </ul>
 

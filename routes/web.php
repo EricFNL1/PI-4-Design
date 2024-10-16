@@ -9,6 +9,8 @@ use App\Http\Controllers\WeatherInfoController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\TestEmailController;
+use App\Http\Controllers\LogController;
+use App\Http\Controllers\StatusController;
 
 
 // Rota inicial redireciona para o login caso não esteja autenticado.
@@ -35,6 +37,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/sensores', [SensorController::class, 'store'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/weather-from-ip', [WeatherInfoController::class, 'getWeatherFromIP'])->middleware('auth');
+    Route::get('/dashboard', [DashboardController::class, 'showDashboard'])->name('dashboard')->middleware('auth');
+
 
     
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -65,3 +69,12 @@ Route::get('/teste-email', [TestEmailController::class, 'sendTestEmail'])->middl
 
 // Rota para injetar dados de teste nos sensores
 Route::get('/injetar-dados', [SensorController::class, 'injetarDadosTeste'])->middleware('auth');
+
+
+
+
+// Rota para a página de Logs com filtro de data
+Route::get('/logs', [LogController::class, 'index'])->name('logs')->middleware('auth');
+
+// Rota para a página de Status dos equipamentos
+Route::get('/status', [StatusController::class, 'index'])->name('status')->middleware('auth');
