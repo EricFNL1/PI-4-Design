@@ -40,7 +40,7 @@
         <div class="time-display" id="localTime"></div>
     </div>
                     <div class="text-center mt-5">
-                        <a href="#" class="text-dark">Configurações Avançadas<i class="bi bi-gear-fill"></i></a>
+                        <a href="{{ route('advanced.settings')}}" class="text-dark">Configurações Avançadas<i class="bi bi-gear-fill"></i></a>
                         <a  class="btn btn-danger w-75 mt-3" href="{{ url('/weather-from-ip') }}" class="btn btn-info">Obter Informações pelo IP</a>
                     </div>
                     <!-- Botão de Sair -->

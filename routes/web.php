@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\TestEmailController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\StatusController;
+use App\Http\Controllers\AdvancedSettingsController;
 
 
 // Rota inicial redireciona para o login caso não esteja autenticado.
@@ -78,3 +79,8 @@ Route::get('/logs', [LogController::class, 'index'])->name('logs')->middleware('
 
 // Rota para a página de Status dos equipamentos
 Route::get('/status', [StatusController::class, 'index'])->name('status')->middleware('auth');
+
+
+
+Route::get('/advanced-settings', [AdvancedSettingsController::class, 'index'])->name('advanced.settings')->middleware('auth');
+Route::post('/advanced-settings', [AdvancedSettingsController::class, 'updateFanSpeed'])->name('advanced.settings.update')->middleware('auth');

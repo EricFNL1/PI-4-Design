@@ -56,3 +56,27 @@
 .dark-theme .badge.bg-danger {
     background-color: #dc3545; /* Badge de desligado vermelha */
 }
+
+/* Tema escuro */
+.dark-theme {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+/* Input e Botões no tema escuro */
+.dark-theme input, 
+.dark-theme button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+}
+
+.dark-theme input::placeholder {
+    color: #ccc;
+}
+
+.dark-theme .alert {
+    background-color: #333;
+    color: #fff;
+    border-color: #555;
+}
