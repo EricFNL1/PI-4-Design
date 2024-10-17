@@ -84,3 +84,7 @@ Route::get('/status', [StatusController::class, 'index'])->name('status')->middl
 
 Route::get('/advanced-settings', [AdvancedSettingsController::class, 'index'])->name('advanced.settings')->middleware('auth');
 Route::post('/fase/selecionar', [AdvancedSettingsController::class, 'selecionarFase'])->name('fase.selecionar')->middleware('auth');
+
+
+Route::post('/sensores', [SensorController::class, 'receberDados']);
+

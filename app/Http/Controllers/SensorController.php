@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Sensor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +11,24 @@ use App\Mail\AlertNotification;
 
 class SensorController extends Controller
 {
+
+
+    public function receberDados(Request $request)
+    {
+        // Validação dos dados recebidos
+        $validatedData = $request->validate([
+            'temperatura' => 'required|numeric',
+            'umidade' => 'required|numeric',
+        ]);
+
+        // Armazenando os dados no banco
+        $sensor = new Sensor;
+        $sensor->temperatura = $validatedData['temperatura'];
+        $sensor->umidade = $validatedData['umidade'];
+        $sensor->save();
+
+        return response()->json(['message' => 'Dados recebidos com sucesso'], 200);
+    }
     /**
      * Display a listing of the resource.
      */
