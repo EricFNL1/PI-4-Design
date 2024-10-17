@@ -11,6 +11,7 @@
     <!-- Incluindo Chart.js -->
     <link rel="stylesheet" href="styledashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="icon" href="img/fundologin.jpg" type="image/x-icon" loading="lazy">
 
 </head>
 <body>
