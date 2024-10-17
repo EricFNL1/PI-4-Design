@@ -32,23 +32,27 @@ class AdvancedSettingsController extends Controller
             ],
         ];
 
-        // Retorna a view com as fases do cultivo do morango
-        return view('advanced-settings', ['phases' => $phases]);
-    }
+        // Fase selecionada pelo usuário, exemplo armazenado em sessão
+        $selectedPhase = session('selectedPhase', 'Germinação');
 
-    public function updateFanSpeed(Request $request)
-    {
-        // Valida a entrada do usuário
-        $validatedData = $request->validate([
-            'fan_speed' => 'required|integer|min:1|max:100',
+        return view('advanced-settings', [
+            'phases' => $phases,
+            'selectedPhase' => $selectedPhase,
         ]);
-
-        // Simulação de atualização de configuração de velocidade das ventoinhas
-        $fanSpeed = $validatedData['fan_speed'];
-
-        // Aqui você poderia, por exemplo, salvar em um banco de dados ou enviar para o microcontrolador
-
-        return redirect()->back()->with('success', 'Velocidade da ventoinha atualizada para ' . $fanSpeed . '%');
     }
-}
 
+    public function selecionarFase(Request $request)
+    {
+        // Validar a fase selecionada
+        $request->validate([
+            'fase' => 'required|string',
+        ]);
+    
+        $faseSelecionada = $request->input('fase');
+    
+        // Aqui você pode fazer algo com a fase selecionada, como salvar em um banco de dados ou realizar outras ações
+    
+        return redirect()->back()->with('success', 'Fase selecionada: ' . $faseSelecionada);
+    }
+    
+}

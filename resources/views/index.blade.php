@@ -76,6 +76,7 @@
                             <li><a class="dropdown-item" href="{{ route('dashboard') }}">Detalhamento</a></li>
                             <li><a class="dropdown-item" href="{{ route('logs') }}">Log & Histórico</a></li>
                             <li><a class="dropdown-item" href="{{ route('status') }}">Status</a></li>
+                            <li><a class="dropdown-item" href="{{ route('advanced.settings')}}">Configurações Avançadas</a></li>
                             <li class="text-center mt-3"><a href="#" class="btn btn-danger w-75" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
     Sair <i class="bi bi-box-arrow-right"></i>
 </a></li>

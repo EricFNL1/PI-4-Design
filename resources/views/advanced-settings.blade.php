@@ -19,43 +19,30 @@
             <div class="accordion" id="cultivoAccordion">
                 @foreach($phases as $fase => $detalhes)
                     <div class="accordion-item">
-                        <h2 class="accordion-header" id="heading{{ $fase }}">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $fase }}" aria-expanded="true" aria-controls="collapse{{ $fase }}">
+                        <h2 class="accordion-header" id="heading{{ str_replace(' ', '_', $fase) }}">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ str_replace(' ', '_', $fase) }}" aria-expanded="false" aria-controls="collapse{{ str_replace(' ', '_', $fase) }}">
                                 {{ $fase }}
                             </button>
                         </h2>
-                        <div id="collapse{{ $fase }}" class="accordion-collapse collapse" aria-labelledby="heading{{ $fase }}" data-bs-parent="#cultivoAccordion">
+                        <div id="collapse{{ str_replace(' ', '_', $fase) }}" class="accordion-collapse collapse" aria-labelledby="heading{{ str_replace(' ', '_', $fase) }}" data-bs-parent="#cultivoAccordion">
                             <div class="accordion-body">
                                 <ul>
                                     <li><strong>Luz:</strong> {{ $detalhes['luz'] }}</li>
                                     <li><strong>Água:</strong> {{ $detalhes['agua'] }}</li>
                                     <li><strong>Temperatura:</strong> {{ $detalhes['temperatura'] }}</li>
                                 </ul>
+                                <!-- Botão para Selecionar a Fase -->
+                                <form method="POST" action="{{ route('fase.selecionar') }}">
+                                    @csrf
+                                    <input type="hidden" name="fase" value="{{ $fase }}">
+                                    <button type="submit" class="btn btn-success mt-3">Selecionar {{ $fase }}</button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 @endforeach
             </div>
         </div>
-
-        <!-- Formulário de controle de velocidade das ventoinhas -->
-        <form method="POST" action="{{ route('advanced.settings.update') }}">
-            @csrf
-            <div class="row mb-4">
-                <div class="col-md-6">
-                    <label for="fan_speed" class="form-label">Velocidade da Ventoinha (%)</label>
-                    <input type="number" name="fan_speed" id="fan_speed" class="form-control" min="1" max="100" required value="50">
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Salvar Configuração</button>
-        </form>
-
-        <!-- Mensagem de sucesso -->
-        @if(session('success'))
-            <div class="alert alert-success mt-3">
-                {{ session('success') }}
-            </div>
-        @endif
 
         <!-- Botão de Voltar -->
         <div class="text-center my-4">
