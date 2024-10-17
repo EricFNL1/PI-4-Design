@@ -13,6 +13,31 @@
     <div class="container my-4">
         <h1 class="text-center">Configurações Avançadas</h1>
 
+        <!-- Exibição das Fases do Cultivo -->
+        <div class="my-4">
+            <h2>Fases do Cultivo do Morango</h2>
+            <div class="accordion" id="cultivoAccordion">
+                @foreach($phases as $fase => $detalhes)
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading{{ $fase }}">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $fase }}" aria-expanded="true" aria-controls="collapse{{ $fase }}">
+                                {{ $fase }}
+                            </button>
+                        </h2>
+                        <div id="collapse{{ $fase }}" class="accordion-collapse collapse" aria-labelledby="heading{{ $fase }}" data-bs-parent="#cultivoAccordion">
+                            <div class="accordion-body">
+                                <ul>
+                                    <li><strong>Luz:</strong> {{ $detalhes['luz'] }}</li>
+                                    <li><strong>Água:</strong> {{ $detalhes['agua'] }}</li>
+                                    <li><strong>Temperatura:</strong> {{ $detalhes['temperatura'] }}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
         <!-- Formulário de controle de velocidade das ventoinhas -->
         <form method="POST" action="{{ route('advanced.settings.update') }}">
             @csrf

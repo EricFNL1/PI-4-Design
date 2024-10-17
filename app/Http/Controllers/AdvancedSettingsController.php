@@ -8,8 +8,32 @@ class AdvancedSettingsController extends Controller
 {
     public function index()
     {
-        // Retorna a view com o controle da velocidade das ventoinhas
-        return view('advanced-settings');
+        // Definindo as fases do cultivo do morango
+        $phases = [
+            'Germinação' => [
+                'luz' => '14-16 horas por dia',
+                'agua' => 'Solo úmido, mas não encharcado',
+                'temperatura' => '18-22°C',
+            ],
+            'Crescimento vegetativo' => [
+                'luz' => '12-14 horas por dia',
+                'agua' => 'Rega moderada',
+                'temperatura' => '16-24°C',
+            ],
+            'Florescimento' => [
+                'luz' => '10-12 horas por dia',
+                'agua' => 'Rega constante, sem encharcar',
+                'temperatura' => '15-20°C',
+            ],
+            'Frutificação' => [
+                'luz' => '8-10 horas por dia',
+                'agua' => 'Manter o solo constantemente úmido',
+                'temperatura' => '14-18°C',
+            ],
+        ];
+
+        // Retorna a view com as fases do cultivo do morango
+        return view('advanced-settings', ['phases' => $phases]);
     }
 
     public function updateFanSpeed(Request $request)
@@ -27,3 +51,4 @@ class AdvancedSettingsController extends Controller
         return redirect()->back()->with('success', 'Velocidade da ventoinha atualizada para ' . $fanSpeed . '%');
     }
 }
+
