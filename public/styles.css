@@ -523,3 +523,13 @@ h3 {
     color: #ff4500; /* cor laranja mais suave */
     font-weight: bold;
 }
+
+#sidebar {
+    overflow-y: auto;
+    max-height: 100vh; /* Mantém a altura da tela */
+}
+
+#sidebar {
+    overflow-y: auto;
+    max-height: 100vh; /* Mantém a altura da tela */
+}
