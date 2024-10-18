@@ -9,5 +9,10 @@ class Sensor extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['temperatura', 'umidade'];
+    protected $fillable = ['nome', 'tipo', 'estufa_id'];
+
+    public function estufa()
+    {
+        return $this->belongsTo(Estufa::class);
+    }
 }

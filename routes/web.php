@@ -12,6 +12,8 @@ use App\Http\Controllers\TestEmailController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\AdvancedSettingsController;
+use App\Http\Controllers\EstufaController;
+
 
 
 // Rota inicial redireciona para o login caso não esteja autenticado.
@@ -86,5 +88,14 @@ Route::get('/advanced-settings', [AdvancedSettingsController::class, 'index'])->
 Route::post('/fase/selecionar', [AdvancedSettingsController::class, 'selecionarFase'])->name('fase.selecionar')->middleware('auth');
 
 
-Route::post('/sensores', [SensorController::class, 'receberDados']);
+Route::post('/sensores', [SensorController::class, 'receberDados'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
 
+
+
+
+// Rota para a página de criação de estufa
+Route::get('/estufa/create', [EstufaController::class, 'create'])->name('estufa.create');
+Route::post('/estufa/store', [EstufaController::class, 'store'])->name('estufa.store');
+
+Route::get('/sensor/create', [SensorController::class, 'create'])->name('sensor.create');
+Route::post('/sensor/store', [SensorController::class, 'store'])->name('sensor.store');

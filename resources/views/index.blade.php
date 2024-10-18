@@ -19,9 +19,21 @@
                     <div class="sidebar-header text-center p-3">
                         <img src="img/fundologin.jpg" class="img-fluid rounded-circle" alt="Logo Estufa">
                     </div>
+                    <!-- Botão de Criar Estufa -->
+<div class="text-center mt-3">
+<a href="{{ route('estufa.create') }}" class="btn btn-primary">Criar Estufa</a>
+
+
+</div>
+
+<!-- Botão de Cadastrar Sensores -->
+<div class="text-center mt-3">
+<a href="{{ route('sensor.create') }}" class="btn btn-secondary">Cadastrar Sensor</a>
+</div>
+
                     <!-- Menu Items -->
                     <ul class="nav flex-column text-center">
-                        <li class="nav-item">
+                        <li class="nav-item mt-3">
                             <a class="nav-link active text-dark" href="#">Home</a>
                         </li>
                         <li class="nav-item">
@@ -39,7 +51,7 @@
         <h3>Horário Local:</h3>
         <div class="time-display" id="localTime"></div>
     </div>
-                    <div class="text-center mt-5">
+                    <div class="text-center mt-1">
                         <a href="{{ route('advanced.settings')}}" class="text-dark">Configurações Avançadas<i class="bi bi-gear-fill"></i></a>
                         <a  class="btn btn-danger w-75 mt-3" href="{{ url('/weather-from-ip') }}" class="btn btn-info">Obter Informações pelo IP</a>
                     </div>
