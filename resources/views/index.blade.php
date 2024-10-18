@@ -88,6 +88,8 @@
                             <li><a class="dropdown-item" href="{{ route('logs') }}">Log & Histórico</a></li>
                             <li><a class="dropdown-item" href="{{ route('status') }}">Status</a></li>
                             <li><a class="dropdown-item" href="{{ route('advanced.settings')}}">Configurações Avançadas</a></li>
+                            <li><a href="{{ route('estufa.create') }}" class="btn btn-danger w-75">Criar Estufa</a></li>
+                            <li><a href="{{ route('sensor.create') }}" class="btn btn-danger w-75">Cadastrar Sensor</a></li>
                             <li class="text-center mt-3"><a href="#" class="btn btn-danger w-75" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
     Sair <i class="bi bi-box-arrow-right"></i>
 </a></li>
