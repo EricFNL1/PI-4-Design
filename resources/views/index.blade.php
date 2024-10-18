@@ -53,7 +53,6 @@
     </div>
                     <div class="text-center mt-1">
                         <a href="{{ route('advanced.settings')}}" class="text-dark">Configurações Avançadas<i class="bi bi-gear-fill"></i></a>
-                        <a  class="btn btn-danger w-75 mt-3" href="{{ url('/weather-from-ip') }}" class="btn btn-info">Obter Informações pelo IP</a>
                     </div>
                     <!-- Botão de Sair -->
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -96,6 +95,15 @@
                         
                     </div>
     </div>
+    <select name="estufa_id" id="estufa" class="form-select mb-3" style="width: 200px;">
+    @foreach ($estufas as $estufa)
+        <option value="{{ $estufa->id }}">{{ $estufa->nome }}</option>
+    @endforeach
+</select>
+
+
+
+
                 <!-- Cards de Conteúdo -->
                 <div class="row">
     <div class="col-md-8">

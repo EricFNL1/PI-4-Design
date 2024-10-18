@@ -13,6 +13,8 @@ use App\Http\Controllers\LogController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\AdvancedSettingsController;
 use App\Http\Controllers\EstufaController;
+use App\Http\Controllers\HomeController;
+
 
 
 
@@ -46,10 +48,8 @@ Route::middleware('auth')->group(function () {
     
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-    // Redireciona para o dashboard ou página inicial após o login bem-sucedido.
-    Route::get('/index', function () {
-        return view('index');
-    })->name('index');
+    Route::get('/index', [HomeController::class, 'index'])->name('index');
+
 });
 
 
@@ -99,3 +99,7 @@ Route::post('/estufa/store', [EstufaController::class, 'store'])->name('estufa.s
 
 Route::get('/sensor/create', [SensorController::class, 'create'])->name('sensor.create');
 Route::post('/sensor/store', [SensorController::class, 'store'])->name('sensor.store');
+
+Route::get('/sensores', [SensorController::class, 'index'])->name('sensores.index');
+
+

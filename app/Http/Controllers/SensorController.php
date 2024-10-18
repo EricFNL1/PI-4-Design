@@ -8,6 +8,20 @@ use Illuminate\Http\Request;
 
 class SensorController extends Controller
 {
+
+    public function index(Request $request)
+    {
+        // Carrega todas as estufas para exibição no dropdown
+        $estufas = Estufa::all();
+
+        // Verifica se foi selecionada uma estufa no request
+        $sensores = [];
+        if ($request->has('estufa_id')) {
+            $sensores = Sensor::where('estufa_id', $request->input('estufa_id'))->get();
+        }
+
+        return view('sensores.index', compact('estufas', 'sensores'));
+    }
     public function create()
     {
         $estufas = Estufa::all();
