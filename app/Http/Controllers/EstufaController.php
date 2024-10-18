@@ -18,6 +18,6 @@ class EstufaController extends Controller
 
         Estufa::create(['nome' => $request->nome]);
 
-        return redirect()->route('dashboard')->with('success', 'Estufa criada com sucesso.');
+        return redirect()->route('index')->with('success', 'Estufa criada com sucesso.');
     }
 }

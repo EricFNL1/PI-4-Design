@@ -28,6 +28,6 @@ class SensorController extends Controller
             'estufa_id' => $request->estufa_id
         ]);
 
-        return redirect()->route('dashboard')->with('success', 'Sensor cadastrado com sucesso.');
+        return redirect()->route('index')->with('success', 'Sensor cadastrado com sucesso.');
     }
 }

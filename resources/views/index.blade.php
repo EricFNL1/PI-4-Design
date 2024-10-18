@@ -20,15 +20,15 @@
                         <img src="img/fundologin.jpg" class="img-fluid rounded-circle" alt="Logo Estufa">
                     </div>
                     <!-- Botão de Criar Estufa -->
-<div class="text-center mt-3">
-<a href="{{ route('estufa.create') }}" class="btn btn-primary">Criar Estufa</a>
+<div class="text-center mt-1">
+<a href="{{ route('estufa.create') }}" class="btn btn-danger w-75">Criar Estufa</a>
 
 
 </div>
 
 <!-- Botão de Cadastrar Sensores -->
 <div class="text-center mt-3">
-<a href="{{ route('sensor.create') }}" class="btn btn-secondary">Cadastrar Sensor</a>
+<a href="{{ route('sensor.create') }}" class="btn btn-danger w-75">Cadastrar Sensor</a>
 </div>
 
                     <!-- Menu Items -->
