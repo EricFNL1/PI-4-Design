@@ -14,7 +14,18 @@ use App\Http\Controllers\StatusController;
 use App\Http\Controllers\AdvancedSettingsController;
 use App\Http\Controllers\EstufaController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ArduinoController;
+use App\Http\Controllers\SensorDataController;
 
+Route::get('/relay/on', [ArduinoController::class, 'turnRelayOn'])->name('relay.on');
+Route::get('/relay/off', [ArduinoController::class, 'turnRelayOff'])->name('relay.off');
+Route::get('/pump/activate', [ArduinoController::class, 'activatePump'])->name('pump.activate');
+Route::get('/ventilation/on', [ArduinoController::class, 'turnVentilationOn'])->name('ventilation.on');
+Route::get('/ventilation/off', [ArduinoController::class, 'turnVentilationOff'])->name('ventilation.off');
+
+
+Route::post('/sensor-data/store', [SensorDataController::class, 'store'])->name('sensorData.store');
+Route::get('/sensor-data', [SensorDataController::class, 'getData'])->name('sensorData.get');
 
 
 

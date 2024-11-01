@@ -78,10 +78,10 @@
                             <img src="img/fundologin.jpg" class="img-fluid rounded-circle" style="width: 30px;" alt="Menu">
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li><a class="dropdown-item" href="#" data-action="themeToggle">Alternar Tema</a></li>
-                            <li><a class="dropdown-item" href="#" data-action="lightsOn">Ligar Luzes</a></li>
-                            <li><a class="dropdown-item" href="#" data-action="lightsOff">Desligar Luzes</a></li>
-                            <li><a class="dropdown-item" href="#" data-action="fanToggle">Ligar/Desligar Ventoinha</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="toggleTheme()">Alternar Tema</a></li>
+<li><a class="dropdown-item" href="#" onclick="controlDevice('/relay/on')">Ligar Luzes</a></li>
+<li><a class="dropdown-item" href="#" onclick="controlDevice('/relay/off')">Desligar Luzes</a></li>
+<li><a class="dropdown-item" href="#" onclick="toggleFan()">Ligar/Desligar Ventoinha</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#">Home</a></li>
                             <li><a class="dropdown-item" href="{{ route('dashboard') }}">Detalhamento</a></li>

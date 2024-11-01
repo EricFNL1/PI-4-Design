@@ -12,20 +12,18 @@
     <link rel="stylesheet" href="styledashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="icon" href="img/fundologin.jpg" type="image/x-icon" loading="lazy">
-
 </head>
 <body>
     <div class="container page1">
         <h1 class="text-center my-4">Dashboard de Monitoramento</h1>
 
         <div class="text-center my-4">
-    <label for="periodSelect">Selecionar Período:</label>
-    <select id="periodSelect" class="form-select w-50 mx-auto">
-        <option value="7">Última semana</option>
-        <option value="30">Último mês</option>
-    </select>
-</div>
-
+            <label for="periodSelect">Selecionar Período:</label>
+            <select id="periodSelect" class="form-select w-50 mx-auto">
+                <option value="7">Última semana</option>
+                <option value="30">Último mês</option>
+            </select>
+        </div>
 
         <!-- Container para os gráficos -->
         <div class="row">
@@ -47,128 +45,64 @@
     </div>
 
     <script>
-    // Dados simulados para os gráficos
-    const dataByDay = {
-        7: {
-            labels: ['1', '2', '3', '4', '5', '6', '7'],
-            temperatureData: [30, 32, 33, 29, 35, 31, 30],
-            humidityData: [70, 72, 75, 68, 74, 71, 73],
-            airHumidityData: [65, 67, 69, 70, 71, 72, 73]
-        },
-        30: {
-            labels: ['1', '5', '10', '15', '20', '25', '30'],
-            temperatureData: [29, 30, 31, 32, 30, 28, 29],
-            humidityData: [68, 70, 72, 74, 71, 69, 70],
-            airHumidityData: [64, 65, 66, 67, 68, 69, 70]
-        }
-    };
-
-    const ctxTemp = document.getElementById('temperatureChart').getContext('2d');
-    const ctxHumidity = document.getElementById('humidityChart').getContext('2d');
-    const ctxAirHumidity = document.getElementById('airHumidityChart').getContext('2d');
-
-    let temperatureChart = createChart(ctxTemp, dataByDay[7].labels, dataByDay[7].temperatureData, 'Temperatura (°C)');
-    let humidityChart = createChart(ctxHumidity, dataByDay[7].labels, dataByDay[7].humidityData, 'Umidade (%)');
-    let airHumidityChart = createChart(ctxAirHumidity, dataByDay[7].labels, dataByDay[7].airHumidityData, 'Umidade no Ar (%)');
-
-    document.getElementById('periodSelect').addEventListener('change', function () {
-        const selectedPeriod = this.value;
-
-        updateChart(temperatureChart, dataByDay[selectedPeriod].labels, dataByDay[selectedPeriod].temperatureData);
-        updateChart(humidityChart, dataByDay[selectedPeriod].labels, dataByDay[selectedPeriod].humidityData);
-        updateChart(airHumidityChart, dataByDay[selectedPeriod].labels, dataByDay[selectedPeriod].airHumidityData);
-    });
-
-    function createChart(ctx, labels, data, label) {
-        return new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: label,
-                    data: data,
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    fill: false,
-                }]
-            }
-        });
-    }
-
-    function updateChart(chart, labels, data) {
-        chart.data.labels = labels;
-        chart.data.datasets[0].data = data;
-        chart.update();
-    }
-</script>
-
-
-    <script>
-        // Dados simulados para os gráficos
-        const temperatureData = [30, 32, 33, 29, 35, 31, 30]; // Temperatura simulada
-        const humidityData = [70, 72, 75, 68, 74, 71, 73]; // Umidade simulada
-        const airHumidityData = [65, 67, 69, 70, 71, 72, 73]; // Umidade no Ar simulada
-
-        // Gráfico de Temperatura
         const ctxTemp = document.getElementById('temperatureChart').getContext('2d');
-        new Chart(ctxTemp, {
-            type: 'line',
-            data: {
-                labels: ['1', '2', '3', '4', '5', '6', '7'],
-                datasets: [{
-                    label: 'Temperatura (°C)',
-                    data: temperatureData,
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    fill: false,
-                }]
-            }
-        });
-
-        // Gráfico de Umidade
         const ctxHumidity = document.getElementById('humidityChart').getContext('2d');
-        new Chart(ctxHumidity, {
-            type: 'line',
-            data: {
-                labels: ['1', '2', '3', '4', '5', '6', '7'],
-                datasets: [{
-                    label: 'Umidade (%)',
-                    data: humidityData,
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    fill: false,
-                }]
-            }
-        });
-
-        // Gráfico de Umidade no Ar
         const ctxAirHumidity = document.getElementById('airHumidityChart').getContext('2d');
-        new Chart(ctxAirHumidity, {
-            type: 'line',
-            data: {
-                labels: ['1', '2', '3', '4', '5', '6', '7'],
-                datasets: [{
-                    label: 'Umidade no Ar (%)',
-                    data: airHumidityData,
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    fill: false,
-                }]
-            }
+
+        let temperatureChart, humidityChart, airHumidityChart;
+
+        function createChart(ctx, label, borderColor) {
+            return new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: label,
+                        data: [],
+                        borderColor: borderColor,
+                        fill: false,
+                    }]
+                }
+            });
+        }
+
+        function fetchData(days) {
+            fetch(`/api/sensor-data?days=${days}`)
+                .then(response => response.json())
+                .then(data => {
+                    const labels = data.map(entry => new Date(entry.created_at).toLocaleDateString());
+                    const temperatureData = data.map(entry => entry.temperature);
+                    const humidityData = data.map(entry => entry.humidity);
+                    const airHumidityData = data.map(entry => entry.soil_moisture);
+
+                    updateChart(temperatureChart, labels, temperatureData);
+                    updateChart(humidityChart, labels, humidityData);
+                    updateChart(airHumidityChart, labels, airHumidityData);
+                })
+                .catch(error => console.error('Erro ao buscar dados do banco:', error));
+        }
+
+        function updateChart(chart, labels, data) {
+            chart.data.labels = labels;
+            chart.data.datasets[0].data = data;
+            chart.update();
+        }
+
+        document.getElementById('periodSelect').addEventListener('change', function () {
+            const selectedPeriod = this.value;
+            fetchData(selectedPeriod);
         });
+
+        // Inicializar gráficos e buscar dados para a última semana
+        temperatureChart = createChart(ctxTemp, 'Temperatura (°C)', 'rgba(255, 99, 132, 1)');
+        humidityChart = createChart(ctxHumidity, 'Umidade (%)', 'rgba(54, 162, 235, 1)');
+        airHumidityChart = createChart(ctxAirHumidity, 'Umidade no Ar (%)', 'rgba(75, 192, 192, 1)');
+
+        // Carregar dados iniciais
+        fetchData(7);
     </script>
 
-
-<script src="script.js"></script>
-
-    <!-- Script para gerenciar tema e salvar no localStorage -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const isDarkThemeEnabled = localStorage.getItem('dark-theme-enabled') === 'true';
-
-            if (isDarkThemeEnabled) {
-                document.body.classList.add('dark-theme');
-            }
-        });
-    </script>
-
-    <!-- Incluindo Bootstrap JS -->
+    <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

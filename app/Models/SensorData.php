@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class SensorData extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['temperature', 'humidity', 'soil_moisture'];
 }
