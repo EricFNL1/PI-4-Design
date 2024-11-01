@@ -31,7 +31,7 @@
 <a href="{{ route('sensor.create') }}" class="btn btn-danger w-75">Cadastrar Sensor</a>
 </div>
 
-<div class="text-center mt-1">
+<div class="text-center mt-3">
     <a href="{{ route('gerenciador.index') }}" class="btn btn-danger w-75">Gerenciar Estufas e Sensores</a>
 </div>
 
@@ -100,12 +100,15 @@
                         
                     </div>
     </div>
-    <p>Selecione a estufa:</p>
-    <select name="estufa_id" id="estufa" class="form-select mb-3" style="width: 200px;" onchange="fetchEstufaData()">
-    @foreach ($estufas as $estufa)
-        <option value="{{ $estufa->id }}">{{ $estufa->nome }}</option>
-    @endforeach
-</select>
+    <div class="d-flex align-items-center mb-3">
+    <label for="estufa" class="me-2">Selecione a estufa:</label>
+    <select name="estufa_id" id="estufa" class="form-select" style="width: 200px;" onchange="fetchEstufaData()">
+        @foreach ($estufas as $estufa)
+            <option value="{{ $estufa->id }}">{{ $estufa->nome }}</option>
+        @endforeach
+    </select>
+</div>
+
 
 
 

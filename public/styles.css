@@ -537,3 +537,28 @@ h3 {
 
 
 
+/* Estilizando a barra de rolagem para navegadores baseados em Webkit (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f0f0f0; /* Cor de fundo da trilha */
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #4caf50; /* Cor da barra de rolagem */
+    border-radius: 10px;
+    border: 2px solid #f0f0f0; /* Borda para dar efeito de separação */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #388e3c; /* Cor ao passar o mouse */
+}
+
+/* Estilizando para Firefox */
+* {
+    scrollbar-width: thin; /* Define a espessura da barra */
+    scrollbar-color: #4caf50 #f0f0f0; /* Cor da barra e do fundo */
+}
