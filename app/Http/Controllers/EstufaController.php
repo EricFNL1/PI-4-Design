@@ -20,4 +20,6 @@ class EstufaController extends Controller
 
         return redirect()->route('index')->with('success', 'Estufa criada com sucesso.');
     }
+
+    
 }

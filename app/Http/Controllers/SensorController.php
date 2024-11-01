@@ -44,4 +44,6 @@ class SensorController extends Controller
 
         return redirect()->route('index')->with('success', 'Sensor cadastrado com sucesso.');
     }
+
+    
 }

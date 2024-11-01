@@ -31,17 +31,19 @@ class SensorDataController extends Controller
     // Método para buscar dados dos últimos "n" dias
     public function getData(Request $request)
     {
-        $days = $request->get('days', 7); // Padrão: última semana
-        $dateLimit = Carbon::now()->subDays($days);
-
-        // Busca os dados de sensor dos últimos "n" dias, ordenados por data
-        $sensorData = SensorData::where('created_at', '>=', $dateLimit)
-            ->orderBy('created_at')
-            ->get(['temperature', 'humidity', 'soil_moisture', 'created_at']);
-
+        $estufaId = $request->get('estufa_id');
+        $days = $request->get('days', 7);
+    
+        $query = SensorData::where('created_at', '>=', Carbon::now()->subDays($days));
+        
+        if ($estufaId) {
+            $query->where('estufa_id', $estufaId);
+        }
+    
+        $sensorData = $query->orderBy('created_at')->get(['temperature', 'humidity', 'soil_moisture', 'created_at']);
+    
         return response()->json($sensorData);
     }
-
     public function index(Request $request)
     {
         $query = SensorData::query();

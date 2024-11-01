@@ -31,6 +31,12 @@
 <a href="{{ route('sensor.create') }}" class="btn btn-danger w-75">Cadastrar Sensor</a>
 </div>
 
+<div class="text-center mt-1">
+    <a href="{{ route('gerenciador.index') }}" class="btn btn-danger w-75">Gerenciar Estufas e Sensores</a>
+</div>
+
+
+
                     <!-- Menu Items -->
                     <ul class="nav flex-column text-center">
                         <li class="nav-item mt-3">
@@ -47,10 +53,7 @@
                         </li>
                     </ul>
 
-                    <div class="text-center mt-3 clock-container">
-        <h3>Horário Local:</h3>
-        <div class="time-display" id="localTime"></div>
-    </div>
+                    
                     <div class="text-center mt-1">
                         <a href="{{ route('advanced.settings')}}" class="text-dark">Configurações Avançadas<i class="bi bi-gear-fill"></i></a>
                     </div>
@@ -97,11 +100,13 @@
                         
                     </div>
     </div>
-    <select name="estufa_id" id="estufa" class="form-select mb-3" style="width: 200px;">
+    <p>Selecione a estufa:</p>
+    <select name="estufa_id" id="estufa" class="form-select mb-3" style="width: 200px;" onchange="fetchEstufaData()">
     @foreach ($estufas as $estufa)
         <option value="{{ $estufa->id }}">{{ $estufa->nome }}</option>
     @endforeach
 </select>
+
 
 
 
@@ -201,14 +206,20 @@
 
     <!-- Card de Informações do Clima -->
     <div class="card mb-4" id="weatherCard" style="width: 100%; height: auto;">
-        <div class="card-body text-center">
-            <h5 class="card-title">Informações do Clima</h5>
-            <p class="card-text">Temperatura: <span id="temperature">N/A</span> °C</p>
-            <p class="card-text">Descrição: <span id="weatherDescription">N/A</span></p>
-            <p class="card-text">Localização: <span id="latitude">N/A</span>, <span id="longitude">N/A</span></p>
+    <div class="card-body text-center">
+        <h5 class="card-title">Informações do Clima</h5>
+        <p class="card-text">Temperatura: <span id="temperature">N/A</span> °C</p>
+        <p class="card-text">Descrição: <span id="weatherDescription">N/A</span></p>
+        <p class="card-text">Localização: <span id="latitude">N/A</span>, <span id="longitude">N/A</span></p>
+        
+        <!-- Relógio Local -->
+        <div class="text-center">
+            <p class="mb-0"><strong>Horário Local:</strong> <span id="localTime" style="font-size: 1.1em; color: #f44336;"></span></p>
         </div>
     </div>
 </div>
+
+
 
 
 
@@ -216,6 +227,30 @@
             </main>
         </div>
     </div>
+
+    
+    <script>
+        function fetchEstufaData() {
+    const estufaId = document.getElementById('estufa').value;
+    
+    fetch(`/sensor-data?estufa_id=${estufaId}`)
+        .then(response => response.json())
+        .then(data => {
+            // Atualiza os valores na interface
+            document.getElementById('temperature-value').textContent = `${data.temperature} °C`;
+            document.getElementById('humidity-value').textContent = `${data.humidity} %`;
+            document.getElementById('humidity-air-value').textContent = `${data.soil_moisture} %`;
+            
+            // Atualiza altura dos gráficos
+            document.querySelector('.thermometer-fill').style.height = `${Math.min(data.temperature, 100)}%`;
+            document.querySelector('.water-level').style.height = `${data.humidity}%`;
+            document.querySelector('.gauge-cover').style.height = `${data.soil_moisture}%`;
+        })
+        .catch(error => console.error('Erro ao obter dados da estufa:', error));
+}
+document.addEventListener('DOMContentLoaded', fetchEstufaData);
+
+    </script>
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -278,6 +313,8 @@
     // Atualiza os dados a cada 2 segundos
     setInterval(updateSensorData, 2000);
 </script>
+
+
 
 
 

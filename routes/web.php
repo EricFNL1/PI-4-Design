@@ -16,6 +16,8 @@ use App\Http\Controllers\EstufaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ArduinoController;
 use App\Http\Controllers\SensorDataController;
+use App\Http\Controllers\GestorController;
+
 
 Route::get('/relay/on', [ArduinoController::class, 'turnRelayOn'])->name('relay.on');
 Route::get('/relay/off', [ArduinoController::class, 'turnRelayOff'])->name('relay.off');
@@ -26,6 +28,10 @@ Route::get('/ventilation/off', [ArduinoController::class, 'turnVentilationOff'])
 
 Route::post('/sensor-data/store', [SensorDataController::class, 'store'])->name('sensorData.store');
 Route::get('/sensor-data', [SensorDataController::class, 'getData'])->name('sensorData.get');
+
+
+
+
 
 
 
@@ -113,4 +119,19 @@ Route::post('/sensor/store', [SensorController::class, 'store'])->name('sensor.s
 
 Route::get('/sensores', [SensorController::class, 'index'])->name('sensores.index');
 
+
+Route::get('/gerenciador', [GestorController::class, 'index'])->name('gerenciador.index');
+Route::put('/estufa/{id}/update', [GestorController::class, 'updateEstufa'])->name('estufa.update');
+Route::delete('/estufa/{id}/destroy', [GestorController::class, 'destroyEstufa'])->name('estufa.destroy');
+Route::put('/sensor/{id}/update', [GestorController::class, 'updateSensor'])->name('sensor.update');
+Route::delete('/sensor/{id}/destroy', [GestorController::class, 'destroySensor'])->name('sensor.destroy');
+
+
+// Rota para editar um sensor
+Route::get('/sensor/{id}/edit', [SensorController::class, 'edit'])->name('sensor.edit');
+Route::put('/sensor/{id}', [SensorController::class, 'update'])->name('sensor.update');
+
+// Rota para editar uma estufa
+Route::get('/estufa/{id}/edit', [EstufaController::class, 'edit'])->name('estufa.edit');
+Route::put('/estufa/{id}', [EstufaController::class, 'update'])->name('estufa.update');
 
