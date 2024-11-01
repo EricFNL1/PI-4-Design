@@ -166,29 +166,40 @@
                 <div>
                     <button id="themeToggle" class="theme-toggle-btn"></button>
                 </div>
+                
+                <!-- Controle da Luz -->
                 <div class="icon-container">
-                    <a href="#" id="lightsOn" class="icon-light-on" style="display: block;">
+                    <a href="#" onclick="controlDevice('/relay/on')" id="lightsOn" class="icon-light-on" style="display: block;">
                         <span class="iconify" data-icon="mdi:lightbulb-on" data-width="40" data-height="40"></span>
                     </a>
-                    <a href="#" id="lightsOff" class="icon-light-off" style="display: none;">
+                    <a href="#" onclick="controlDevice('/relay/off')" id="lightsOff" class="icon-light-off" style="display: none;">
                         <span class="iconify" data-icon="mdi:lightbulb-off" data-width="40" data-height="40"></span>
                     </a>
                 </div>
+
+                <!-- Controle da Ventilação -->
                 <div>
-                    <button id="fanToggle" class="btn btn-info rounded-circle" style="width: 50px; height: 50px;">
+                    <button onclick="controlDevice('/ventilation/on')" id="fanToggle" class="btn btn-info rounded-circle" style="width: 50px; height: 50px;">
+                        <i class="fas fa-fan" id="fanIcon"></i>
+                    </button>
+                    <button onclick="controlDevice('/ventilation/off')" class="btn btn-info rounded-circle" style="width: 50px; height: 50px; display:none;">
                         <i class="fas fa-fan" id="fanIcon"></i>
                     </button>
                 </div>
+
+                <!-- Controle da Bomba de Água -->
                 <div class="icon-container">
-                    <a href="#" id="waterPumpOn" class="icon-waterpump-on" style="display: block;">
+                    <a href="#" onclick="controlDevice('/pump/activate')" id="waterPumpOn" class="icon-waterpump-on" style="display: block;">
                         <span class="iconify" data-icon="mdi:water-pump" data-width="40" data-height="40"></span>
                     </a>
-                    <a href="#" id="waterPumpOff" class="icon-waterpump-off" style="display: none;">
+                    <a href="#" onclick="controlDevice('/pump/activate')" id="waterPumpOff" class="icon-waterpump-off" style="display: none;">
                         <span class="iconify" data-icon="mdi:water-pump-off" data-width="40" data-height="40"></span>
                     </a>
                 </div>
             </div>
         </div>
+    </div>
+</div>
     </div>
     <div class="col-md-12">
     <div class="card mb-4" id="weatherCard" style="width: 100%; height: auto;">
@@ -218,6 +229,48 @@
         }
     });
 </script>
+
+<script>
+    function controlDevice(endpoint) {
+        fetch(endpoint)
+            .then(response => response.text())
+            .then(data => {
+                alert(data); // Exibe o retorno da resposta do Arduino
+            })
+            .catch(error => console.error('Erro ao enviar comando:', error));
+    }
+</script>
+
+<script>
+    // Endereço IP do ESP32 (ajuste conforme necessário)
+    const esp32Ip = 'http://192.168.4.1';
+
+    // Função para atualizar os dados dos sensores na dashboard
+    function updateSensorData() {
+        fetch(`${esp32Ip}/data`)
+            .then(response => response.json())
+            .then(data => {
+                // Atualiza os valores no HTML
+                document.getElementById('temperature-value').textContent = `${data.temperature} °C`;
+                document.getElementById('humidity-value').textContent = `${data.humidity} %`;
+                document.getElementById('humidity-air-value').textContent = `${data.soil_moisture} %`;
+
+                // Aqui, você também pode atualizar a altura dos gráficos de umidade e temperatura conforme a porcentagem
+                const temperatureHeight = Math.min(data.temperature, 100); // Limita altura a 100%
+                const humidityHeight = data.humidity;
+                const soilMoistureHeight = data.soil_moisture;
+
+                document.querySelector('.thermometer-fill').style.height = `${temperatureHeight}%`;
+                document.querySelector('.water-level').style.height = `${humidityHeight}%`;
+                document.querySelector('.gauge-cover').style.height = `${soilMoistureHeight}%`;
+            })
+            .catch(error => console.error('Erro ao obter dados do ESP32:', error));
+    }
+
+    // Atualiza os dados a cada 2 segundos
+    setInterval(updateSensorData, 2000);
+</script>
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>

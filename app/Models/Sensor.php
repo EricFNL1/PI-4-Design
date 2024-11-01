@@ -8,11 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Sensor extends Model
 {
     use HasFactory;
-    public function estufa()
+    public function sensores()
     {
-        return $this->belongsTo(Estufa::class);
+        return $this->hasMany(Sensor::class);
     }
-    
     
     protected $fillable = ['nome', 'tipo', 'estufa_id'];
 

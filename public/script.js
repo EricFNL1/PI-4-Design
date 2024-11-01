@@ -109,7 +109,7 @@ document.querySelectorAll('#waterPumpOn, #waterPumpOff').forEach(item => {
 //parte simulada, excluir mais tarde.
 
   // Simulando a atualização da temperatura
-  function updateTemperature(temp) {
+ /* function updateTemperature(temp) {
     const fill = document.querySelector('.thermometer-fill');
     const temperatureValue = document.getElementById('temperature-value');
     
@@ -155,7 +155,7 @@ setTimeout(() => {
         // Exemplo de atualização com uma umidade simulada
         setTimeout(() => {
             updateAirHumidity(75); // Altere o valor conforme necessário para simular a umidade
-        }, 1000);
+        }, 1000);*/
 
 
                 // Função para obter o horário local do dispositivo e exibi-lo
