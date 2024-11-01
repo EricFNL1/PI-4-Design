@@ -156,9 +156,8 @@
             </div>
         </div>
     </div>
-
-    <!-- Card de Configurações -->
     <div class="col-md-4">
+    <!-- Card de Configurações -->
     <div class="card mb-4" style="width: 100%;">
         <div class="card-body text-center">
             <h5 class="card-title">Configurações</h5>
@@ -199,9 +198,8 @@
             </div>
         </div>
     </div>
-</div>
-    </div>
-    <div class="col-md-12">
+
+    <!-- Card de Informações do Clima -->
     <div class="card mb-4" id="weatherCard" style="width: 100%; height: auto;">
         <div class="card-body text-center">
             <h5 class="card-title">Informações do Clima</h5>
@@ -245,7 +243,7 @@
     // Endereço IP do ESP32 (ajuste conforme necessário)
     const esp32Ip = 'http://192.168.4.1';
 
-    // Função para atualizar os dados dos sensores na dashboard
+    // Função para atualizar os dados dos sensores na dashboard e enviar ao backend
     function updateSensorData() {
         fetch(`${esp32Ip}/data`)
             .then(response => response.json())
@@ -255,7 +253,7 @@
                 document.getElementById('humidity-value').textContent = `${data.humidity} %`;
                 document.getElementById('humidity-air-value').textContent = `${data.soil_moisture} %`;
 
-                // Aqui, você também pode atualizar a altura dos gráficos de umidade e temperatura conforme a porcentagem
+                // Atualiza a altura dos gráficos de umidade e temperatura conforme a porcentagem
                 const temperatureHeight = Math.min(data.temperature, 100); // Limita altura a 100%
                 const humidityHeight = data.humidity;
                 const soilMoistureHeight = data.soil_moisture;
@@ -263,6 +261,16 @@
                 document.querySelector('.thermometer-fill').style.height = `${temperatureHeight}%`;
                 document.querySelector('.water-level').style.height = `${humidityHeight}%`;
                 document.querySelector('.gauge-cover').style.height = `${soilMoistureHeight}%`;
+
+                // Envia os dados para o backend Laravel
+                fetch('/store-sensor-data', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}' // Inclua o token CSRF para autenticação
+                    },
+                    body: JSON.stringify(data)
+                }).catch(error => console.error('Erro ao enviar dados para o backend:', error));
             })
             .catch(error => console.error('Erro ao obter dados do ESP32:', error));
     }
