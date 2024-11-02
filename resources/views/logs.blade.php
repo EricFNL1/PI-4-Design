@@ -58,8 +58,17 @@
             <a href="/" class="back-button">Voltar para Home</a>
         </div>
     </div>
+    <script src="script.js"></script>
 
     <script>
+        // Verificar se o tema escuro está ativado no localStorage e aplicar a classe
+        document.addEventListener('DOMContentLoaded', function() {
+            const isDarkThemeEnabled = localStorage.getItem('dark-theme-enabled') === 'true';
+            if (isDarkThemeEnabled) {
+                document.body.classList.add('dark-theme');
+            }
+        });
+
         // Dados simulados para fins de demonstração
         const logs = @json($logs);
 
@@ -109,6 +118,7 @@
         // Inicializa a tabela na primeira página
         document.addEventListener('DOMContentLoaded', renderTable);
     </script>
+
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

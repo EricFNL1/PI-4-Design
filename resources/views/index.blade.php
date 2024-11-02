@@ -81,22 +81,26 @@
                             <img src="img/fundologin.jpg" class="img-fluid rounded-circle" style="width: 30px;" alt="Menu">
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="#" onclick="toggleTheme()">Alternar Tema</a></li>
-<li><a class="dropdown-item" href="#" onclick="controlDevice('/relay/on')">Ligar Luzes</a></li>
-<li><a class="dropdown-item" href="#" onclick="controlDevice('/relay/off')">Desligar Luzes</a></li>
-<li><a class="dropdown-item" href="#" onclick="toggleFan()">Ligar/Desligar Ventoinha</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Home</a></li>
-                            <li><a class="dropdown-item" href="{{ route('dashboard') }}">Detalhamento</a></li>
-                            <li><a class="dropdown-item" href="{{ route('logs') }}">Log & Histórico</a></li>
-                            <li><a class="dropdown-item" href="{{ route('status') }}">Status</a></li>
-                            <li><a class="dropdown-item" href="{{ route('advanced.settings')}}">Configurações Avançadas</a></li>
-                            <li class="text-center mt-3"><a href="{{ route('estufa.create') }}" class="btn btn-danger w-75">Criar Estufa</a></li>
-                            <li class="text-center mt-3"><a href="{{ route('sensor.create') }}" class="btn btn-danger w-75">Cadastrar Sensor</a></li>
-                            <li class="text-center mt-3"><a href="#" class="btn btn-danger w-75" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-    Sair <i class="bi bi-box-arrow-right"></i>
-</a></li>
-                        </ul>
+                <li><a class="dropdown-item" id="themeToggle" href="#" onclick="event.preventDefault();  toggleTheme()">Alternar Tema</a></li>
+                <li><a class="dropdown-item"  href="#" onclick="event.preventDefault(); controlDevice('/relay/on')">Ligar Luzes</a></li>
+                <li><a class="dropdown-item" href="#"  onclick="event.preventDefault(); controlDevice('/relay/off')">Desligar Luzes</a></li>
+                <li>
+                    <a class="dropdown-item" href="#" onclick="event.preventDefault(); toggleFan()">Ligar/Desligar Ventoinha</a>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Home</a></li>
+                <li><a class="dropdown-item" href="{{ route('dashboard') }}">Detalhamento</a></li>
+                <li><a class="dropdown-item" href="{{ route('logs') }}">Log & Histórico</a></li>
+                <li><a class="dropdown-item" href="{{ route('status') }}">Status</a></li>
+                <li><a class="dropdown-item" href="{{ route('advanced.settings')}}">Configurações Avançadas</a></li>
+                <li class="text-center mt-3"><a href="{{ route('estufa.create') }}" class="btn btn-danger w-75">Criar Estufa</a></li>
+                <li class="text-center mt-3"><a href="{{ route('sensor.create') }}" class="btn btn-danger w-75">Cadastrar Sensor</a></li>
+                <li class="text-center mt-3">
+                    <a href="#" class="btn btn-danger w-75" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        Sair <i class="bi bi-box-arrow-right"></i>
+                    </a>
+                </li>
+            </ul>
                         
                     </div>
     </div>
