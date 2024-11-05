@@ -17,13 +17,22 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ArduinoController;
 use App\Http\Controllers\SensorDataController;
 use App\Http\Controllers\GestorController;
+use App\Http\Controllers\DadosController;
 
+
+
+
+
+// Adicione essas rotas no web.php para testar diretamente cada função
+Route::get('/ventilation/on', [ArduinoController::class, 'turnVentilationOn']);
+Route::get('/ventilation/off', [ArduinoController::class, 'turnVentilationOff']);
+
+Route::get('/dados-esp32', [DadosController::class, 'obterDados']);
 
 Route::get('/relay/on', [ArduinoController::class, 'turnRelayOn'])->name('relay.on');
 Route::get('/relay/off', [ArduinoController::class, 'turnRelayOff'])->name('relay.off');
 Route::get('/pump/activate', [ArduinoController::class, 'activatePump'])->name('pump.activate');
-Route::get('/ventilation/on', [ArduinoController::class, 'turnVentilationOn'])->name('ventilation.on');
-Route::get('/ventilation/off', [ArduinoController::class, 'turnVentilationOff'])->name('ventilation.off');
+
 
 
 Route::post('/sensor-data/store', [SensorDataController::class, 'store'])->name('sensorData.store');

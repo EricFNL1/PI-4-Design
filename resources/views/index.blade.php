@@ -121,53 +121,52 @@
                 <!-- Cards de Conteúdo -->
                 <div class="row">
     <div class="col-md-8">
-        <div class="row">
-            <!-- Relatório de Temperatura -->
-            <div class="col-12">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h3 class="text-center">Relatório de Temperatura</h3>
-                        <div class="thermometer-container">
-                            <div class="thermometer">
-                                <div class="thermometer-fill" style="height: 50%;"></div>
-                                <div class="thermometer-bulb"></div>
+    <div class="row">
+                            <!-- Relatório de Temperatura -->
+                            <div class="col-12">
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <h3 class="text-center">Relatório de Temperatura</h3>
+                                        <div class="thermometer-container">
+                                            <div class="thermometer">
+                                                <div class="thermometer-fill" id="temperature-fill" style="height: 50%; transition: height 0.5s ease;"></div>
+                                                <div class="thermometer-bulb"></div>
+                                            </div>
+                                            <p class="text-center mt-3">Temperatura Atual: <span id="temperature-value">--°C</span></p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <p class="text-center mt-3">Temperatura Atual: <span id="temperature-value">25°C</span></p>
+                            <!-- Relatório de Umidade -->
+                            <div class="col-12">
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <h3 class="text-center">Relatório de Umidade</h3>
+                                        <div class="aquarium-container">
+                                            <div class="aquarium">
+                                                <div class="water-level" id="humidity-fill" style="height: 50%; transition: height 0.5s ease;"></div>
+                                            </div>
+                                            <p class="text-center mt-3">Umidade Atual: <span id="humidity-value">--%</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Relatório de Umidade do Solo -->
+                            <div class="col-12">
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <h3 class="text-center">Relatório de Umidade do Solo</h3>
+                                        <div class="humidity-meter">
+                                            <div class="gauge">
+                                                <div class="gauge-cover" id="soil-moisture-fill" style="height: 50%; transition: height 0.5s ease;"></div>
+                                            </div>
+                                            <p class="text-center mt-3">Umidade do Solo: <span id="soil-moisture-value">--%</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <!-- Relatório de Umidade -->
-            <div class="col-12">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h3 class="text-center">Relatório de Umidade</h3>
-                        <div class="aquarium-container">
-                            <div class="aquarium">
-                                <div class="water-level" style="height: 50%;"></div>
-                            </div>
-                            <p class="text-center mt-3">Umidade Atual: <span id="humidity-value">50%</span></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Relatório de Umidade do Ar -->
-            <div class="col-12">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h3 class="text-center">Relatório de Umidade do Ar</h3>
-                        <div class="humidity-meter">
-                            <div class="gauge">
-                                <div class="gauge-cover"></div>
-                                <div class="gauge-needle"></div>
-                            </div>
-                            <p class="text-center mt-3">Umidade Atual: <span id="humidity-air-value">50%</span></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="col-md-4">
     <!-- Card de Configurações -->
     <div class="card mb-4" style="width: 100%;">
@@ -190,13 +189,15 @@
 
                 <!-- Controle da Ventilação -->
                 <div>
-                    <button onclick="controlDevice('/ventilation/on')" id="fanToggle" class="btn btn-info rounded-circle" style="width: 50px; height: 50px;">
-                        <i class="fas fa-fan" id="fanIcon"></i>
-                    </button>
-                    <button onclick="controlDevice('/ventilation/off')" class="btn btn-info rounded-circle" style="width: 50px; height: 50px; display:none;">
-                        <i class="fas fa-fan" id="fanIcon"></i>
-                    </button>
-                </div>
+    <button onclick="toggleFan()" id="fanOn" class="btn btn-info rounded-circle" style="width: 50px; height: 50px;">
+        <i class="fas fa-fan"></i>
+    </button>
+    <button onclick="toggleFan()" id="fanOff" class="btn btn-info rounded-circle" style="width: 50px; height: 50px; display: none;">
+        <i class="fas fa-fan"></i>
+    </button>
+</div>
+
+                
 
                 <!-- Controle da Bomba de Água -->
                 <div class="icon-container">
@@ -237,27 +238,59 @@
 
     
     <script>
-        function fetchEstufaData() {
-    const estufaId = document.getElementById('estufa').value;
-    
-    fetch(`/sensor-data?estufa_id=${estufaId}`)
-        .then(response => response.json())
-        .then(data => {
-            // Atualiza os valores na interface
-            document.getElementById('temperature-value').textContent = `${data.temperature} °C`;
-            document.getElementById('humidity-value').textContent = `${data.humidity} %`;
-            document.getElementById('humidity-air-value').textContent = `${data.soil_moisture} %`;
-            
-            // Atualiza altura dos gráficos
-            document.querySelector('.thermometer-fill').style.height = `${Math.min(data.temperature, 100)}%`;
-            document.querySelector('.water-level').style.height = `${data.humidity}%`;
-            document.querySelector('.gauge-cover').style.height = `${data.soil_moisture}%`;
-        })
-        .catch(error => console.error('Erro ao obter dados da estufa:', error));
-}
-document.addEventListener('DOMContentLoaded', fetchEstufaData);
+        function updateSensorData() {
+            fetch('/dados-esp32')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.temperature && data.humidity && data.soil_moisture) {
+                        document.getElementById('temperature-value').textContent = `${data.temperature} °C`;
+                        document.getElementById('humidity-value').textContent = `${data.humidity} %`;
+                        document.getElementById('soil-moisture-value').textContent = `${data.soil_moisture} %`;
 
+                        // Atualiza a altura dos gráficos
+                        document.getElementById('temperature-fill').style.height = `${Math.min(data.temperature, 100)}%`;
+                        document.getElementById('humidity-fill').style.height = `${data.humidity}%`;
+                        document.getElementById('soil-moisture-fill').style.height = `${data.soil_moisture}%`;
+                    } else {
+                        console.error('Dados incompletos recebidos do ESP32:', data);
+                    }
+                })
+                .catch(error => console.error('Erro ao obter dados do ESP32:', error));
+        }
+
+        // Atualiza os dados a cada 2 segundos
+        setInterval(updateSensorData, 2000);
     </script>
+
+    
+
+<script>
+let isFanOn = false;
+
+function toggleFan() {
+    const endpoint = isFanOn ? '/ventilation/off' : '/ventilation/on';
+
+    fetch(endpoint)
+        .then(response => response.text())
+        .then(data => {
+            alert(data); // Exibe a resposta do servidor
+            isFanOn = !isFanOn; // Alterna o estado do ventilador
+            
+            // Alterna a exibição dos botões
+            document.getElementById('fanOn').style.display = isFanOn ? 'none' : 'inline-block';
+            document.getElementById('fanOff').style.display = isFanOn ? 'inline-block' : 'none';
+        })
+        .catch(error => console.error('Erro ao enviar comando para o servidor:', error));
+}
+
+// Inicialização para mostrar o estado correto do botão ao carregar
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('fanOn').style.display = isFanOn ? 'none' : 'inline-block';
+    document.getElementById('fanOff').style.display = isFanOn ? 'inline-block' : 'none';
+});
+
+
+</script>
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -281,45 +314,8 @@ document.addEventListener('DOMContentLoaded', fetchEstufaData);
     }
 </script>
 
-<script>
-    // Endereço IP do ESP32 (ajuste conforme necessário)
-    const esp32Ip = 'http://192.168.4.1';
 
-    // Função para atualizar os dados dos sensores na dashboard e enviar ao backend
-    function updateSensorData() {
-        fetch(`${esp32Ip}/data`)
-            .then(response => response.json())
-            .then(data => {
-                // Atualiza os valores no HTML
-                document.getElementById('temperature-value').textContent = `${data.temperature} °C`;
-                document.getElementById('humidity-value').textContent = `${data.humidity} %`;
-                document.getElementById('humidity-air-value').textContent = `${data.soil_moisture} %`;
 
-                // Atualiza a altura dos gráficos de umidade e temperatura conforme a porcentagem
-                const temperatureHeight = Math.min(data.temperature, 100); // Limita altura a 100%
-                const humidityHeight = data.humidity;
-                const soilMoistureHeight = data.soil_moisture;
-
-                document.querySelector('.thermometer-fill').style.height = `${temperatureHeight}%`;
-                document.querySelector('.water-level').style.height = `${humidityHeight}%`;
-                document.querySelector('.gauge-cover').style.height = `${soilMoistureHeight}%`;
-
-                // Envia os dados para o backend Laravel
-                fetch('/store-sensor-data', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}' // Inclua o token CSRF para autenticação
-                    },
-                    body: JSON.stringify(data)
-                }).catch(error => console.error('Erro ao enviar dados para o backend:', error));
-            })
-            .catch(error => console.error('Erro ao obter dados do ESP32:', error));
-    }
-
-    // Atualiza os dados a cada 2 segundos
-    setInterval(updateSensorData, 2000);
-</script>
 
 
 
