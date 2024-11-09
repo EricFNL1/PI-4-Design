@@ -221,3 +221,42 @@ setTimeout(() => {
                     setInterval(fetchWeatherData, 600000); // 600.000 ms = 10 minutos
                 });
         });
+
+
+        //caso o esp esteja desligado
+        function showNotification(message) {
+            const notification = document.getElementById("notification");
+            notification.innerText = message;
+            notification.style.display = "block"; // Exibe a notificação
+        
+            setTimeout(() => {
+                notification.style.opacity = "0"; // Transição de opacidade para esconder
+                setTimeout(() => {
+                    notification.style.display = "none";
+                    notification.style.opacity = "0.9"; // Reseta a opacidade para o próximo uso
+                }, 500);
+            }, 2000);
+        }
+        
+        // Exemplo de uma requisição usando fetch com tratamento de erro
+        function makeRequest(url) {
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) { // Verifica se a resposta não foi bem-sucedida
+                        throw new Error('O dispositivo ESP está offline ou não respondeu.');
+                    }
+                    return response.json(); // Processa como JSON se espera essa resposta
+                })
+                .then(data => {
+                    // Processa os dados aqui
+                    showNotification('Operação bem-sucedida!');
+                })
+                .catch(error => {
+                    console.error('Erro:', error); // Loga o erro para depuração
+                    showNotification('O dispositivo ESP está offline ou não respondeu.'); // Mensagem amigável
+                });
+        }
+        
+        // Exemplo de chamada da função
+        makeRequest('/sua-url');
+        
