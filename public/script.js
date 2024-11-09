@@ -27,6 +27,21 @@ document.querySelectorAll('#themeToggle, .dropdown-item[data-action="themeToggle
 });
 
 
+function showNotification(message) {
+    const notification = document.getElementById("notification");
+    notification.innerText = message;
+    notification.style.display = "block"; // Exibe a notificação
+    
+    // Oculta a notificação após 2 segundos
+    setTimeout(() => {
+        notification.style.opacity = "0"; // Transição de opacidade para esconder
+        setTimeout(() => {
+            notification.style.display = "none";
+            notification.style.opacity = "0.9"; // Reseta a opacidade para o próximo uso
+        }, 500); // Espera o fim da transição para ocultar completamente
+    }, 2000);
+}
+
 // Função para alternar entre os ícones de lâmpada ligada e desligada
 function toggleLights() {
     const iconLightOn = document.querySelector('.icon-light-on');
@@ -36,12 +51,12 @@ function toggleLights() {
     if (iconLightOn.style.display === 'block' || iconLightOn.style.display === '') {
         iconLightOn.style.display = 'none';
         iconLightOff.style.display = 'block';
-        alert('Luzes Desligadas!');
+        showNotification('Luzes Desligadas!');
     } else {
         // Caso contrário, mostrar o ícone de lâmpada ligada e ocultar o ícone de lâmpada desligada
         iconLightOn.style.display = 'block';
         iconLightOff.style.display = 'none';
-        alert('Luzes Ligadas!');
+        showNotification('Luzes Ligadas!');
     }
 }
 
@@ -52,7 +67,7 @@ document.getElementById('lightsOff').addEventListener('click', toggleLights);
 // Ligar Luzes
 document.querySelectorAll('[data-action="lightsOn"]').forEach(item => {
     item.addEventListener('click', function() {
-        alert('Luzes Ligadas!');
+        showNotification('Luzes Ligadas!');
         document.querySelector('.icon-light-on').style.display = 'none';
         document.querySelector('.icon-light-off').style.display = 'block';
     });
@@ -61,7 +76,7 @@ document.querySelectorAll('[data-action="lightsOn"]').forEach(item => {
 // Desligar Luzes
 document.querySelectorAll('[data-action="lightsOff"]').forEach(item => {
     item.addEventListener('click', function() {
-        alert('Luzes Desligadas!');
+        showNotification('Luzes Desligadas!');
         document.querySelector('.icon-light-on').style.display = 'block';
         document.querySelector('.icon-light-off').style.display = 'none';
     });
@@ -76,17 +91,16 @@ document.querySelectorAll('#fanToggle, .dropdown-item[data-action="fanToggle"]')
         fanButton.classList.toggle('active');
 
         if (fanButton.classList.contains('active')) {
-            alert('Ventoinha Ligada!');
+            showNotification('Ventoinha Ligada!');
             fanIcon.classList.replace('fa-fan', 'fa-fan'); // Atualize conforme necessário para mudar o ícone
         } else {
-            alert('Ventoinha Desligada!');
+            showNotification('Ventoinha Desligada!');
             fanIcon.classList.replace('fa-fan', 'fa-fan'); // Atualize conforme necessário para mudar o ícone
         }
     });
 });
 
-//bomba d'agua
-
+// Bomba d'água
 document.querySelectorAll('#waterPumpOn, #waterPumpOff').forEach(item => {
     item.addEventListener('click', function() {
         const pumpOn = document.getElementById('waterPumpOn');
@@ -97,12 +111,13 @@ document.querySelectorAll('#waterPumpOn, #waterPumpOff').forEach(item => {
         pumpOff.style.display = pumpOff.style.display === 'none' ? 'block' : 'none';
 
         if (pumpOn.style.display === 'none') {
-            alert('Bomba de Água Ligada!');
+            showNotification('Bomba de Água Ligada!');
         } else {
-            alert('Bomba de Água Desligada!');
+            showNotification('Bomba de Água Desligada!');
         }
     });
 });
+
 
 
 

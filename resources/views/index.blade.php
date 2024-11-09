@@ -10,6 +10,8 @@
     <link rel="icon" href="img/fundologin.jpg" type="image/x-icon" loading="lazy">
 </head>
 <body>
+<div id="notification" class="notification" style="display: none;">Luzes Desligadas!</div>
+
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
@@ -19,23 +21,8 @@
                     <div class="sidebar-header text-center p-3">
                         <img src="img/fundologin.jpg" class="img-fluid rounded-circle" alt="Logo Estufa">
                     </div>
-                    <!-- Botão de Criar Estufa -->
-<div class="text-center mt-1">
-<a href="{{ route('estufa.create') }}" class="btn btn-danger w-75">Criar Estufa</a>
 
-
-</div>
-
-<!-- Botão de Cadastrar Sensores -->
-<div class="text-center mt-3">
-<a href="{{ route('sensor.create') }}" class="btn btn-danger w-75">Cadastrar Sensor</a>
-</div>
-
-<div class="text-center mt-3">
-    <a href="{{ route('gerenciador.index') }}" class="btn btn-danger w-75">Gerenciar Estufas e Sensores</a>
-</div>
-
-
+                    <h3 class="text-center">Menu de Itens</h3>
 
                     <!-- Menu Items -->
                     <ul class="nav flex-column text-center">
@@ -55,7 +42,7 @@
 
                     
                     <div class="text-center mt-1">
-                        <a href="{{ route('advanced.settings')}}" class="text-dark">Configurações Avançadas<i class="bi bi-gear-fill"></i></a>
+                        <a href="{{ route('advanced.settings')}}" class="text-dark">Fases da plantação<i class="bi bi-gear-fill"></i></a>
                     </div>
                     <!-- Botão de Sair -->
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -82,19 +69,12 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <li><a class="dropdown-item" id="themeToggle" href="#" onclick="event.preventDefault();  toggleTheme()">Alternar Tema</a></li>
-                <li><a class="dropdown-item"  href="#" onclick="event.preventDefault(); controlDevice('/relay/on')">Ligar Luzes</a></li>
-                <li><a class="dropdown-item" href="#"  onclick="event.preventDefault(); controlDevice('/relay/off')">Desligar Luzes</a></li>
-                <li>
-                    <a class="dropdown-item" href="#" onclick="event.preventDefault(); toggleFan()">Ligar/Desligar Ventoinha</a>
-                </li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="#">Home</a></li>
                 <li><a class="dropdown-item" href="{{ route('dashboard') }}">Detalhamento</a></li>
                 <li><a class="dropdown-item" href="{{ route('logs') }}">Log & Histórico</a></li>
                 <li><a class="dropdown-item" href="{{ route('status') }}">Status</a></li>
                 <li><a class="dropdown-item" href="{{ route('advanced.settings')}}">Configurações Avançadas</a></li>
-                <li class="text-center mt-3"><a href="{{ route('estufa.create') }}" class="btn btn-danger w-75">Criar Estufa</a></li>
-                <li class="text-center mt-3"><a href="{{ route('sensor.create') }}" class="btn btn-danger w-75">Cadastrar Sensor</a></li>
                 <li class="text-center mt-3">
                     <a href="#" class="btn btn-danger w-75" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         Sair <i class="bi bi-box-arrow-right"></i>
@@ -104,128 +84,110 @@
                         
                     </div>
     </div>
-    <div class="d-flex align-items-center mb-3">
-    <label for="estufa" class="me-2">Selecione a estufa:</label>
-    <select name="estufa_id" id="estufa" class="form-select" style="width: 200px;" onchange="fetchEstufaData()">
-        @foreach ($estufas as $estufa)
-            <option value="{{ $estufa->id }}">{{ $estufa->nome }}</option>
-        @endforeach
-    </select>
-</div>
-
-
-
-
-
 
                 <!-- Cards de Conteúdo -->
                 <div class="row">
     <div class="col-md-8">
-    <div class="row">
-                            <!-- Relatório de Temperatura -->
-                            <div class="col-12">
-                                <div class="card mb-4">
-                                    <div class="card-body">
-                                        <h3 class="text-center">Relatório de Temperatura</h3>
-                                        <div class="thermometer-container">
-                                            <div class="thermometer">
-                                                <div class="thermometer-fill" id="temperature-fill" style="height: 50%; transition: height 0.5s ease;"></div>
-                                                <div class="thermometer-bulb"></div>
-                                            </div>
-                                            <p class="text-center mt-3">Temperatura Atual: <span id="temperature-value">--°C</span></p>
-                                        </div>
-                                    </div>
-                                </div>
+        <div class="row">
+            <!-- Relatório de Temperatura -->
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h3 class="text-center">Relatório de Temperatura</h3>
+                        <div class="thermometer-container">
+                            <div class="thermometer">
+                                <div class="thermometer-fill" id="temperature-fill" style="height: 50%; transition: height 0.5s ease;"></div>
+                                <div class="thermometer-bulb"></div>
                             </div>
-                            <!-- Relatório de Umidade -->
-                            <div class="col-12">
-                                <div class="card mb-4">
-                                    <div class="card-body">
-                                        <h3 class="text-center">Relatório de Umidade</h3>
-                                        <div class="aquarium-container">
-                                            <div class="aquarium">
-                                                <div class="water-level" id="humidity-fill" style="height: 50%; transition: height 0.5s ease;"></div>
-                                            </div>
-                                            <p class="text-center mt-3">Umidade Atual: <span id="humidity-value">--%</span></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Relatório de Umidade do Solo -->
-                            <div class="col-12">
-                                <div class="card mb-4">
-                                    <div class="card-body">
-                                        <h3 class="text-center">Relatório de Umidade do Solo</h3>
-                                        <div class="humidity-meter">
-                                            <div class="gauge">
-                                                <div class="gauge-cover" id="soil-moisture-fill" style="height: 50%; transition: height 0.5s ease;"></div>
-                                            </div>
-                                            <p class="text-center mt-3">Umidade do Solo: <span id="soil-moisture-value">--%</span></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <p class="text-center mt-3">Temperatura Atual: <span id="temperature-value">--°C</span></p>
                         </div>
                     </div>
-    <div class="col-md-4">
-    <!-- Card de Configurações -->
-    <div class="card mb-4" style="width: 100%;">
-        <div class="card-body text-center">
-            <h5 class="card-title">Configurações</h5>
-            <div class="d-flex justify-content-around">
-                <div>
-                    <button id="themeToggle" class="theme-toggle-btn"></button>
                 </div>
-                
-                <!-- Controle da Luz -->
-                <div class="icon-container">
-                    <a href="#" onclick="controlDevice('/relay/on')" id="lightsOn" class="icon-light-on" style="display: block;">
-                        <span class="iconify" data-icon="mdi:lightbulb-on" data-width="40" data-height="40"></span>
-                    </a>
-                    <a href="#" onclick="controlDevice('/relay/off')" id="lightsOff" class="icon-light-off" style="display: none;">
-                        <span class="iconify" data-icon="mdi:lightbulb-off" data-width="40" data-height="40"></span>
-                    </a>
+            </div>
+            <!-- Relatório de Umidade -->
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h3 class="text-center">Relatório de Umidade</h3>
+                        <div class="aquarium-container">
+                            <div class="aquarium">
+                                <div class="water-level" id="humidity-fill" style="height: 50%; transition: height 0.5s ease;"></div>
+                            </div>
+                            <p class="text-center mt-3">Umidade Atual: <span id="humidity-value">--%</span></p>
+                        </div>
+                    </div>
                 </div>
-
-                <!-- Controle da Ventilação -->
-                <div>
-    <button onclick="toggleFan()" id="fanOn" class="btn btn-info rounded-circle" style="width: 50px; height: 50px;">
-        <i class="fas fa-fan"></i>
-    </button>
-    <button onclick="toggleFan()" id="fanOff" class="btn btn-info rounded-circle" style="width: 50px; height: 50px; display: none;">
-        <i class="fas fa-fan"></i>
-    </button>
-</div>
-
-                
-
-                <!-- Controle da Bomba de Água -->
-                <div class="icon-container">
-                    <a href="#" onclick="controlDevice('/pump/activate')" id="waterPumpOn" class="icon-waterpump-on" style="display: block;">
-                        <span class="iconify" data-icon="mdi:water-pump" data-width="40" data-height="40"></span>
-                    </a>
-                    <a href="#" onclick="controlDevice('/pump/activate')" id="waterPumpOff" class="icon-waterpump-off" style="display: none;">
-                        <span class="iconify" data-icon="mdi:water-pump-off" data-width="40" data-height="40"></span>
-                    </a>
+            </div>
+            <!-- Relatório de Umidade do Solo -->
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h3 class="text-center">Relatório de Umidade do Solo</h3>
+                        <div class="humidity-meter">
+                            <div class="gauge">
+                                <div class="gauge-cover" id="soil-moisture-fill" style="height: 50%; transition: height 0.5s ease;"></div>
+                            </div>
+                            <p class="text-center mt-3">Umidade do Solo: <span id="soil-moisture-value">--%</span></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Card de Informações do Clima -->
-    <div class="card mb-4" id="weatherCard" style="width: 100%; height: auto;">
-    <div class="card-body text-center">
-        <h5 class="card-title">Informações do Clima</h5>
-        <p class="card-text">Temperatura: <span id="temperature">N/A</span> °C</p>
-        <p class="card-text">Descrição: <span id="weatherDescription">N/A</span></p>
-        <p class="card-text">Localização: <span id="latitude">N/A</span>, <span id="longitude">N/A</span></p>
-        
-        <!-- Relógio Local -->
-        <div class="text-center">
-            <p class="mb-0"><strong>Horário Local:</strong> <span id="localTime" style="font-size: 1.1em; color: #f44336;"></span></p>
+    <div class="col-md-4">
+        <!-- Card de Configurações -->
+        <div class="card mb-4" style="width: 100%;">
+            <div class="card-body text-center">
+                <h5 class="card-title">Configurações</h5>
+                <div class="d-flex justify-content-around">
+                    <div>
+                        <button id="themeToggle" class="theme-toggle-btn"></button>
+                    </div>
+                    <!-- Controle da Luz -->
+                    <div class="icon-container">
+                        <a href="#" onclick="controlDevice('/relay/on')" id="lightsOn" class="icon-light-on" style="display: block;">
+                            <span class="iconify" data-icon="mdi:lightbulb-on" data-width="40" data-height="40"></span>
+                        </a>
+                        <a href="#" onclick="controlDevice('/relay/off')" id="lightsOff" class="icon-light-off" style="display: none;">
+                            <span class="iconify" data-icon="mdi:lightbulb-off" data-width="40" data-height="40"></span>
+                        </a>
+                    </div>
+                    <!-- Controle da Ventilação -->
+                    <div>
+                        <button onclick="toggleFan()" id="fanOn" class="btn btn-info rounded-circle" style="width: 50px; height: 50px;">
+                            <i class="fas fa-fan"></i>
+                        </button>
+                        <button onclick="toggleFan()" id="fanOff" class="btn btn-info rounded-circle" style="width: 50px; height: 50px; display: none;">
+                            <i class="fas fa-fan"></i>
+                        </button>
+                    </div>
+                    <!-- Controle da Bomba de Água -->
+                    <div class="icon-container">
+                        <a href="#" onclick="controlDevice('/pump/activate')" id="waterPumpOn" class="icon-waterpump-on" style="display: block;">
+                            <span class="iconify" data-icon="mdi:water-pump" data-width="40" data-height="40"></span>
+                        </a>
+                        <a href="#" onclick="controlDevice('/pump/activate')" id="waterPumpOff" class="icon-waterpump-off" style="display: none;">
+                            <span class="iconify" data-icon="mdi:water-pump-off" data-width="40" data-height="40"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Card de Informações do Clima -->
+        <div class="card mb-4" id="weatherCard" style="width: 100%; height: auto;">
+            <div class="card-body text-center">
+                <h5 class="card-title">Informações do Clima</h5>
+                <p class="card-text">Temperatura: <span id="temperature">N/A</span> °C</p>
+                <p class="card-text">Descrição: <span id="weatherDescription">N/A</span></p>
+                <p class="card-text">Localização: <span id="latitude">N/A</span>, <span id="longitude">N/A</span></p>
+                <div class="text-center">
+                    <p class="mb-0"><strong>Horário Local:</strong> <span id="localTime" style="font-size: 1.1em; color: #f44336;"></span></p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
 
 
 
@@ -279,6 +241,8 @@ function toggleFan() {
             // Alterna a exibição dos botões
             document.getElementById('fanOn').style.display = isFanOn ? 'none' : 'inline-block';
             document.getElementById('fanOff').style.display = isFanOn ? 'inline-block' : 'none';
+
+            
         })
         .catch(error => console.error('Erro ao enviar comando para o servidor:', error));
 }
