@@ -235,16 +235,17 @@ function toggleFan() {
     fetch(endpoint)
         .then(response => response.text())
         .then(data => {
-            alert(data); // Exibe a resposta do servidor
+            showNotification(data); // Exibe a resposta do servidor na notificação
             isFanOn = !isFanOn; // Alterna o estado do ventilador
             
             // Alterna a exibição dos botões
             document.getElementById('fanOn').style.display = isFanOn ? 'none' : 'inline-block';
             document.getElementById('fanOff').style.display = isFanOn ? 'inline-block' : 'none';
-
-            
         })
-        .catch(error => console.error('Erro ao enviar comando para o servidor:', error));
+        .catch(error => {
+            console.error('Erro ao enviar comando para o servidor:', error);
+            showNotification('Erro ao enviar comando para o servidor'); // Notificação de erro
+        });
 }
 
 // Inicialização para mostrar o estado correto do botão ao carregar
