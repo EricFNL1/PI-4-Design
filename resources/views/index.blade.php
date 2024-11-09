@@ -180,7 +180,7 @@
                 <h5 class="card-title">Informações do Clima</h5>
                 <p class="card-text">Temperatura: <span id="temperature">N/A</span> °C</p>
                 <p class="card-text">Descrição: <span id="weatherDescription">N/A</span></p>
-                <!--<p class="card-text">Localização: <span id="latitude">N/A</span>, <span id="longitude">N/A</span></p>-->
+                <p class="card-text">Localização: <span id="latitude">N/A</span>, <span id="longitude">N/A</span></p>
                 <div class="text-center">
                     <p class="mb-0"><strong>Horário Local:</strong> <span id="localTime" style="font-size: 1.1em; color: #f44336;"></span></p>
                 </div>
