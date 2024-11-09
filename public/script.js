@@ -67,7 +67,7 @@ document.getElementById('lightsOff').addEventListener('click', toggleLights);
 // Ligar Luzes
 document.querySelectorAll('[data-action="lightsOn"]').forEach(item => {
     item.addEventListener('click', function() {
-        showNotification('Luzes Desligadas!');
+        showNotification('Luzes Ligadas!');
         document.querySelector('.icon-light-on').style.display = 'none';
         document.querySelector('.icon-light-off').style.display = 'block';
     });
