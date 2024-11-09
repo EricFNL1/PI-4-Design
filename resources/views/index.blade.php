@@ -11,6 +11,8 @@
 </head>
 <body>
 <div id="notification" class="notification" style="display: none;">Luzes Desligadas!</div>
+<div id="notification" class="notification" style="display: none;"></div>
+
 
     <div class="container-fluid">
         <div class="row">
