@@ -210,7 +210,6 @@ setTimeout(() => {
                 })
                 .catch(error => {
                     console.error('Erro ao buscar os dados de clima:', error);
-                    alert('Erro ao buscar os dados de clima');
                 });
 
                 document.addEventListener('DOMContentLoaded', function() {
@@ -253,7 +252,6 @@ setTimeout(() => {
                 })
                 .catch(error => {
                     console.error('Erro:', error); // Loga o erro para depuração
-                    showNotification('O dispositivo ESP está offline ou não respondeu.'); // Mensagem amigável
                 });
         }
         
