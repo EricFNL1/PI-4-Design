@@ -88,118 +88,119 @@
     </div>
 
                 <!-- Cards de Conteúdo -->
-                <div class="row">
-    <div class="col-md-8">
-        <div class="row">
-            <!-- Relatório de Temperatura -->
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h3 class="text-center">Relatório de Temperatura</h3>
-                        <div class="thermometer-container">
-                            <div class="thermometer">
-                                <div class="thermometer-fill" id="temperature-fill" style="height: 50%; transition: height 0.5s ease;"></div>
-                                <div class="thermometer-bulb"></div>
+                <div class="container">
+    <div class="row">
+        <!-- Coluna principal para os relatórios e gráfico -->
+        <div class="col-lg-9">
+            <div class="row">
+                <!-- Relatório de Temperatura -->
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h3 class="text-center">Relatório de Temperatura</h3>
+                            <div class="thermometer-container">
+                                <div class="thermometer">
+                                    <div class="thermometer-fill" id="temperature-fill" style="height: 50%; transition: height 0.5s ease;"></div>
+                                    <div class="thermometer-bulb"></div>
+                                </div>
+                                <p class="text-center mt-3">Temperatura Atual: <span id="temperature-value">--°C</span></p>
                             </div>
-                            <p class="text-center mt-3">Temperatura Atual: <span id="temperature-value">--°C</span></p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Relatório de Umidade -->
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h3 class="text-center">Relatório de Umidade</h3>
+                            <div class="aquarium-container">
+                                <div class="aquarium">
+                                    <div class="water-level" id="humidity-fill" style="height: 50%; transition: height 0.5s ease;"></div>
+                                </div>
+                                <p class="text-center mt-3">Umidade Atual: <span id="humidity-value">--%</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Relatório de Umidade do Solo -->
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h3 class="text-center">Relatório de Umidade do Solo</h3>
+                            <div class="humidity-meter">
+                                <div class="gauge">
+                                    <div class="gauge-cover" id="soil-moisture-fill" style="height: 50%; transition: height 0.5s ease;"></div>
+                                </div>
+                                <p class="text-center mt-3">Umidade do Solo: <span id="soil-moisture-value">--%</span></p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Relatório de Umidade -->
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h3 class="text-center">Relatório de Umidade</h3>
-                        <div class="aquarium-container">
-                            <div class="aquarium">
-                                <div class="water-level" id="humidity-fill" style="height: 50%; transition: height 0.5s ease;"></div>
-                            </div>
-                            <p class="text-center mt-3">Umidade Atual: <span id="humidity-value">--%</span></p>
+            <!-- Relatório Geral (Gráfico) logo abaixo dos três relatórios principais -->
+            <div class="card mb-4" id="generalReport">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Relatório Geral</h5>
+                    <canvas id="generalChart" style="width: 100%; height: 400px;"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coluna lateral para Configurações e Informações do Clima -->
+        <div class="col-lg-3">
+            <!-- Card de Configurações -->
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Configurações</h5>
+                    <div class="d-flex justify-content-around">
+                        <div>
+                            <button id="themeToggle" class="theme-toggle-btn"></button>
+                        </div>
+                        <!-- Controle da Luz -->
+                        <div class="icon-container">
+                            <a href="#" onclick="controlDevice('/relay/on')" id="lightsOn" class="icon-light-on" style="display: block;">
+                                <span class="iconify" data-icon="mdi:lightbulb-on" data-width="40" data-height="40"></span>
+                            </a>
+                            <a href="#" onclick="controlDevice('/relay/off')" id="lightsOff" class="icon-light-off" style="display: none;">
+                                <span class="iconify" data-icon="mdi:lightbulb-off" data-width="40" data-height="40"></span>
+                            </a>
+                        </div>
+                        <!-- Controle da Ventilação -->
+                        <div>
+                            <button onclick="toggleFan()" id="fanOn" class="btn btn-info rounded-circle" style="width: 50px; height: 50px;">
+                                <i class="fas fa-fan"></i>
+                            </button>
+                            <button onclick="toggleFan()" id="fanOff" class="btn btn-info rounded-circle" style="width: 50px; height: 50px; display: none;">
+                                <i class="fas fa-fan"></i>
+                            </button>
+                        </div>
+                        <!-- Controle da Bomba de Água -->
+                        <div class="icon-container">
+                            <a href="#" onclick="controlDevice('/pump/activate')" id="waterPumpOn" class="icon-waterpump-on" style="display: block;">
+                                <span class="iconify" data-icon="mdi:water-pump" data-width="40" data-height="40"></span>
+                            </a>
+                            <a href="#" onclick="controlDevice('/pump/activate')" id="waterPumpOff" class="icon-waterpump-off" style="display: none;">
+                                <span class="iconify" data-icon="mdi:water-pump-off" data-width="40" data-height="40"></span>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Relatório de Umidade do Solo -->
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h3 class="text-center">Relatório de Umidade do Solo</h3>
-                        <div class="humidity-meter">
-                            <div class="gauge">
-                                <div class="gauge-cover" id="soil-moisture-fill" style="height: 50%; transition: height 0.5s ease;"></div>
-                            </div>
-                            <p class="text-center mt-3">Umidade do Solo: <span id="soil-moisture-value">--%</span></p>
-                        </div>
+            <!-- Card de Informações do Clima -->
+            <div class="card mb-4" id="weatherCard">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Informações do Clima</h5>
+                    <p class="card-text">Temperatura: <span id="temperature">N/A</span> °C</p>
+                    <p class="card-text">Descrição: <span id="weatherDescription">N/A</span></p>
+                    <div class="text-center">
+                        <p class="mb-0"><strong>Horário Local:</strong> <span id="localTime" style="font-size: 1.1em; color: #f44336;"></span></p>
                     </div>
                 </div>
+                <div id="map" style="height: 300px; width: 100%;"></div>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <!-- Card de Configurações -->
-        <div class="card mb-4" style="width: 100%;">
-            <div class="card-body text-center">
-                <h5 class="card-title">Configurações</h5>
-                <div class="d-flex justify-content-around">
-                    <div>
-                        <button id="themeToggle" class="theme-toggle-btn"></button>
-                    </div>
-                    <!-- Controle da Luz -->
-                    <div class="icon-container">
-                        <a href="#" onclick="controlDevice('/relay/on')" id="lightsOn" class="icon-light-on" style="display: block;">
-                            <span class="iconify" data-icon="mdi:lightbulb-on" data-width="40" data-height="40"></span>
-                        </a>
-                        <a href="#" onclick="controlDevice('/relay/off')" id="lightsOff" class="icon-light-off" style="display: none;">
-                            <span class="iconify" data-icon="mdi:lightbulb-off" data-width="40" data-height="40"></span>
-                        </a>
-                    </div>
-                    <!-- Controle da Ventilação -->
-                    <div>
-                        <button onclick="toggleFan()" id="fanOn" class="btn btn-info rounded-circle" style="width: 50px; height: 50px;">
-                            <i class="fas fa-fan"></i>
-                        </button>
-                        <button onclick="toggleFan()" id="fanOff" class="btn btn-info rounded-circle" style="width: 50px; height: 50px; display: none;">
-                            <i class="fas fa-fan"></i>
-                        </button>
-                    </div>
-                    <!-- Controle da Bomba de Água -->
-                    <div class="icon-container">
-                        <a href="#" onclick="controlDevice('/pump/activate')" id="waterPumpOn" class="icon-waterpump-on" style="display: block;">
-                            <span class="iconify" data-icon="mdi:water-pump" data-width="40" data-height="40"></span>
-                        </a>
-                        <a href="#" onclick="controlDevice('/pump/activate')" id="waterPumpOff" class="icon-waterpump-off" style="display: none;">
-                            <span class="iconify" data-icon="mdi:water-pump-off" data-width="40" data-height="40"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Card de Informações do Clima -->
-        <div class="card mb-4" id="weatherCard" style="width: 100%; height: auto;">
-            <div class="card-body text-center">
-                <h5 class="card-title">Informações do Clima</h5>
-                <p class="card-text">Temperatura: <span id="temperature">N/A</span> °C</p>
-                <p class="card-text">Descrição: <span id="weatherDescription">N/A</span></p>
-               <!-- <p class="card-text none">Localização: <span id="latitude">N/A</span>, <span id="longitude">N/A</span></p>-->
-                <div class="text-center">
-                    <p class="mb-0"><strong>Horário Local:</strong> <span id="localTime" style="font-size: 1.1em; color: #f44336;"></span></p>
-                </div>
-            </div>
-            
-<div id="map" style="height: 300px; width: 100%;"></div>
-        </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
+</div>
 
                     
             </main>
