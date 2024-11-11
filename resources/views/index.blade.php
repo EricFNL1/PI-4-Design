@@ -186,6 +186,8 @@
                     <p class="mb-0"><strong>Horário Local:</strong> <span id="localTime" style="font-size: 1.1em; color: #f44336;"></span></p>
                 </div>
             </div>
+            
+<div id="map" style="height: 300px; width: 100%;"></div>
         </div>
     </div>
 </div>
@@ -195,7 +197,6 @@
 
 
 
-<div id="map" style="height: 300px; width: 100%;"></div>
 
 
                     

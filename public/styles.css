@@ -576,3 +576,8 @@ h3 {
 .none{
     display: none;
 }
+
+#map {
+    height: 200px; /* Ajuste a altura do mapa */
+    width: 100%;
+}
