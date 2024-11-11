@@ -259,4 +259,38 @@ setTimeout(() => {
         
         // Exemplo de chamada da função
         makeRequest('/sua-url');
-        
+
+
+
+//mapa loc
+
+document.addEventListener('DOMContentLoaded', function() {
+    // URL para a API de localização por IP (substitua por seu serviço, se necessário)
+    const ipInfoUrl = 'https://ipinfo.io/json?token=ed30f9f6c4d9e8'; // Substitua YOUR_TOKEN pelo seu token de API
+
+    // Faz a requisição para obter a localização
+    fetch(ipInfoUrl)
+        .then(response => response.json())
+        .then(data => {
+            const [lat, lng] = data.loc.split(',').map(Number); // Divide a localização no formato "lat,lng" e converte para números
+            const location = [lat, lng]; // Cria o array de localização para o Leaflet
+
+            // Inicializa o mapa e centraliza na localização obtida
+            const map = L.map('map').setView(location, 13);
+
+            // Adiciona a camada de mapa do OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // Adiciona um marcador na localização
+            L.marker(location).addTo(map)
+                .bindPopup('Localização Atual')
+                .openPopup();
+        })
+        .catch(error => {
+            console.error('Erro ao obter localização:', error);
+            alert('Não foi possível obter a localização.');
+        });
+});

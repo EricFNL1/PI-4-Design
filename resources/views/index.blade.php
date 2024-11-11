@@ -8,6 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="img/fundologin.jpg" type="image/x-icon" loading="lazy">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 </head>
 <body>
 <div id="notification" class="notification" style="display: none;">Luzes Desligadas!</div>
@@ -75,7 +76,7 @@
                 <li><a class="dropdown-item" href="{{ route('dashboard') }}">Detalhamento</a></li>
                 <li><a class="dropdown-item" href="{{ route('logs') }}">Log & Histórico</a></li>
                 <li><a class="dropdown-item" href="{{ route('status') }}">Status</a></li>
-                <li><a class="dropdown-item" href="{{ route('advanced.settings')}}">Configurações Avançadas</a></li>
+                <li><a class="dropdown-item" href="{{ route('advanced.settings')}}">Fases da plantação</a></li>
                 <li class="text-center mt-3">
                     <a href="#" class="btn btn-danger w-75" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         Sair <i class="bi bi-box-arrow-right"></i>
@@ -180,7 +181,7 @@
                 <h5 class="card-title">Informações do Clima</h5>
                 <p class="card-text">Temperatura: <span id="temperature">N/A</span> °C</p>
                 <p class="card-text">Descrição: <span id="weatherDescription">N/A</span></p>
-                <p class="card-text none">Localização: <span id="latitude">N/A</span>, <span id="longitude">N/A</span></p>
+               <!-- <p class="card-text none">Localização: <span id="latitude">N/A</span>, <span id="longitude">N/A</span></p>-->
                 <div class="text-center">
                     <p class="mb-0"><strong>Horário Local:</strong> <span id="localTime" style="font-size: 1.1em; color: #f44336;"></span></p>
                 </div>
@@ -192,6 +193,7 @@
 
 
 
+<div id="map" style="height: 300px; width: 100%;"></div>
 
 
                     
@@ -291,5 +293,6 @@ document.addEventListener('DOMContentLoaded', () => {
     <script src="script.js"></script>
     <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
     <script src="{{ asset('js/app.js') }}?v={{ time() }}"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 </body>
 </html>
