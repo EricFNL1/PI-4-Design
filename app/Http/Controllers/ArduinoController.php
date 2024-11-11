@@ -30,14 +30,12 @@ class ArduinoController extends Controller
     public function turnVentilationOn()
     {
         $response = Http::get("{$this->esp32Ip}/toggleRelay3On");
-        Log::info('Comando de ligar ventilação enviado', ['response' => $response->body()]); // Adiciona log
         return $response->body();
     }
 
     public function turnVentilationOff()
     {
         $response = Http::get("{$this->esp32Ip}/toggleRelay3Off");
-        Log::info('Comando de desligar ventilação enviado', ['response' => $response->body()]); // Adiciona log
         return $response->body();
     }
 }

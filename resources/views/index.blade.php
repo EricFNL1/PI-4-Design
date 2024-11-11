@@ -203,29 +203,37 @@
 
     
     <script>
-        function updateSensorData() {
-            fetch('/dados-esp32')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.temperature && data.humidity && data.soil_moisture) {
-                        document.getElementById('temperature-value').textContent = `${data.temperature} °C`;
-                        document.getElementById('humidity-value').textContent = `${data.humidity} %`;
-                        document.getElementById('soil-moisture-value').textContent = `${data.soil_moisture} %`;
+    function updateSensorData() {
+        fetch('/dados-esp32')
+            .then(response => response.json())
+            .then(data => {
+                if (data.temperature && data.humidity && data.soil_moisture) {
+                    document.getElementById('temperature-value').textContent = `${data.temperature} °C`;
+                    document.getElementById('humidity-value').textContent = `${data.humidity} %`;
+                    document.getElementById('soil-moisture-value').textContent = `${data.soil_moisture} %`;
 
-                        // Atualiza a altura dos gráficos
-                        document.getElementById('temperature-fill').style.height = `${Math.min(data.temperature, 100)}%`;
-                        document.getElementById('humidity-fill').style.height = `${data.humidity}%`;
-                        document.getElementById('soil-moisture-fill').style.height = `${data.soil_moisture}%`;
-                    } else {
-                        console.error('Dados incompletos recebidos do ESP32:', data);
-                    }
-                })
-                .catch(error => console.error('Erro ao obter dados do ESP32:', error));
-        }
+                    // Define a temperatura máxima esperada
+                    const temperaturaMaxima = 45;
 
-        // Atualiza os dados a cada 2 segundos
-        setInterval(updateSensorData, 2000);
-    </script>
+                    // Calcula a porcentagem da temperatura em relação ao máximo
+                    let porcentagemTemperatura = (data.temperature / temperaturaMaxima) * 100;
+                    porcentagemTemperatura = Math.min(porcentagemTemperatura, 100); // Garante que não exceda 100%
+
+                    // Atualiza a altura dos gráficos
+                    document.getElementById('temperature-fill').style.height = `${porcentagemTemperatura}%`;
+                    document.getElementById('humidity-fill').style.height = `${data.humidity}%`;
+                    document.getElementById('soil-moisture-fill').style.height = `${data.soil_moisture}%`;
+                } else {
+                    console.error('Dados incompletos recebidos do ESP32:', data);
+                }
+            })
+            .catch(error => console.error('Erro ao obter dados do ESP32:', error));
+    }
+
+    // Atualiza os dados a cada 2 segundos
+    setInterval(updateSensorData, 2000);
+</script>
+
 
     
 
@@ -276,7 +284,6 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch(endpoint)
             .then(response => response.text())
             .then(data => {
-                alert(data); // Exibe o retorno da resposta do Arduino
             })
             .catch(error => console.error('Erro ao enviar comando:', error));
     }
