@@ -295,3 +295,106 @@ document.addEventListener('DOMContentLoaded', function() {
         
 }); 
  
+//geral index
+
+const ctx = document.getElementById('generalChart').getContext('2d');
+const generalChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: [], // Labels serão preenchidas com o tempo
+        datasets: [
+            {
+                label: 'Temperatura (°C)',
+                data: [],
+                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                fill: true
+            },
+            {
+                label: 'Umidade (%)',
+                data: [],
+                borderColor: 'rgba(54, 162, 235, 1)',
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                fill: true
+            },
+            {
+                label: 'Umidade do Solo (%)',
+                data: [],
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                fill: true
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            x: {
+                display: true,
+                title: {
+                    display: true,
+                    text: 'Tempo'
+                }
+            },
+            y: {
+                display: true,
+                title: {
+                    display: true,
+                    text: 'Valores'
+                }
+            }
+        }
+    }
+});
+
+// Função para atualizar os dados do gráfico
+function updateChartData(chart, temperature, humidity, soilMoisture) {
+    const currentTime = new Date().toLocaleTimeString(); // Rótulo com o horário atual
+    chart.data.labels.push(currentTime); // Adiciona o horário ao eixo X
+    chart.data.datasets[0].data.push(temperature); // Temperatura
+    chart.data.datasets[1].data.push(humidity); // Umidade
+    chart.data.datasets[2].data.push(soilMoisture); // Umidade do solo
+
+    // Limita o número de pontos exibidos para evitar sobrecarga visual
+    if (chart.data.labels.length > 10) {
+        chart.data.labels.shift();
+        chart.data.datasets[0].data.shift();
+        chart.data.datasets[1].data.shift();
+        chart.data.datasets[2].data.shift();
+    }
+
+    chart.update(); // Atualiza o gráfico
+}
+
+// Função para atualizar os dados dos sensores e o gráfico
+function updateSensorData() {
+    fetch('/dados-esp32')
+        .then(response => response.json())
+        .then(data => {
+            if (data.temperature && data.humidity && data.soil_moisture) {
+                // Atualiza os valores nos elementos HTML
+                document.getElementById('temperature-value').textContent = `${data.temperature} °C`;
+                document.getElementById('humidity-value').textContent = `${data.humidity} %`;
+                document.getElementById('soil-moisture-value').textContent = `${data.soil_moisture} %`;
+
+                // Atualiza a altura dos gráficos visuais
+                const temperaturaMaxima = 45;
+                let porcentagemTemperatura = (data.temperature / temperaturaMaxima) * 100;
+                porcentagemTemperatura = Math.min(porcentagemTemperatura, 100);
+
+                document.getElementById('temperature-fill').style.height = `${porcentagemTemperatura}%`;
+                document.getElementById('humidity-fill').style.height = `${data.humidity}%`;
+                document.getElementById('soil-moisture-fill').style.height = `${data.soil_moisture}%`;
+
+                // Atualiza o gráfico com os dados de temperatura, umidade e umidade do solo
+                updateChartData(generalChart, data.temperature, data.humidity, data.soil_moisture);
+            } else {
+                console.error('Dados incompletos recebidos do ESP32:', data);
+            }
+        })
+        .catch(error => console.error('Erro ao obter dados do ESP32:', error));
+}
+
+// Atualiza os dados a cada 2 segundos
+setInterval(updateSensorData, 2000);
+

@@ -190,7 +190,9 @@
 <div id="map" style="height: 300px; width: 100%;"></div>
         </div>
     </div>
-</div>
+
+
+
 
 
 
@@ -304,5 +306,6 @@ document.addEventListener('DOMContentLoaded', () => {
     <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
     <script src="{{ asset('js/app.js') }}?v={{ time() }}"></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
