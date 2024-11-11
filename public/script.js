@@ -262,6 +262,7 @@ setTimeout(() => {
 
 //mapa loc
 
+
 document.addEventListener('DOMContentLoaded', function() {
     // URL para a API de localização por IP (substitua por seu serviço, se necessário)
     const ipInfoUrl = 'https://ipinfo.io/json?token=ed30f9f6c4d9e8'; // Substitua YOUR_TOKEN pelo seu token de API
