@@ -198,7 +198,7 @@ setTimeout(() => {
                     // Verifica se a resposta tem os dados esperados
                     if (data.error) {
                         console.error(data.error);
-                        alert('Erro ao buscar informações de clima');
+                        
                         return;
                     }
     
@@ -269,27 +269,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Faz a requisição para obter a localização
     fetch(ipInfoUrl)
-        .then(response => response.json())
-        .then(data => {
-            const [lat, lng] = data.loc.split(',').map(Number); // Divide a localização no formato "lat,lng" e converte para números
-            const location = [lat, lng]; // Cria o array de localização para o Leaflet
+        .then(response => response.json() )
+        .then(data =>  {
+            const [lat, lng] = data.loc.split(',').map(Number ); // Divide a localização no formato "lat,lng" e converte para números
+            const location = [lat, lng ]; // Cria o array de localização para o Leaflet
 
             // Inicializa o mapa e centraliza na localização obtida
-            const map = L.map('map').setView(location, 13);
+            const map = L.map('map').setView(location, 13 );
 
             // Adiciona a camada de mapa do OpenStreetMap
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' , {
                 maxZoom: 19,
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' 
             }).addTo(map);
 
             // Adiciona um marcador na localização
-            L.marker(location).addTo(map)
-                .bindPopup('Localização Atual')
-                .openPopup();
+            L.marker(location).addTo(map) 
+                .bindPopup('Localização Atual') 
+                .openPopup(); 
         })
-        .catch(error => {
-            console.error('Erro ao obter localização:', error);
-            alert('Não foi possível obter a localização.');
-        });
-});
+        .catch(error => { 
+            console.error('Erro ao obter localização:', error); 
+            alert('Não foi possível obter a localização.'); 
+        }); 
+}); 
+ 
