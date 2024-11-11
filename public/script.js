@@ -209,7 +209,7 @@ setTimeout(() => {
                     document.getElementById('longitude').innerText = data.longitude ?? 'N/A';
                 })
                 .catch(error => {
-                    console.error('Erro ao buscar os dados de clima:', error);
+                    
                 });
 
                 document.addEventListener('DOMContentLoaded', function() {
