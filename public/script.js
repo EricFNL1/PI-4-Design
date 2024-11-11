@@ -290,7 +290,8 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => { 
             console.error('Erro ao obter localização:', error); 
-            alert('Não foi possível obter a localização.'); 
-        }); 
+            showNotification('Não foi possível obter a localização.');
+        });
+        
 }); 
  
