@@ -30,6 +30,21 @@ class SensorController extends Controller
 
     public function store(Request $request)
     {
+
+        $data = $request->validate([
+        'temperature' => 'required|numeric',
+        'humidity' => 'required|numeric',
+        'soil_moisture' => 'required|numeric',
+    ]);
+
+    // Código para salvar dados em banco de dados ou processar como necessário
+    return response()->json(['success' => true]);
+
+        
+        
+        
+        
+        /* 
         $request->validate([
             'nome' => 'required|string|max:255',
             'tipo' => 'required|string|max:255',
@@ -42,7 +57,8 @@ class SensorController extends Controller
             'estufa_id' => $request->estufa_id
         ]);
 
-        return redirect()->route('index')->with('success', 'Sensor cadastrado com sucesso.');
+        return redirect()->route('index')->with('success', 'Sensor cadastrado com sucesso.'); 
+        */
     }
 
     

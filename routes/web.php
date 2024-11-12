@@ -39,7 +39,7 @@ Route::post('/sensor-data/store', [SensorDataController::class, 'store'])->name(
 Route::get('/sensor-data', [SensorDataController::class, 'getData'])->name('sensorData.get');
 
 
-
+Route::post('/sensor-data', 'SensorController@store');
 
 
 
