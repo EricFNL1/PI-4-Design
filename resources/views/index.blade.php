@@ -167,12 +167,12 @@
                         </div>
                         <!-- Controle da Ventilação -->
                         <div>
-                            <button onclick="toggleFan()" id="fanOn" class="btn btn-info rounded-circle" style="width: 50px; height: 50px;">
-                                <i class="fas fa-fan"></i>
-                            </button>
-                            <button onclick="toggleFan()" id="fanOff" class="btn btn-info rounded-circle" style="width: 50px; height: 50px; display: none;">
-                                <i class="fas fa-fan"></i>
-                            </button>
+                        <button onclick="toggleFan()" id="fanOn" class="btn btn-info rounded-circle" style="width: 50px; height: 50px;">
+    <i class="fas fa-fan"></i>
+</button>
+<button onclick="toggleFan()" id="fanOff" class="btn btn-info rounded-circle" style="width: 50px; height: 50px; display: none;">
+    <i class="fas fa-fan"></i>
+</button>
                         </div>
                         <!-- Controle da Bomba de Água -->
                         <div class="icon-container">
@@ -244,31 +244,42 @@
     
 
 <script>
-let isFanOn = false;
-
 function toggleFan() {
-    const endpoint = isFanOn ? '/ventilation/off' : '/ventilation/on';
+    const fanOn = document.getElementById('fanOn');
+    const fanOff = document.getElementById('fanOff');
 
-    fetch(endpoint)
-        .then(response => response.text())
-        .then(data => {
-            showNotification(data); // Exibe a resposta do servidor na notificação
-            isFanOn = !isFanOn; // Alterna o estado do ventilador
-            
-            // Alterna a exibição dos botões
-            document.getElementById('fanOn').style.display = isFanOn ? 'none' : 'inline-block';
-            document.getElementById('fanOff').style.display = isFanOn ? 'inline-block' : 'none';
-        })
-        .catch(error => {
-            console.error('Erro ao enviar comando para o servidor:', error);
-            showNotification('Erro ao enviar comando para o servidor'); // Notificação de erro
-        });
+    // Alterna a exibição dos botões
+    if (fanOn.style.display === 'inline-block' || fanOn.style.display === '') {
+        fanOn.style.display = 'none';
+        fanOff.style.display = 'inline-block';
+        showNotification('Ventilador Ligado!'); // Notificação ao ligar
+    } else {
+        fanOn.style.display = 'inline-block';
+        fanOff.style.display = 'none';
+        showNotification('Ventilador Desligado!'); // Notificação ao desligar
+    }
 }
 
-// Inicialização para mostrar o estado correto do botão ao carregar
+// Função de notificação (já existente no seu código)
+function showNotification(message) {
+    const notification = document.getElementById("notification");
+    notification.innerText = message;
+    notification.style.display = "block";
+    
+    // Oculta a notificação após 2 segundos
+    setTimeout(() => {
+        notification.style.opacity = "0";
+        setTimeout(() => {
+            notification.style.display = "none";
+            notification.style.opacity = "1"; // Reseta a opacidade para o próximo uso
+        }, 500);
+    }, 2000);
+}
+
+// Inicializa o estado dos botões ao carregar a página
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('fanOn').style.display = isFanOn ? 'none' : 'inline-block';
-    document.getElementById('fanOff').style.display = isFanOn ? 'inline-block' : 'none';
+    document.getElementById('fanOn').style.display = 'inline-block';
+    document.getElementById('fanOff').style.display = 'none';
 });
 
 
