@@ -97,7 +97,7 @@
                 <div class="col-md-4">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h3 class="text-center">Relatório de Temperatura</h3>
+                            <h3 class="text-center">Temperatura</h3>
                             <div class="thermometer-container">
                                 <div class="thermometer">
                                     <div class="thermometer-fill" id="temperature-fill" style="height: 50%; transition: height 0.5s ease;"></div>
@@ -112,7 +112,7 @@
                 <div class="col-md-4">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h3 class="text-center">Relatório de Umidade</h3>
+                            <h3 class="text-center">Umidade</h3>
                             <div class="aquarium-container">
                                 <div class="aquarium">
                                     <div class="water-level" id="humidity-fill" style="height: 50%; transition: height 0.5s ease;"></div>
@@ -126,7 +126,7 @@
                 <div class="col-md-4">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h3 class="text-center">Relatório de Umidade do Solo</h3>
+                            <h3 class="text-center">Umidade do Solo</h3>
                             <div class="humidity-meter">
                                 <div class="gauge">
                                     <div class="gauge-cover" id="soil-moisture-fill" style="height: 50%; transition: height 0.5s ease;"></div>
