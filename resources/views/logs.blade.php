@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class="container my-4 page2">
-        <h1 class="text-center">Logs de Monitoramento</h1>
+        <h1 class="text-center mb-5">Logs de Monitoramento</h1>
 
         <!-- Filtro por Data -->
         <form method="GET" action="{{ url('/logs') }}">

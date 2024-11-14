@@ -13,7 +13,7 @@
         <h1 class="text-center">Status dos Equipamentos</h1>
 
         <!-- Status dos Equipamentos -->
-        <div class="row">
+        <div class="row mt-5">
             <div class="col-md-4">
                 <div class="card text-center">
                     <div class="card-body">

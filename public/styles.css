@@ -482,22 +482,49 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 5px; /* Espaçamento para flex-wrap */
 }
 
 .icon-container span {
-    font-size: 30px; /* Ajusta o tamanho do ícone */
+    font-size: 30px;
+}
+
+/* Botão de ventilador com tamanho ajustável */
+.fan-btn {
+    width: 50px;
+    height: 50px;
+}
+
+@media (max-width: 1366px) {
+    /* Ajustes para telas de 1366px ou menores */
+    .icon-container {
+        width: 45px;
+        height: 45px;
+    }
+    .icon-container span {
+        font-size: 28px;
+    }
+    .fan-btn {
+        width: 45px;
+        height: 45px;
+    }
 }
 
 @media (max-width: 768px) {
+    /* Ajustes para telas menores */
     .icon-container {
         width: 40px;
         height: 40px;
     }
-
     .icon-container span {
-        font-size: 24px; /* Ajusta o tamanho para telas menores */
+        font-size: 24px;
+    }
+    .fan-btn {
+        width: 40px;
+        height: 40px;
     }
 }
+
 
 .clock-container {
     background-color: #ffffff;

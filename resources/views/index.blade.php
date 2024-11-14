@@ -141,7 +141,7 @@
             <div class="card mb-4" id="generalReport">
                 <div class="card-body">
                     <h5 class="card-title text-center">Relatório Geral</h5>
-                    <canvas id="generalChart" style="width: 100%; height: 278px;"></canvas>
+                    <canvas id="generalChart" style="width: 100%; height: 265px;"></canvas>
                 </div>
             </div>
         </div>
@@ -151,37 +151,37 @@
             <!-- Card de Configurações -->
             <div class="card mb-4">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Configurações</h5>
-                    <div class="d-flex justify-content-around">
-                        <div>
-                            <button id="themeToggle" class="theme-toggle-btn"></button>
-                        </div>
-                        <!-- Controle da Luz -->
-                        <div class="icon-container">
-                            <a href="#" onclick="controlDevice('/relay/on')" id="lightsOn" class="icon-light-on" style="display: block;">
-                                <span class="iconify" data-icon="mdi:lightbulb-on" data-width="40" data-height="40"></span>
-                            </a>
-                            <a href="#" onclick="controlDevice('/relay/off')" id="lightsOff" class="icon-light-off" style="display: none;">
-                                <span class="iconify" data-icon="mdi:lightbulb-off" data-width="40" data-height="40"></span>
-                            </a>
-                        </div>
-                        <!-- Controle da Ventilação -->
-                        <div>
-                        <button onclick="toggleFan()" id="fanOn" class="btn btn-info rounded-circle" style="width: 50px; height: 50px;">
-    <i class="fas fa-fan"></i>
-</button>
-<button onclick="toggleFan()" id="fanOff" class="btn btn-info rounded-circle" style="width: 50px; height: 50px; display: none;">
-    <i class="fas fa-fan"></i>
-</button>
-                        </div>
-                        <!-- Controle da Bomba de Água -->
-                        <div class="icon-container">
-                            <a href="#" onclick="controlDevice('/pump/activate')" id="waterPumpOn" class="icon-waterpump-on" style="display: block;">
-                                <span class="iconify" data-icon="mdi:water-pump" data-width="40" data-height="40"></span>
-                            </a>
-                            <a href="#" onclick="controlDevice('/pump/activate')" id="waterPumpOff" class="icon-waterpump-off" style="display: none;">
-                                <span class="iconify" data-icon="mdi:water-pump-off" data-width="40" data-height="40"></span>
-                            </a>
+                <h5 class="card-title">Configurações</h5>
+            <div class="d-flex justify-content-around flex-wrap">
+                <div class="icon-container">
+                    <button id="themeToggle" class="theme-toggle-btn"></button>
+                </div>
+                <!-- Controle da Luz -->
+                <div class="icon-container">
+                    <a href="#" onclick="controlDevice('/relay/on')" id="lightsOn" class="icon-light-on" style="display: block;">
+                        <span class="iconify" data-icon="mdi:lightbulb-on" data-width="40" data-height="40"></span>
+                    </a>
+                    <a href="#" onclick="controlDevice('/relay/off')" id="lightsOff" class="icon-light-off" style="display: none;">
+                        <span class="iconify" data-icon="mdi:lightbulb-off" data-width="40" data-height="40"></span>
+                    </a>
+                </div>
+                <!-- Controle da Ventilação -->
+                <div class="icon-container">
+                    <button onclick="toggleFan()" id="fanOn" class="btn btn-info rounded-circle fan-btn">
+                        <i class="fas fa-fan"></i>
+                    </button>
+                    <button onclick="toggleFan()" id="fanOff" class="btn btn-info rounded-circle fan-btn" style="display: none;">
+                        <i class="fas fa-fan"></i>
+                    </button>
+                </div>
+                <!-- Controle da Bomba de Água -->
+                <div class="icon-container">
+                    <a href="#" onclick="controlDevice('/pump/activate')" id="waterPumpOn" class="icon-waterpump-on" style="display: block;">
+                        <span class="iconify" data-icon="mdi:water-pump" data-width="40" data-height="40"></span>
+                    </a>
+                    <a href="#" onclick="controlDevice('/pump/activate')" id="waterPumpOff" class="icon-waterpump-off" style="display: none;">
+                        <span class="iconify" data-icon="mdi:water-pump-off" data-width="40" data-height="40"></span>
+                    </a>
                         </div>
                     </div>
                 </div>
@@ -193,7 +193,7 @@
                     <p class="card-text">Temperatura: <span id="temperature">N/A</span> °C</p>
                     <p class="card-text">Descrição: <span id="weatherDescription">N/A</span></p>
                     <div class="text-center">
-                        <p class="mb-0"><strong>Horário Local:</strong> <span id="localTime" style="font-size: 1.1em; color: #f44336;"></span></p>
+                        <p class="mb-0"><strong>Horário:</strong> <span id="localTime" style="font-size: 0.8em; color: #f44336;"></span></p>
                     </div>
                 </div>
                 <div id="map" style="height: 300px; width: 100%;"></div>
@@ -236,8 +236,8 @@
             .catch(error => console.error('Erro ao obter dados do ESP32:', error));
     }
 
-    // Atualiza os dados a cada 2 segundos
-    setInterval(updateSensorData, 2000);
+    // Atualiza os dados a cada 8 segundos
+    setInterval(updateSensorData, 8000);
 </script>
 
 

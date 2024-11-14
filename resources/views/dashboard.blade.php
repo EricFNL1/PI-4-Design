@@ -17,7 +17,7 @@
     <div class="container page1">
         <h1 class="text-center my-4">Dashboard de Monitoramento</h1>
 
-        <div class="text-center my-4">
+        <div class="text-center my-4 mt-5">
             <label for="periodSelect">Selecionar Período:</label>
             <select id="periodSelect" class="form-select w-50 mx-auto">
                 <option value="7">Última semana</option>
