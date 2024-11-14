@@ -88,7 +88,7 @@
     </div>
 
                 <!-- Cards de Conteúdo -->
-                <div class="container">
+                <div class="container card-container">
     <div class="row">
         <!-- Coluna principal para os relatórios e gráfico -->
         <div class="col-lg-9">
@@ -149,7 +149,7 @@
         <!-- Coluna lateral para Configurações e Informações do Clima -->
         <div class="col-lg-3">
             <!-- Card de Configurações -->
-            <div class="card mb-4">
+            <div class="card mb-4 config-card">
                 <div class="card-body text-center">
                 <h5 class="card-title">Configurações</h5>
             <div class="d-flex justify-content-around flex-wrap">

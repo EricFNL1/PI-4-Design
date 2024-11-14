@@ -632,3 +632,14 @@ h3 {
         margin-left: 250px; /* Compensa a largura da sidebar */
     }
 }
+
+@media (max-width: 768px) { /* Ajuste o tamanho conforme necessário */
+    .config-card {
+        order: -1; /* Define uma ordem alta para que o card de Configurações seja o primeiro */
+    }
+
+    .card-container { /* Define o layout para que o `order` funcione */
+        display: flex;
+        flex-direction: column;
+    }
+}
