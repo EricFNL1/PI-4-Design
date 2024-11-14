@@ -146,6 +146,9 @@ Route::put('/estufa/{id}', [EstufaController::class, 'update'])->name('estufa.up
 
 
 Route::post('/data', [ArduinoController::class, 'storeSensorData']);
+;
+
+Route::post('/data', [SensorDataController::class, 'store']);
 
 Route::post('/data', [SensorController::class, 'storeData']); // Rota para receber dados do ESP32
 Route::get('/dadosensor', [SensorController::class, 'showData']); // Rota para exibir dados do sensor
