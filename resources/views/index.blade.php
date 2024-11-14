@@ -141,7 +141,7 @@
             <div class="card mb-4" id="generalReport">
                 <div class="card-body">
                     <h5 class="card-title text-center">Relatório Geral</h5>
-                    <canvas id="generalChart" style="width: 100%; height: 265px;"></canvas>
+                    <canvas id="generalChart" style="width: 100%; height: 257px;"></canvas>
                 </div>
             </div>
         </div>
