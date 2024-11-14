@@ -38,4 +38,6 @@ class ArduinoController extends Controller
         $response = Http::get("{$this->esp32Ip}/toggleRelay3Off");
         return $response->body();
     }
+
+    
 }

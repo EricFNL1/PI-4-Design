@@ -32,42 +32,44 @@
 </body>
 
 <script>
-   document.addEventListener('DOMContentLoaded', function () {
+ document.addEventListener('DOMContentLoaded', function () {
     function updateSensorData() {
         const temperatureElement = document.getElementById('temperature-value');
         const humidityElement = document.getElementById('humidity-value');
         const soilMoistureElement = document.getElementById('soil-moisture-value');
 
         // Verifica se os elementos existem antes de acessar `textContent`
-        const temperature = temperatureElement ? temperatureElement.textContent.replace('°C', '').trim() : null;
-        const humidity = humidityElement ? humidityElement.textContent.replace('%', '').trim() : null;
-        const soilMoisture = soilMoistureElement ? soilMoistureElement.textContent.replace('%', '').trim() : null;
+        if (temperatureElement && humidityElement && soilMoistureElement) {
+            const temperature = temperatureElement.textContent.replace('°C', '').trim();
+            const humidity = humidityElement.textContent.replace('%', '').trim();
+            const soilMoisture = soilMoistureElement.textContent.replace('%', '').trim();
 
-        if (temperature && humidity && soilMoisture) {
-            fetch('/data', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    temperature: parseFloat(temperature),
-                    humidity: parseFloat(humidity),
-                    soil_moisture: parseFloat(soilMoisture)
-                }),
-            })
-            .then(response => response.json())
-            .then(data => console.log('Dados enviados:', data))
-            .catch(error => console.error('Erro ao enviar dados:', error));
+            if (temperature && humidity && soilMoisture) {
+                fetch('/data', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        temperature: parseFloat(temperature),
+                        humidity: parseFloat(humidity),
+                        soil_moisture: parseFloat(soilMoisture)
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => console.log('Dados enviados:', data))
+                .catch(error => console.error('Erro ao enviar dados:', error));
+            } else {
+                console.warn('Um ou mais elementos do DOM possuem valores inválidos.');
+            }
         } else {
-            console.warn('Um ou mais elementos do DOM não foram encontrados ou possuem valores inválidos.');
+            console.warn('Um ou mais elementos do DOM não foram encontrados.');
         }
     }
 
     // Atualiza os dados a cada 8 segundos
     setInterval(updateSensorData, 8000);
 });
-
-
 </script>
 </html>
 
