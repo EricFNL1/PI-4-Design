@@ -8,8 +8,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="img/fundologin.jpg" type="image/x-icon" loading="lazy">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 </head>
 <body>
+<div id="notification" class="notification" style="display: none;">Luzes Desligadas!</div>
+
+
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
@@ -19,23 +23,8 @@
                     <div class="sidebar-header text-center p-3">
                         <img src="img/fundologin.jpg" class="img-fluid rounded-circle" alt="Logo Estufa">
                     </div>
-                    <!-- Botão de Criar Estufa -->
-<div class="text-center mt-1">
-<a href="{{ route('estufa.create') }}" class="btn btn-danger w-75">Criar Estufa</a>
 
-
-</div>
-
-<!-- Botão de Cadastrar Sensores -->
-<div class="text-center mt-3">
-<a href="{{ route('sensor.create') }}" class="btn btn-danger w-75">Cadastrar Sensor</a>
-</div>
-
-<div class="text-center mt-3">
-    <a href="{{ route('gerenciador.index') }}" class="btn btn-danger w-75">Gerenciar Estufas e Sensores</a>
-</div>
-
-
+                    <h3 class="text-center">Menu de Itens</h3>
 
                     <!-- Menu Items -->
                     <ul class="nav flex-column text-center">
@@ -55,7 +44,7 @@
 
                     
                     <div class="text-center mt-1">
-                        <a href="{{ route('advanced.settings')}}" class="text-dark">Configurações Avançadas<i class="bi bi-gear-fill"></i></a>
+                        <a href="{{ route('advanced.settings')}}" class="text-dark">Fases da plantação<i class="bi bi-gear-fill"></i></a>
                     </div>
                     <!-- Botão de Sair -->
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -82,19 +71,12 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <li><a class="dropdown-item" id="themeToggle" href="#" onclick="event.preventDefault();  toggleTheme()">Alternar Tema</a></li>
-                <li><a class="dropdown-item"  href="#" onclick="event.preventDefault(); controlDevice('/relay/on')">Ligar Luzes</a></li>
-                <li><a class="dropdown-item" href="#"  onclick="event.preventDefault(); controlDevice('/relay/off')">Desligar Luzes</a></li>
-                <li>
-                    <a class="dropdown-item" href="#" onclick="event.preventDefault(); toggleFan()">Ligar/Desligar Ventoinha</a>
-                </li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="#">Home</a></li>
                 <li><a class="dropdown-item" href="{{ route('dashboard') }}">Detalhamento</a></li>
                 <li><a class="dropdown-item" href="{{ route('logs') }}">Log & Histórico</a></li>
                 <li><a class="dropdown-item" href="{{ route('status') }}">Status</a></li>
-                <li><a class="dropdown-item" href="{{ route('advanced.settings')}}">Configurações Avançadas</a></li>
-                <li class="text-center mt-3"><a href="{{ route('estufa.create') }}" class="btn btn-danger w-75">Criar Estufa</a></li>
-                <li class="text-center mt-3"><a href="{{ route('sensor.create') }}" class="btn btn-danger w-75">Cadastrar Sensor</a></li>
+                <li><a class="dropdown-item" href="{{ route('advanced.settings')}}">Fases da plantação</a></li>
                 <li class="text-center mt-3">
                     <a href="#" class="btn btn-danger w-75" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         Sair <i class="bi bi-box-arrow-right"></i>
@@ -104,79 +86,76 @@
                         
                     </div>
     </div>
-    <div class="d-flex align-items-center mb-3">
-    <label for="estufa" class="me-2">Selecione a estufa:</label>
-    <select name="estufa_id" id="estufa" class="form-select" style="width: 200px;" onchange="fetchEstufaData()">
-        @foreach ($estufas as $estufa)
-            <option value="{{ $estufa->id }}">{{ $estufa->nome }}</option>
-        @endforeach
-    </select>
-</div>
-
-
-
-
-
 
                 <!-- Cards de Conteúdo -->
-                <div class="row">
-    <div class="col-md-8">
+                <div class="container card-container">
     <div class="row">
-                            <!-- Relatório de Temperatura -->
-                            <div class="col-12">
-                                <div class="card mb-4">
-                                    <div class="card-body">
-                                        <h3 class="text-center">Relatório de Temperatura</h3>
-                                        <div class="thermometer-container">
-                                            <div class="thermometer">
-                                                <div class="thermometer-fill" id="temperature-fill" style="height: 50%; transition: height 0.5s ease;"></div>
-                                                <div class="thermometer-bulb"></div>
-                                            </div>
-                                            <p class="text-center mt-3">Temperatura Atual: <span id="temperature-value">--°C</span></p>
-                                        </div>
-                                    </div>
+        <!-- Coluna principal para os relatórios e gráfico -->
+        <div class="col-lg-9">
+            <div class="row">
+                <!-- Relatório de Temperatura -->
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h3 class="text-center">Temperatura</h3>
+                            <div class="thermometer-container">
+                                <div class="thermometer">
+                                    <div class="thermometer-fill" id="temperature-fill" style="height: 50%; transition: height 0.5s ease;"></div>
+                                    <div class="thermometer-bulb"></div>
                                 </div>
-                            </div>
-                            <!-- Relatório de Umidade -->
-                            <div class="col-12">
-                                <div class="card mb-4">
-                                    <div class="card-body">
-                                        <h3 class="text-center">Relatório de Umidade</h3>
-                                        <div class="aquarium-container">
-                                            <div class="aquarium">
-                                                <div class="water-level" id="humidity-fill" style="height: 50%; transition: height 0.5s ease;"></div>
-                                            </div>
-                                            <p class="text-center mt-3">Umidade Atual: <span id="humidity-value">--%</span></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Relatório de Umidade do Solo -->
-                            <div class="col-12">
-                                <div class="card mb-4">
-                                    <div class="card-body">
-                                        <h3 class="text-center">Relatório de Umidade do Solo</h3>
-                                        <div class="humidity-meter">
-                                            <div class="gauge">
-                                                <div class="gauge-cover" id="soil-moisture-fill" style="height: 50%; transition: height 0.5s ease;"></div>
-                                            </div>
-                                            <p class="text-center mt-3">Umidade do Solo: <span id="soil-moisture-value">--%</span></p>
-                                        </div>
-                                    </div>
-                                </div>
+                                <p class="text-center mt-3">Temperatura Atual: <span id="temperature-value">--°C</span></p>
                             </div>
                         </div>
                     </div>
-    <div class="col-md-4">
-    <!-- Card de Configurações -->
-    <div class="card mb-4" style="width: 100%;">
-        <div class="card-body text-center">
-            <h5 class="card-title">Configurações</h5>
-            <div class="d-flex justify-content-around">
-                <div>
+                </div>
+                <!-- Relatório de Umidade -->
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h3 class="text-center">Umidade</h3>
+                            <div class="aquarium-container">
+                                <div class="aquarium">
+                                    <div class="water-level" id="humidity-fill" style="height: 50%; transition: height 0.5s ease;"></div>
+                                </div>
+                                <p class="text-center mt-3">Umidade Atual: <span id="humidity-value">--%</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Relatório de Umidade do Solo -->
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h3 class="text-center">Umidade do Solo</h3>
+                            <div class="humidity-meter">
+                                <div class="gauge">
+                                    <div class="gauge-cover" id="soil-moisture-fill" style="height: 50%; transition: height 0.5s ease;"></div>
+                                </div>
+                                <p class="text-center mt-3">Umidade do Solo: <span id="soil-moisture-value">--%</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Relatório Geral (Gráfico) logo abaixo dos três relatórios principais -->
+            <div class="card mb-4" id="generalReport">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Relatório Geral</h5>
+                    <canvas id="generalChart" style="width: 100%; height: 257px;"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coluna lateral para Configurações e Informações do Clima -->
+        <div class="col-lg-3">
+            <!-- Card de Configurações -->
+            <div class="card mb-4 config-card">
+                <div class="card-body text-center">
+                <h5 class="card-title">Configurações</h5>
+            <div class="d-flex justify-content-around flex-wrap">
+                <div class="icon-container">
                     <button id="themeToggle" class="theme-toggle-btn"></button>
                 </div>
-                
                 <!-- Controle da Luz -->
                 <div class="icon-container">
                     <a href="#" onclick="controlDevice('/relay/on')" id="lightsOn" class="icon-light-on" style="display: block;">
@@ -186,19 +165,15 @@
                         <span class="iconify" data-icon="mdi:lightbulb-off" data-width="40" data-height="40"></span>
                     </a>
                 </div>
-
                 <!-- Controle da Ventilação -->
-                <div>
-    <button onclick="toggleFan()" id="fanOn" class="btn btn-info rounded-circle" style="width: 50px; height: 50px;">
-        <i class="fas fa-fan"></i>
-    </button>
-    <button onclick="toggleFan()" id="fanOff" class="btn btn-info rounded-circle" style="width: 50px; height: 50px; display: none;">
-        <i class="fas fa-fan"></i>
-    </button>
-</div>
-
-                
-
+                <div class="icon-container">
+                <button onclick="toggleFan()" id="fanOn" class="btn btn-info rounded-circle" style="width: 50px; height: 50px;">
+                                <i class="fas fa-fan"></i>
+                            </button>
+                            <button onclick="toggleFan()" id="fanOff" class="btn btn-info rounded-circle" style="width: 50px; height: 50px; display: none;">
+                                <i class="fas fa-fan"></i>
+                            </button>
+                </div>
                 <!-- Controle da Bomba de Água -->
                 <div class="icon-container">
                     <a href="#" onclick="controlDevice('/pump/activate')" id="waterPumpOn" class="icon-waterpump-on" style="display: block;">
@@ -207,29 +182,25 @@
                     <a href="#" onclick="controlDevice('/pump/activate')" id="waterPumpOff" class="icon-waterpump-off" style="display: none;">
                         <span class="iconify" data-icon="mdi:water-pump-off" data-width="40" data-height="40"></span>
                     </a>
+                        </div>
+                    </div>
                 </div>
+            </div>
+            <!-- Card de Informações do Clima -->
+            <div class="card mb-4" id="weatherCard">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Informações do Clima</h5>
+                    <p class="card-text">Temperatura: <span id="temperature">N/A</span> °C</p>
+                    <p class="card-text">Descrição: <span id="weatherDescription">N/A</span></p>
+                    <div class="text-center">
+                        <p class="mb-0"><strong>Horário:</strong> <span id="localTime" style="font-size: 1.2rem; color: #f44336;"></span></p>
+                    </div>
+                </div>
+                <div id="map" style="height: 300px; width: 100%;"></div>
             </div>
         </div>
     </div>
-
-    <!-- Card de Informações do Clima -->
-    <div class="card mb-4" id="weatherCard" style="width: 100%; height: auto;">
-    <div class="card-body text-center">
-        <h5 class="card-title">Informações do Clima</h5>
-        <p class="card-text">Temperatura: <span id="temperature">N/A</span> °C</p>
-        <p class="card-text">Descrição: <span id="weatherDescription">N/A</span></p>
-        <p class="card-text">Localização: <span id="latitude">N/A</span>, <span id="longitude">N/A</span></p>
-        
-        <!-- Relógio Local -->
-        <div class="text-center">
-            <p class="mb-0"><strong>Horário Local:</strong> <span id="localTime" style="font-size: 1.1em; color: #f44336;"></span></p>
-        </div>
-    </div>
 </div>
-
-
-
-
 
                     
             </main>
@@ -238,57 +209,126 @@
 
     
     <script>
-        function updateSensorData() {
-            fetch('/dados-esp32')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.temperature && data.humidity && data.soil_moisture) {
-                        document.getElementById('temperature-value').textContent = `${data.temperature} °C`;
-                        document.getElementById('humidity-value').textContent = `${data.humidity} %`;
-                        document.getElementById('soil-moisture-value').textContent = `${data.soil_moisture} %`;
-
-                        // Atualiza a altura dos gráficos
-                        document.getElementById('temperature-fill').style.height = `${Math.min(data.temperature, 100)}%`;
-                        document.getElementById('humidity-fill').style.height = `${data.humidity}%`;
-                        document.getElementById('soil-moisture-fill').style.height = `${data.soil_moisture}%`;
-                    } else {
-                        console.error('Dados incompletos recebidos do ESP32:', data);
+           document.addEventListener('DOMContentLoaded', function() {
+            // Inicialização do gráfico
+            const ctx = document.getElementById('generalChart').getContext('2d');
+            const generalChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: 'Temperatura (°C)',
+                            data: [],
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            fill: true
+                        },
+                        {
+                            label: 'Umidade (%)',
+                            data: [],
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            fill: true
+                        },
+                        {
+                            label: 'Umidade do Solo (%)',
+                            data: [],
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Tempo'
+                            }
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Valores'
+                            }
+                        }
                     }
-                })
-                .catch(error => console.error('Erro ao obter dados do ESP32:', error));
-        }
+                }
+            });
 
-        // Atualiza os dados a cada 2 segundos
-        setInterval(updateSensorData, 2000);
-    </script>
+            // Função para atualizar os dados do gráfico
+            function updateChartData(chart, temperature, humidity, soilMoisture) {
+                const currentTime = new Date().toLocaleTimeString();
+                chart.data.labels.push(currentTime);
+                chart.data.datasets[0].data.push(temperature);
+                chart.data.datasets[1].data.push(humidity);
+                chart.data.datasets[2].data.push(soilMoisture);
+
+                if (chart.data.labels.length > 10) {
+                    chart.data.labels.shift();
+                    chart.data.datasets[0].data.shift();
+                    chart.data.datasets[1].data.shift();
+                    chart.data.datasets[2].data.shift();
+                }
+
+                chart.update();
+            }
+
+            // Função para buscar dados do ESP32 e atualizar o gráfico e os valores na página
+            function updateSensorData() {
+                fetch('/dados-esp32')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.temperature && data.humidity && data.soil_moisture) {
+                            // Atualiza os valores na página
+                            document.getElementById('temperature-value').textContent = `${data.temperature} °C`;
+                            document.getElementById('humidity-value').textContent = `${data.humidity} %`;
+                            document.getElementById('soil-moisture-value').textContent = `${data.soil_moisture} %`;
+
+                            // Atualiza o gráfico com os novos dados do sensor
+                            updateChartData(generalChart, data.temperature, data.humidity, data.soil_moisture);
+                        } else {
+                            console.error('Dados incompletos recebidos do ESP32:', data);
+                        }
+                    })
+                    .catch(error => console.error('Erro ao obter dados do ESP32:', error));
+            }
+
+            // Atualiza os dados a cada 8 segundos
+            setInterval(updateSensorData, 30000);
+        });
+</script>
+
 
     
 
 <script>
 let isFanOn = false;
-
 function toggleFan() {
     const endpoint = isFanOn ? '/ventilation/off' : '/ventilation/on';
-
     fetch(endpoint)
         .then(response => response.text())
         .then(data => {
-            alert(data); // Exibe a resposta do servidor
+            showNotification(data); // Exibe a resposta do servidor na notificação
             isFanOn = !isFanOn; // Alterna o estado do ventilador
             
             // Alterna a exibição dos botões
             document.getElementById('fanOn').style.display = isFanOn ? 'none' : 'inline-block';
             document.getElementById('fanOff').style.display = isFanOn ? 'inline-block' : 'none';
         })
-        .catch(error => console.error('Erro ao enviar comando para o servidor:', error));
-}
+        .catch(error => {
+            console.error('Erro ao enviar comando para o servidor:', error);
+            showNotification('Erro ao enviar comando para o servidor'); // Notificação de erro
+        });
 
-// Inicialização para mostrar o estado correto do botão ao carregar
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('fanOn').style.display = isFanOn ? 'none' : 'inline-block';
-    document.getElementById('fanOff').style.display = isFanOn ? 'inline-block' : 'none';
-});
-
+        document.getElementById('fanOn').style.display = isFanOn ? 'none' : 'inline-block';
+        document.getElementById('fanOff').style.display = isFanOn ? 'inline-block' : 'none';
+    }
 
 </script>
 
@@ -308,7 +348,6 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch(endpoint)
             .then(response => response.text())
             .then(data => {
-                alert(data); // Exibe o retorno da resposta do Arduino
             })
             .catch(error => console.error('Erro ao enviar comando:', error));
     }
@@ -319,11 +358,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
     <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
     <script src="{{ asset('js/app.js') }}?v={{ time() }}"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>

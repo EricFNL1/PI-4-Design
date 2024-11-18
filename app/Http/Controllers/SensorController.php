@@ -2,48 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Sensor;
-use App\Models\Estufa;
 use Illuminate\Http\Request;
+use App\Models\SensorReading;
 
 class SensorController extends Controller
 {
-
-    public function index(Request $request)
+    // Método para armazenar os dados enviados pelo ESP32
+    public function storeData(Request $request)
     {
-        // Carrega todas as estufas para exibição no dropdown
-        $estufas = Estufa::all();
-
-        // Verifica se foi selecionada uma estufa no request
-        $sensores = [];
-        if ($request->has('estufa_id')) {
-            $sensores = Sensor::where('estufa_id', $request->input('estufa_id'))->get();
-        }
-
-        return view('sensores.index', compact('estufas', 'sensores'));
-    }
-    public function create()
-    {
-        $estufas = Estufa::all();
-        return view('sensor.create', compact('estufas'));
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nome' => 'required|string|max:255',
-            'tipo' => 'required|string|max:255',
-            'estufa_id' => 'required|exists:estufas,id'
+        // Valida os dados recebidos
+        $validatedData = $request->validate([
+            'temperature' => 'required|numeric',
+            'humidity' => 'required|numeric',
+            'soil_moisture' => 'required|numeric',
         ]);
 
-        Sensor::create([
-            'nome' => $request->nome,
-            'tipo' => $request->tipo,
-            'estufa_id' => $request->estufa_id
-        ]);
+        // Armazena os dados no banco de dados
+        SensorReading::create($validatedData);
 
-        return redirect()->route('index')->with('success', 'Sensor cadastrado com sucesso.');
+        return response()->json(['message' => 'Dados salvos com sucesso'], 200);
     }
 
-    
+    // Método para exibir os dados do sensor
+    public function showData()
+    {
+        // Pega os últimos 10 registros, por exemplo
+        $sensorData = SensorReading::orderBy('created_at', 'desc')->take(10)->get();
+
+        return view('dadosensor', ['sensorData' => $sensorData]);
+    }
 }

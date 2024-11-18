@@ -27,6 +27,21 @@ document.querySelectorAll('#themeToggle, .dropdown-item[data-action="themeToggle
 });
 
 
+function showNotification(message) {
+    const notification = document.getElementById("notification");
+    notification.innerText = message;
+    notification.style.display = "block"; // Exibe a notificação
+    
+    // Oculta a notificação após 2 segundos
+    setTimeout(() => {
+        notification.style.opacity = "0"; // Transição de opacidade para esconder
+        setTimeout(() => {
+            notification.style.display = "none";
+            notification.style.opacity = "0.9"; // Reseta a opacidade para o próximo uso
+        }, 500); // Espera o fim da transição para ocultar completamente
+    }, 2000);
+}
+
 // Função para alternar entre os ícones de lâmpada ligada e desligada
 function toggleLights() {
     const iconLightOn = document.querySelector('.icon-light-on');
@@ -36,12 +51,12 @@ function toggleLights() {
     if (iconLightOn.style.display === 'block' || iconLightOn.style.display === '') {
         iconLightOn.style.display = 'none';
         iconLightOff.style.display = 'block';
-        alert('Luzes Desligadas!');
+        showNotification('Luzes Desligadas!');
     } else {
         // Caso contrário, mostrar o ícone de lâmpada ligada e ocultar o ícone de lâmpada desligada
         iconLightOn.style.display = 'block';
         iconLightOff.style.display = 'none';
-        alert('Luzes Ligadas!');
+        showNotification('Luzes Ligadas!');
     }
 }
 
@@ -52,7 +67,7 @@ document.getElementById('lightsOff').addEventListener('click', toggleLights);
 // Ligar Luzes
 document.querySelectorAll('[data-action="lightsOn"]').forEach(item => {
     item.addEventListener('click', function() {
-        alert('Luzes Ligadas!');
+        showNotification('Luzes Ligadas!');
         document.querySelector('.icon-light-on').style.display = 'none';
         document.querySelector('.icon-light-off').style.display = 'block';
     });
@@ -61,7 +76,7 @@ document.querySelectorAll('[data-action="lightsOn"]').forEach(item => {
 // Desligar Luzes
 document.querySelectorAll('[data-action="lightsOff"]').forEach(item => {
     item.addEventListener('click', function() {
-        alert('Luzes Desligadas!');
+        showNotification('Luzes Desligadas!');
         document.querySelector('.icon-light-on').style.display = 'block';
         document.querySelector('.icon-light-off').style.display = 'none';
     });
@@ -76,17 +91,16 @@ document.querySelectorAll('#fanToggle, .dropdown-item[data-action="fanToggle"]')
         fanButton.classList.toggle('active');
 
         if (fanButton.classList.contains('active')) {
-            alert('Ventoinha Ligada!');
+            showNotification('Ventoinha Ligada!');
             fanIcon.classList.replace('fa-fan', 'fa-fan'); // Atualize conforme necessário para mudar o ícone
         } else {
-            alert('Ventoinha Desligada!');
+            showNotification('Ventoinha Desligada!');
             fanIcon.classList.replace('fa-fan', 'fa-fan'); // Atualize conforme necessário para mudar o ícone
         }
     });
 });
 
-//bomba d'agua
-
+// Bomba d'água
 document.querySelectorAll('#waterPumpOn, #waterPumpOff').forEach(item => {
     item.addEventListener('click', function() {
         const pumpOn = document.getElementById('waterPumpOn');
@@ -97,12 +111,13 @@ document.querySelectorAll('#waterPumpOn, #waterPumpOff').forEach(item => {
         pumpOff.style.display = pumpOff.style.display === 'none' ? 'block' : 'none';
 
         if (pumpOn.style.display === 'none') {
-            alert('Bomba de Água Ligada!');
+            showNotification('Bomba de Água Ligada!');
         } else {
-            alert('Bomba de Água Desligada!');
+            showNotification('Bomba de Água Desligada!');
         }
     });
 });
+
 
 
 
@@ -183,7 +198,7 @@ setTimeout(() => {
                     // Verifica se a resposta tem os dados esperados
                     if (data.error) {
                         console.error(data.error);
-                        alert('Erro ao buscar informações de clima');
+                        
                         return;
                     }
     
@@ -194,8 +209,7 @@ setTimeout(() => {
                     document.getElementById('longitude').innerText = data.longitude ?? 'N/A';
                 })
                 .catch(error => {
-                    console.error('Erro ao buscar os dados de clima:', error);
-                    alert('Erro ao buscar os dados de clima');
+                    
                 });
 
                 document.addEventListener('DOMContentLoaded', function() {
@@ -206,3 +220,114 @@ setTimeout(() => {
                     setInterval(fetchWeatherData, 600000); // 600.000 ms = 10 minutos
                 });
         });
+
+
+        //caso o esp esteja desligado
+        function showNotification(message) {
+            const notification = document.getElementById("notification");
+            notification.innerText = message;
+            notification.style.display = "block"; // Exibe a notificação
+        
+            setTimeout(() => {
+                notification.style.opacity = "0"; // Transição de opacidade para esconder
+                setTimeout(() => {
+                    notification.style.display = "none";
+                    notification.style.opacity = "0.9"; // Reseta a opacidade para o próximo uso
+                }, 500);
+            }, 2000);
+        }
+        
+        // Exemplo de uma requisição usando fetch com tratamento de erro
+        function makeRequest(url) {
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) { // Verifica se a resposta não foi bem-sucedida
+                        throw new Error('O dispositivo ESP está offline ou não respondeu.');
+                    }
+                    return response.json(); // Processa como JSON se espera essa resposta
+                })
+                .then(data => {
+                    // Processa os dados aqui
+                    showNotification('Operação bem-sucedida!');
+                })
+                .catch(error => {
+                    console.error('Erro:', error); // Loga o erro para depuração
+                });
+        }
+        
+        // Exemplo de chamada da função
+        makeRequest('/sua-url');
+
+
+
+//mapa loc
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // URL para a API de localização por IP (substitua por seu serviço, se necessário)
+    const ipInfoUrl = 'https://ipinfo.io/json?token=ed30f9f6c4d9e8'; // Substitua YOUR_TOKEN pelo seu token de API
+
+    // Faz a requisição para obter a localização
+    fetch(ipInfoUrl)
+        .then(response => response.json() )
+        .then(data =>  {
+            const [lat, lng] = data.loc.split(',').map(Number ); // Divide a localização no formato "lat,lng" e converte para números
+            const location = [lat, lng ]; // Cria o array de localização para o Leaflet
+
+            // Inicializa o mapa e centraliza na localização obtida
+            const map = L.map('map').setView(location, 13 );
+
+            // Adiciona a camada de mapa do OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' , {
+                maxZoom: 19,
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' 
+            }).addTo(map);
+
+            // Adiciona um marcador na localização
+            L.marker(location).addTo(map) 
+                .bindPopup('Localização Atual') 
+                .openPopup(); 
+        })
+        .catch(error => { 
+            console.error('Erro ao obter localização:', error); 
+            showNotification('Não foi possível obter a localização.');
+        });
+        
+}); 
+ 
+//geral index
+
+
+
+// Função para atualizar os dados dos sensores e o gráfico
+function updateSensorData() {
+    fetch('/dados-esp32')
+        .then(response => response.json())
+        .then(data => {
+            if (data.temperature && data.humidity && data.soil_moisture) {
+                // Atualiza os valores nos elementos HTML
+                document.getElementById('temperature-value').textContent = `${data.temperature} °C`;
+                document.getElementById('humidity-value').textContent = `${data.humidity} %`;
+                document.getElementById('soil-moisture-value').textContent = `${data.soil_moisture} %`;
+
+                // Atualiza a altura dos gráficos visuais
+                const temperaturaMaxima = 45;
+                let porcentagemTemperatura = (data.temperature / temperaturaMaxima) * 100;
+                porcentagemTemperatura = Math.min(porcentagemTemperatura, 100);
+
+                document.getElementById('temperature-fill').style.height = `${porcentagemTemperatura}%`;
+                document.getElementById('humidity-fill').style.height = `${data.humidity}%`;
+                document.getElementById('soil-moisture-fill').style.height = `${data.soil_moisture}%`;
+
+                // Atualiza o gráfico com os dados de temperatura, umidade e umidade do solo
+                updateChartData(generalChart, data.temperature, data.humidity, data.soil_moisture);
+            } else {
+                console.error('Dados incompletos recebidos do ESP32:', data);
+            }
+        })
+        .catch(error => console.error('Erro ao obter dados do ESP32:', error));
+}
+
+// Atualiza os dados a cada 2 segundos
+setInterval(updateSensorData, 2000);
+

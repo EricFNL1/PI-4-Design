@@ -18,6 +18,9 @@ use App\Http\Controllers\ArduinoController;
 use App\Http\Controllers\SensorDataController;
 use App\Http\Controllers\GestorController;
 use App\Http\Controllers\DadosController;
+use App\Http\Controllers\WhatsAppController;
+
+
 
 
 
@@ -144,3 +147,24 @@ Route::put('/sensor/{id}', [SensorController::class, 'update'])->name('sensor.up
 Route::get('/estufa/{id}/edit', [EstufaController::class, 'edit'])->name('estufa.edit');
 Route::put('/estufa/{id}', [EstufaController::class, 'update'])->name('estufa.update');
 
+
+Route::post('/data', [ArduinoController::class, 'storeSensorData']);
+
+Route::post('/data', [SensorDataController::class, 'store']);
+Route::get('/data', function() {
+    return response()->json(['message' => 'Endpoint funcionando.']);
+});
+
+
+Route::post('/data', [SensorController::class, 'storeData']); // Rota para receber dados do ESP32
+Route::get('/dadosensor', [SensorController::class, 'showData']); // Rota para exibir dados do sensor
+
+
+Route::get('/send-alert', [WhatsAppController::class, 'sendAlert']);
+
+
+Route::get('/relay-on', [ArduinoController::class, 'turnRelayOn']);
+Route::get('/relay-off', [ArduinoController::class, 'turnRelayOff']);
+Route::get('/pump-on', [ArduinoController::class, 'activatePump']);
+Route::get('/ventilation-on', [ArduinoController::class, 'turnVentilationOn']);
+Route::get('/ventilation-off', [ArduinoController::class, 'turnVentilationOff']);
