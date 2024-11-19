@@ -28,6 +28,7 @@ Route::get('/toggle-mode', [ArduinoController::class, 'toggleMode']);
 Route::get('/test-whatsapp', [WhatsAppController::class, 'sendTestMessage']);
 Route::get('/test-whatsapp', [WhatsAppController::class, 'sendAlert']);
 
+Route::get('/test-whatsapp-alert', [WhatsAppController::class, 'sendAlert']);
 
 
 // Adicione essas rotas no web.php para testar diretamente cada função
