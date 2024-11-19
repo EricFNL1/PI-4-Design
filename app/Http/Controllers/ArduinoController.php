@@ -14,7 +14,7 @@ class ArduinoController extends Controller
         try {
             // Use cache para evitar muitas requisições ao ESP32
             return Cache::remember('sensor_data', 15, function () {
-                $response = Http::timeout(5)->get('http://192.168.6.5/data');
+                $response = Http::timeout(5)->get('http://192.168.15.4/data');
                 
                 if ($response->successful()) {
                     return $response->json();
