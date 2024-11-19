@@ -643,3 +643,37 @@ h3 {
         flex-direction: column;
     }
 }
+
+/* Estilização do botão de modo */
+#modeToggle {
+    display: inline-block;
+    background-color: #007bff; /* Azul primário */
+    color: #fff; /* Texto branco */
+    font-size: 16px; /* Tamanho do texto */
+    font-weight: bold;
+    padding: 10px 20px; /* Espaçamento interno */
+    border: none; /* Remove bordas */
+    border-radius: 25px; /* Deixa o botão arredondado */
+    cursor: pointer; /* Muda o cursor ao passar */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Animações */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+#modeToggle:hover {
+    background-color: #0056b3; /* Azul mais escuro ao passar o mouse */
+    transform: scale(1.05); /* Leve ampliação ao passar o mouse */
+}
+
+#modeToggle:active {
+    transform: scale(0.95); /* Leve redução ao clicar */
+    background-color: #004085; /* Azul ainda mais escuro */
+}
+
+/* Adiciona um indicador de estado ativo */
+#modeIndicator {
+    display: block;
+    font-size: 14px; /* Tamanho menor para o indicador */
+    color: #555; /* Cor neutra */
+    margin-top: 8px; /* Espaçamento superior */
+    text-align: center;
+}

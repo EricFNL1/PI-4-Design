@@ -22,13 +22,11 @@ use App\Http\Controllers\WhatsAppController;
 
 
 Route::get('/dados-esp32', [ArduinoController::class, 'getSensorData']);
+Route::get('/toggle-mode', [ArduinoController::class, 'toggleMode']);
+//Route::get('/send-alert', [WhatsAppController::class, 'sendAlert']);
 
-
-Route::get('/dados-esp32', [ArduinoController::class, 'getSensorData']);
-
-
-Route::get('/send-alert', [WhatsAppController::class, 'sendAlert']);
-
+Route::get('/test-whatsapp', [WhatsAppController::class, 'sendTestMessage']);
+Route::get('/test-whatsapp', [WhatsAppController::class, 'sendAlert']);
 
 
 
@@ -175,3 +173,15 @@ Route::get('/relay-off', [ArduinoController::class, 'turnRelayOff']);
 Route::get('/pump-on', [ArduinoController::class, 'activatePump']);
 Route::get('/ventilation-on', [ArduinoController::class, 'turnVentilationOn']);
 Route::get('/ventilation-off', [ArduinoController::class, 'turnVentilationOff']);
+
+
+Route::get('/test-whatsapp', function () {
+    // Simula os dados do sensor no cache
+    Cache::put('sensor_data', [
+        'temperature' => 35, // Temperatura de teste acima do limite
+        'humidity' => 60,    // Umidade de teste
+    ], 60); // Expira em 60 segundos
+
+    $controller = new WhatsAppController();
+    return $controller->sendAlert();
+});

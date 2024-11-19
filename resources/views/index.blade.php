@@ -183,15 +183,18 @@
                         <span class="iconify" data-icon="mdi:water-pump-off" data-width="40" data-height="40"></span>
                     </a>
                         </div>
+                        <div class="text-center mt-4">
+    <button id="modeToggle" onclick="toggleMode()">Alternar Modo</button>
+</div>
+
+
                     </div>
                 </div>
             </div>
             <!-- Card de Informações do Clima -->
             <div class="card mb-4" id="weatherCard">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Informações do Clima</h5>
-                    <p class="card-text">Temperatura: <span id="temperature">N/A</span> °C</p>
-                    <p class="card-text">Descrição: <span id="weatherDescription">N/A</span></p>
+                    <h5 class="card-title">Localização</h5>
                     <div class="text-center">
                         <p class="mb-0"><strong>Horário:</strong> <span id="localTime" style="font-size: 1.2rem; color: #f44336;"></span></p>
                     </div>
@@ -318,6 +321,26 @@
 
 </script>
 
+<script>
+   function toggleMode() {
+    fetch('/toggle-mode')
+        .then(response => response.json())
+        .then(data => {
+            if (data.mode) {
+                document.getElementById('modeIndicator').innerText = `Modo Atual: ${data.mode}`;
+                showNotification(`Modo alterado para ${data.mode}`); // Opcional: exibe notificação
+            } else {
+                console.error('Erro ao alternar o modo:', data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Erro na requisição:', error);
+            alert('Não foi possível alternar o modo. Verifique a conexão.');
+        });
+}
+
+
+</script>
 
     
 
