@@ -209,99 +209,113 @@
 
     
     <script>
-           document.addEventListener('DOMContentLoaded', function() {
-            // Inicialização do gráfico
-            const ctx = document.getElementById('generalChart').getContext('2d');
-            const generalChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: [],
-                    datasets: [
-                        {
-                            label: 'Temperatura (°C)',
-                            data: [],
-                            borderColor: 'rgba(255, 99, 132, 1)',
-                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                            fill: true
-                        },
-                        {
-                            label: 'Umidade (%)',
-                            data: [],
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                            fill: true
-                        },
-                        {
-                            label: 'Umidade do Solo (%)',
-                            data: [],
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            fill: true
-                        }
-                    ]
+       document.addEventListener('DOMContentLoaded', function () {
+    // Inicialização do gráfico
+    const ctx = document.getElementById('generalChart').getContext('2d');
+    const generalChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [], // Inicialmente vazio
+            datasets: [
+                {
+                    label: 'Temperatura (°C)',
+                    data: [],
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    fill: true
                 },
-                options: {
-                    responsive: true,
-                    scales: {
-                        x: {
-                            display: true,
-                            title: {
-                                display: true,
-                                text: 'Tempo'
-                            }
-                        },
-                        y: {
-                            display: true,
-                            title: {
-                                display: true,
-                                text: 'Valores'
-                            }
-                        }
+                {
+                    label: 'Umidade (%)',
+                    data: [],
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    fill: true
+                },
+                {
+                    label: 'Umidade do Solo (%)',
+                    data: [],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    fill: true
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Tempo'
+                    }
+                },
+                y: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Valores'
                     }
                 }
-            });
+            }
+        }
+    });
 
-            // Função para atualizar os dados do gráfico
-            function updateChartData(chart, temperature, humidity, soilMoisture) {
-                const currentTime = new Date().toLocaleTimeString();
-                chart.data.labels.push(currentTime);
-                chart.data.datasets[0].data.push(temperature);
-                chart.data.datasets[1].data.push(humidity);
-                chart.data.datasets[2].data.push(soilMoisture);
+    // Função para atualizar os dados do gráfico
+    function updateChartData(chart, temperature, humidity, soilMoisture) {
+        const currentTime = new Date().toLocaleTimeString(); // Pega o horário atual
+        chart.data.labels.push(currentTime); // Adiciona o horário ao eixo X
+        chart.data.datasets[0].data.push(temperature); // Adiciona temperatura
+        chart.data.datasets[1].data.push(humidity); // Adiciona umidade
+        chart.data.datasets[2].data.push(soilMoisture); // Adiciona umidade do solo
 
-                if (chart.data.labels.length > 10) {
-                    chart.data.labels.shift();
-                    chart.data.datasets[0].data.shift();
-                    chart.data.datasets[1].data.shift();
-                    chart.data.datasets[2].data.shift();
+        // Limita os dados exibidos no gráfico para evitar sobrecarga
+        if (chart.data.labels.length > 10) {
+            chart.data.labels.shift(); // Remove o mais antigo
+            chart.data.datasets[0].data.shift();
+            chart.data.datasets[1].data.shift();
+            chart.data.datasets[2].data.shift();
+        }
+
+        chart.update(); // Atualiza o gráfico
+    }
+
+    // Função para buscar dados do ESP32 e atualizar o gráfico e os valores na página
+    function updateSensorData() {
+        fetch('/dados-esp32')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erro HTTP: ${response.status}`);
                 }
+                return response.json();
+            })
+            .then(data => {
+                if (data && data.temperature && data.humidity && data.soil_moisture) {
+                    // Atualiza os valores nos elementos HTML
+                    document.getElementById('temperature-value').textContent = `${data.temperature} °C`;
+                    document.getElementById('humidity-value').textContent = `${data.humidity} %`;
+                    document.getElementById('soil-moisture-value').textContent = `${data.soil_moisture} %`;
 
-                chart.update();
-            }
+                    // Atualiza o gráfico com os novos dados
+                    updateChartData(generalChart, data.temperature, data.humidity, data.soil_moisture);
+                } else {
+                    console.error('Dados incompletos recebidos:', data);
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao obter dados do backend:', error);
+                alert('Não foi possível obter os dados dos sensores. Verifique a conexão com o ESP32.');
+            });
+    }
 
-            // Função para buscar dados do ESP32 e atualizar o gráfico e os valores na página
-            function updateSensorData() {
-                fetch('/dados-esp32')
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.temperature && data.humidity && data.soil_moisture) {
-                            // Atualiza os valores na página
-                            document.getElementById('temperature-value').textContent = `${data.temperature} °C`;
-                            document.getElementById('humidity-value').textContent = `${data.humidity} %`;
-                            document.getElementById('soil-moisture-value').textContent = `${data.soil_moisture} %`;
+    // Configura o intervalo de atualização (15 segundos)
+    setInterval(updateSensorData, 15000);
 
-                            // Atualiza o gráfico com os novos dados do sensor
-                            updateChartData(generalChart, data.temperature, data.humidity, data.soil_moisture);
-                        } else {
-                            console.error('Dados incompletos recebidos do ESP32:', data);
-                        }
-                    })
-                    .catch(error => console.error('Erro ao obter dados do ESP32:', error));
-            }
+    // Chama a função imediatamente ao carregar a página
+    updateSensorData();
+});
 
-            // Atualiza os dados a cada 8 segundos
-            setInterval(updateSensorData, 30000);
-        });
+
 </script>
 
 

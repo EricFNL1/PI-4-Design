@@ -10,24 +10,21 @@ class ArduinoController extends Controller
 {
 
     public function getSensorData()
-{
-    return Cache::remember('sensor_data', 15, function () {
-        $response = Http::timeout(5)->get('http://192.168.6.5/dados');
-        return $response->json();
-    });
-}
-    // Atualiza o IP do ESP32
-    private $esp32Ip = 'http://192.168.6.5'; // Novo IP do ESP32 na rede Wi-Fi
-
-    public function turnRelayOn()
     {
         try {
-            $response = Http::timeout(5)->get("{$this->esp32Ip}/toggleRelayOn");
-            Log::info('Comando de ligar relay enviado', ['response' => $response->body()]);
-            return $response->body();
+            // Use cache para evitar muitas requisições ao ESP32
+            return Cache::remember('sensor_data', 15, function () {
+                $response = Http::timeout(5)->get('http://192.168.6.5/data');
+                
+                if ($response->successful()) {
+                    return $response->json();
+                }
+
+                throw new \Exception('Erro na resposta do ESP32: ' . $response->body());
+            });
         } catch (\Exception $e) {
-            Log::error('Erro ao enviar comando de ligar relay', ['error' => $e->getMessage()]);
-            return response()->json(['error' => 'Erro ao conectar ao ESP32'], 500);
+            Log::error('Erro ao obter dados do ESP32', ['error' => $e->getMessage()]);
+            return response()->json(['error' => 'Não foi possível obter os dados do ESP32'], 500);
         }
     }
 

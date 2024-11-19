@@ -21,7 +21,13 @@ use App\Http\Controllers\DadosController;
 use App\Http\Controllers\WhatsAppController;
 
 
+Route::get('/dados-esp32', [ArduinoController::class, 'getSensorData']);
 
+
+Route::get('/dados-esp32', [ArduinoController::class, 'getSensorData']);
+
+
+Route::get('/send-alert', [WhatsAppController::class, 'sendAlert']);
 
 
 
@@ -29,6 +35,7 @@ use App\Http\Controllers\WhatsAppController;
 // Adicione essas rotas no web.php para testar diretamente cada função
 Route::get('/ventilation/on', [ArduinoController::class, 'turnVentilationOn']);
 Route::get('/ventilation/off', [ArduinoController::class, 'turnVentilationOff']);
+Route::get('/dados-esp32', [ArduinoController::class, 'getSensorData']);
 
 Route::get('/dados-esp32', [DadosController::class, 'obterDados']);
 
