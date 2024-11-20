@@ -9,5 +9,13 @@ class SensorData extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['temperature', 'humidity', 'soil_moisture'];
+    protected $table = 'sensor_data';
+
+    protected $fillable = [
+        'temperature',
+        'humidity',
+        'soil_moisture',
+    ];
+
+    public $timestamps = true; // Garante que created_at e updated_at sejam manipulados automaticamente
 }

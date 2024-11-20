@@ -20,6 +20,7 @@ use App\Http\Controllers\GestorController;
 use App\Http\Controllers\DadosController;
 use App\Http\Controllers\WhatsAppController;
 
+Route::get('/sensor-data', [SensorDataController::class, 'getSensorData'])->name('sensor.data');
 
 Route::get('/dados-esp32', [ArduinoController::class, 'getSensorData']);
 Route::get('/toggle-mode', [ArduinoController::class, 'toggleMode']);
@@ -29,6 +30,10 @@ Route::get('/test-whatsapp', [WhatsAppController::class, 'sendTestMessage']);
 Route::get('/test-whatsapp', [WhatsAppController::class, 'sendAlert']);
 
 Route::get('/test-whatsapp-alert', [WhatsAppController::class, 'sendAlert']);
+
+Route::get('/fetch-sensor-data', [ArduinoController::class, 'fetchAndSaveSensorData']);
+
+Route::get('/logs', [LogController::class, 'index'])->name('logs');
 
 
 // Adicione essas rotas no web.php para testar diretamente cada função
@@ -47,6 +52,15 @@ Route::get('/pump/activate', [ArduinoController::class, 'activatePump'])->name('
 Route::post('/sensor-data/store', [SensorDataController::class, 'store'])->name('sensorData.store');
 Route::get('/sensor-data', [SensorDataController::class, 'getData'])->name('sensorData.get');
 
+Route::post('/toggle-mode', function (Request $request) {
+    // Atualiza o estado do modo no backend (banco, cache, etc.)
+    $mode = $request->input('mode'); // 'automatic' ou 'manual'
+
+    // Exemplo: salvar o estado no cache (ou banco de dados)
+    Cache::put('operation_mode', $mode);
+
+    return response()->json(['message' => 'Modo atualizado com sucesso!', 'mode' => $mode]);
+});
 
 
 

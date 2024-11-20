@@ -19,11 +19,11 @@
             <div class="row mb-4">
                 <div class="col-md-4">
                     <label for="dataInicio" class="form-label">Data de Início</label>
-                    <input type="date" name="dataInicio" id="dataInicio" class="form-control" value="{{ request('dataInicio') }}" required>
+                    <input type="date" name="dataInicio" id="dataInicio" class="form-control" value="{{ request('dataInicio') }}">
                 </div>
                 <div class="col-md-4">
                     <label for="dataFim" class="form-label">Data de Fim</label>
-                    <input type="date" name="dataFim" id="dataFim" class="form-control" value="{{ request('dataFim') }}" required>
+                    <input type="date" name="dataFim" id="dataFim" class="form-control" value="{{ request('dataFim') }}">
                 </div>
                 <div class="col-md-4 d-flex align-items-end">
                     <button type="submit" class="btn btn-primary w-100">Filtrar</button>
@@ -42,83 +42,32 @@
                     <th>Umidade do Solo</th>
                 </tr>
             </thead>
-            <tbody id="logTableBody">
-                <!-- O conteúdo será preenchido pelo JavaScript -->
+            <tbody>
+                @forelse ($logs as $log)
+                <tr>
+                    <td>{{ $log->created_at->format('d/m/Y') }}</td>
+                    <td>{{ $log->created_at->format('H:i:s') }}</td>
+                    <td>{{ $log->temperature }} °C</td>
+                    <td>{{ $log->humidity }} %</td>
+                    <td>{{ $log->soil_moisture }} %</td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="5" class="text-center">Nenhum log encontrado.</td>
+                </tr>
+                @endforelse
             </tbody>
         </table>
 
         <!-- Controle de Paginação -->
         <div class="d-flex justify-content-center">
-            <button onclick="prevPage()" class="btn btn-primary me-2">Anterior</button>
-            <span id="pageNumber">1</span>
-            <button onclick="nextPage()" class="btn btn-primary ms-2">Próxima</button>
+            {{ $logs->appends(request()->query())->links() }}
         </div>
 
         <div class="text-center my-4">
-            <a href="/" class="back-button">Voltar para Home</a>
+            <a href="/" class="btn btn-secondary">Voltar para Home</a>
         </div>
     </div>
-    <script src="script.js"></script>
-
-    <script>
-        // Verificar se o tema escuro está ativado no localStorage e aplicar a classe
-        document.addEventListener('DOMContentLoaded', function() {
-            const isDarkThemeEnabled = localStorage.getItem('dark-theme-enabled') === 'true';
-            if (isDarkThemeEnabled) {
-                document.body.classList.add('dark-theme');
-            }
-        });
-
-        // Dados simulados para fins de demonstração
-        const logs = @json($logs);
-
-        const itemsPerPage = 5; // Número de registros por página
-        let currentPage = 1;
-
-        function renderTable() {
-            const logTableBody = document.getElementById('logTableBody');
-            logTableBody.innerHTML = '';
-
-            // Calcula o índice de início e fim para a página atual
-            const start = (currentPage - 1) * itemsPerPage;
-            const end = start + itemsPerPage;
-            const paginatedItems = logs.slice(start, end);
-
-            // Popula a tabela com os registros da página atual
-            paginatedItems.forEach(log => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${log.created_at ? new Date(log.created_at).toLocaleDateString() : 'Sem data'}</td>
-                    <td>${log.created_at ? new Date(log.created_at).toLocaleTimeString() : 'Sem hora'}</td>
-                    <td>${log.temperature ?? 'N/A'} °C</td>
-                    <td>${log.humidity ?? 'N/A'} %</td>
-                    <td>${log.soil_moisture ?? 'N/A'} %</td>
-                `;
-                logTableBody.appendChild(row);
-            });
-
-            // Atualiza o número da página
-            document.getElementById('pageNumber').textContent = currentPage;
-        }
-
-        function prevPage() {
-            if (currentPage > 1) {
-                currentPage--;
-                renderTable();
-            }
-        }
-
-        function nextPage() {
-            if (currentPage * itemsPerPage < logs.length) {
-                currentPage++;
-                renderTable();
-            }
-        }
-
-        // Inicializa a tabela na primeira página
-        document.addEventListener('DOMContentLoaded', renderTable);
-    </script>
-
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

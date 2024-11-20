@@ -16,7 +16,7 @@ class WhatsAppController extends Controller
                 'whatsapp:+5519983224023', // Substitua pelo número do destinatário
                 [
                     'from' => env('TWILIO_WHATSAPP_FROM'), // Número do Twilio
-                    'body' => 'Olá! Este é um alerta de teste via WhatsApp.'
+                    'body' => 'Olá! Por favor verifique sua estufa, temperatura e umidade fora do ideal'
                 ]
             );
 

@@ -9,14 +9,10 @@ class DashboardController extends Controller
 {
     public function showDashboard()
     {
-        // Gerando dados simulados
-        $dados = collect([
-            (object) ['temperatura' => rand(20, 40), 'umidade' => rand(50, 100)],
-            (object) ['temperatura' => rand(20, 40), 'umidade' => rand(50, 100)],
-            (object) ['temperatura' => rand(20, 40), 'umidade' => rand(50, 100)],
-        ]);
+        // Carrega os últimos 10 registros salvos no banco
+        $dados = SensorData::latest()->take(10)->get();
 
-        // Retorna a view 'dashboard' com os dados simulados
+        // Retorna a view 'dashboard' com os dados
         return view('dashboard', compact('dados'));
     }
 }

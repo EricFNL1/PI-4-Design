@@ -184,8 +184,10 @@
                     </a>
                         </div>
                         <div class="text-center mt-4">
+    <p id="modeStatus">Modo Atual: Manual</p>
     <button id="modeToggle" onclick="toggleMode()">Alternar Modo</button>
 </div>
+
 
 
                     </div>
@@ -379,6 +381,40 @@ function toggleFan() {
         }
     });
 </script>
+
+<script>
+    // Estado inicial do modo
+    let isAutomaticMode = false;
+
+    // Função para alternar o modo
+    function toggleMode() {
+        // Alterna entre Automático e Manual
+        isAutomaticMode = !isAutomaticMode;
+
+        // Atualiza o texto exibido
+        const modeStatus = document.getElementById('modeStatus');
+        modeStatus.textContent = `Modo Atual: ${isAutomaticMode ? 'Automático' : 'Manual'}`;
+
+        // Envia a atualização para o backend, se necessário
+        fetch('/toggle-mode', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({ mode: isAutomaticMode ? 'automatic' : 'manual' })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Modo atualizado no backend:', data);
+        })
+        .catch(error => {
+            console.error('Erro ao atualizar o modo no backend:', error);
+        });
+    }
+</script>
+
+
 
 <script>
     function controlDevice(endpoint) {
