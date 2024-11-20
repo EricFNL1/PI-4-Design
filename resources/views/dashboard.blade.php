@@ -12,10 +12,21 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="styledashboard.css">
     <link rel="icon" href="img/fundologin.jpg" type="image/x-icon" loading="lazy">
+
+    <style>
+        /* Ajustando a altura dos gráficos para torná-los mais compactos */
+        .chart-container {
+            height: 300px; /* Define uma altura fixa para os gráficos */
+        }
+        canvas {
+            display: block;
+            height: 100% !important; /* Garantir que o gráfico ocupe a altura total do container */
+        }
+    </style>
 </head>
 <body>
     <div class="container page1 my-4">
-        <h1 class="text-center mb-5">Dashboard de Monitoramento</h1>
+        <h1 class="text-center mb-4">Dashboard de Monitoramento</h1>
 
         <!-- Filtro de Período -->
         <div class="row mb-4">
@@ -28,27 +39,27 @@
             </div>
         </div>
 
-        <!-- Gráficos -->
+        <!-- Gráficos em linha -->
         <div class="row">
-            <div class="col-md-4 mb-4">
+            <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body chart-container">
                         <h5 class="card-title text-center">Temperatura (°C)</h5>
                         <canvas id="temperatureChart"></canvas>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 mb-4">
+            <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body chart-container">
                         <h5 class="card-title text-center">Umidade Relativa (%)</h5>
                         <canvas id="humidityChart"></canvas>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 mb-4">
+            <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body chart-container">
                         <h5 class="card-title text-center">Umidade do Solo (%)</h5>
                         <canvas id="soilMoistureChart"></canvas>
                     </div>
