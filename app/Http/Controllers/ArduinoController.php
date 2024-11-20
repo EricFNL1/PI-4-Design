@@ -78,14 +78,14 @@ class ArduinoController extends Controller
         try {
             $response = Http::timeout(5)->get("{$this->esp32Ip}/toggleMode");
             if ($response->successful()) {
-                $currentMode = $response->body(); // Resposta do ESP32
+                $currentMode = $response->body(); // Resposta do ESP32 (Automático ou Manual)
                 return response()->json(['mode' => $currentMode], 200);
             }
-
+    
             throw new \Exception('Falha ao alternar o modo no ESP32.');
         } catch (\Exception $e) {
-            Log::error('Erro ao alternar o modo automático:', ['error' => $e->getMessage()]);
-            return response()->json(['error' => 'Não foi possível alternar o modo automático.'], 500);
+            Log::error('Erro ao alternar o modo:', ['error' => $e->getMessage()]);
+            return response()->json(['error' => 'Não foi possível alternar o modo.'], 500);
         }
     }
 

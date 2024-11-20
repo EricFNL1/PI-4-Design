@@ -383,35 +383,26 @@ function toggleFan() {
 </script>
 
 <script>
-    // Estado inicial do modo
-    let isAutomaticMode = false;
-
-    // Função para alternar o modo
-    function toggleMode() {
-        // Alterna entre Automático e Manual
-        isAutomaticMode = !isAutomaticMode;
-
-        // Atualiza o texto exibido
-        const modeStatus = document.getElementById('modeStatus');
-        modeStatus.textContent = `Modo Atual: ${isAutomaticMode ? 'Automático' : 'Manual'}`;
-
-        // Envia a atualização para o backend, se necessário
-        fetch('/toggle-mode', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify({ mode: isAutomaticMode ? 'automatic' : 'manual' })
-        })
+   function toggleMode() {
+    // Envia requisição para alternar o modo no ESP32
+    fetch('/toggle-mode')
         .then(response => response.json())
         .then(data => {
-            console.log('Modo atualizado no backend:', data);
+            if (data.mode) {
+                // Atualiza a interface com o modo retornado
+                const modeStatus = document.getElementById('modeStatus');
+                modeStatus.textContent = `Modo Atual: ${data.mode}`;
+                showNotification(`Modo alterado para ${data.mode}`); // Exibe notificação opcional
+            } else {
+                console.error('Erro ao alternar o modo:', data.error);
+            }
         })
         .catch(error => {
-            console.error('Erro ao atualizar o modo no backend:', error);
+            console.error('Erro na requisição:', error);
+            alert('Não foi possível alternar o modo. Verifique a conexão.');
         });
-    }
+}
+
 </script>
 
 

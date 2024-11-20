@@ -63,6 +63,10 @@ Route::post('/toggle-mode', function (Request $request) {
 });
 
 
+// Exemplo de rota no Laravel
+Route::get('/toggle-mode', [ArduinoController::class, 'toggleMode']);
+
+
 
 
 
