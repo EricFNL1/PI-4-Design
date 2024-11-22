@@ -20,6 +20,12 @@ use App\Http\Controllers\GestorController;
 use App\Http\Controllers\DadosController;
 use App\Http\Controllers\WhatsAppController;
 
+Route::post('/send-status', [WhatsAppController::class, 'sendStatus'])->name('send-status');
+
+
+Route::post('/send-message', [WhatsAppController::class, 'sendMessage'])->name('send.message');
+
+
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::get('/send-test-message', [WhatsAppController::class, 'sendTestMessage']);

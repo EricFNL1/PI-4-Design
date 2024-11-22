@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>SMARTGROW</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -195,10 +196,11 @@
     <button id="modeToggle" onclick="toggleMode()">Alternar Modo</button>
 </div>
 <div class="text-center mt-2">
-    <button id="sendWhatsAppStatus" class="btn btn-success">
-        <i class="fab fa-whatsapp"></i> Enviar Status pelo WhatsApp
+    <button id="sendWhatsAppMessage" class="btn btn-success">
+        <i class="fab fa-whatsapp"></i> Enviar Status 
     </button>
 </div>
+
 
 
 
@@ -432,21 +434,28 @@ function toggleFan() {
 </script>
 
 <script>
-    document.getElementById('sendWhatsAppStatus').addEventListener('click', function() {
-        fetch('/send-status')
-            .then(response => response.json())
-            .then(data => {
-                if (data.message) {
-                    alert(data.message); // Mensagem de sucesso
-                } else if (data.error) {
-                    alert(data.error); // Mensagem de erro
-                }
-            })
-            .catch(error => {
-                console.error('Erro ao enviar status:', error);
-                alert('Erro ao enviar status. Verifique a conexão com o servidor.');
-            });
-    });
+   document.getElementById('sendWhatsAppMessage').addEventListener('click', function () {
+    fetch('/send-status', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                alert(data.message); // Exibe mensagem de sucesso
+            } else if (data.error) {
+                alert(data.error); // Exibe mensagem de erro
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao enviar mensagens:', error);
+            alert('Erro ao enviar mensagens.');
+        });
+});
+
 </script>
 
 <script>
@@ -471,22 +480,31 @@ function sendSensorData(temperature, humidity, soilMoisture) {
 
 </script>
 
+
+
 <script>
-    document.getElementById('sendWhatsAppStatus').addEventListener('click', function () {
-        fetch('/send-whatsapp-status')
-            .then(response => response.json())
-            .then(data => {
-                if (data.message) {
-                    alert(data.message);
-                } else if (data.error) {
-                    alert(data.error);
-                }
-            })
-            .catch(error => {
-                console.error('Erro ao enviar status:', error);
-                alert('Erro ao enviar status. Verifique a conexão com o servidor.');
-            });
+document.getElementById('sendWhatsAppMessage').addEventListener('click', function () {
+    fetch('/send-status', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            alert(data.message); // Mensagem de sucesso
+        } else if (data.error) {
+            alert(data.error); // Mensagem de erro
+        }
+    })
+    .catch(error => {
+        console.error('Erro ao enviar mensagem:', error);
+        alert('Erro ao enviar mensagem. Verifique a conexão com o servidor.');
     });
+});
+
 </script>
 
 

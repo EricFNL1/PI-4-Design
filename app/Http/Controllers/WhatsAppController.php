@@ -7,47 +7,38 @@ use Twilio\Rest\Client;
 
 class WhatsAppController extends Controller
 {
-    public function sendMessage()
-{
-    try {
-        $twilio = new \Twilio\Rest\Client(env('TWILIO_SID'), env('TWILIO_AUTH_TOKEN'));
-
-        $message = $twilio->messages->create(
-            'whatsapp:+5519983224023', // Substitua pelo número de destino
-            [
-                'from' => 'whatsapp:+14155238886', // Número Twilio
-                'body' => 'Mensagem simples enviada durante a janela de 24 horas.'
-            ]
-        );
-
-        return response()->json(['message' => 'Mensagem enviada com sucesso!', 'sid' => $message->sid]);
-    } catch (\Exception $e) {
-        \Log::error('Erro ao enviar mensagem WhatsApp', ['error' => $e->getMessage()]);
-        return response()->json(['error' => 'Erro ao enviar mensagem: ' . $e->getMessage()], 500);
-    }
-}
-
-    public function sendTestMessage()
+    public function sendStatus()
     {
         try {
-            // Mensagem de teste simples
-            $messageBody = "Teste de envio de mensagem via WhatsApp usando Twilio.";
-
-            // Inicializa o cliente Twilio
             $twilio = new Client(env('TWILIO_SID'), env('TWILIO_AUTH_TOKEN'));
-            $twilio->messages->create(
-                'whatsapp:+5519983224023', // Número do destinatário
+    
+            // Enviar mensagem para o WhatsApp
+            $whatsappMessage = $twilio->messages->create(
+                'whatsapp:+5519983224023', // Número do destinatário no WhatsApp
                 [
-                    'from' => env('TWILIO_WHATSAPP_FROM'), // Número do Twilio
-                    'body' => $messageBody
+                    'from' => env('TWILIO_WHATSAPP_FROM'), // Número Twilio para WhatsApp
+                    'body' => '⚡ Status Atual: Temperatura 28°C, Umidade 55%, Umidade do Solo 60%. Confira sua estufa!'
                 ]
             );
-
-            return response()->json(['message' => 'Mensagem enviada com sucesso!']);
+    
+            // Enviar alerta por SMS
+            $smsMessage = $twilio->messages->create(
+                '+5519983224023', // Número do destinatário no SMS
+                [
+                    'from' => env('TWILIO_PHONE'), // Número Twilio para SMS
+                    'body' => '📢 Alerta de Estufa: Temperatura 28°C, Umidade 55%, Umidade do Solo 60%. Mantenha sua plantação saudável!'
+                ]
+            );
+    
+            return response()->json([
+                'message' => 'Mensagens enviadas com sucesso!',
+                'whatsapp_sid' => $whatsappMessage->sid,
+                'sms_sid' => $smsMessage->sid,
+            ]);
         } catch (\Exception $e) {
-            // Log do erro e resposta em caso de falha
-            \Log::error('Erro ao enviar mensagem no WhatsApp', ['error' => $e->getMessage()]);
-            return response()->json(['error' => 'Erro ao enviar mensagem: ' . $e->getMessage()], 500);
+            \Log::error('Erro ao enviar mensagens', ['error' => $e->getMessage()]);
+            return response()->json(['error' => 'Erro ao enviar mensagens: ' . $e->getMessage()], 500);
         }
     }
+    
 }
