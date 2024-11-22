@@ -17,5 +17,5 @@ class SensorData extends Model
         'soil_moisture',
     ];
 
-    public $timestamps = true; // Garante que created_at e updated_at sejam manipulados automaticamente
+    public $timestamps = true; // Para utilizar os campos created_at e updated_at
 }

@@ -92,21 +92,19 @@ class ArduinoController extends Controller
     public function fetchAndSaveSensorData()
     {
         try {
-            // Faz a requisição ao ESP32 para obter os dados do sensor
+            // Faz a requisição ao ESP32
             $response = Http::timeout(5)->get("{$this->esp32Ip}/data");
 
             if ($response->successful()) {
                 $data = $response->json();
 
-                // Verifica se os dados estão completos
+                // Salva os dados no banco se forem válidos
                 if (isset($data['temperature'], $data['humidity'], $data['soil_moisture'])) {
-                    // Salva os dados no banco
                     SensorData::create([
                         'temperature' => $data['temperature'],
                         'humidity' => $data['humidity'],
                         'soil_moisture' => $data['soil_moisture'],
                     ]);
-
                     return response()->json(['message' => 'Dados salvos com sucesso!']);
                 }
 
@@ -115,11 +113,13 @@ class ArduinoController extends Controller
 
             return response()->json(['error' => 'Falha na comunicação com o ESP32.'], $response->status());
         } catch (\Exception $e) {
-            Log::error('Erro ao buscar ou salvar dados do ESP32', ['error' => $e->getMessage()]);
+            Log::error('Erro ao salvar dados do ESP32', ['error' => $e->getMessage()]);
             return response()->json(['error' => 'Erro ao processar os dados: ' . $e->getMessage()], 500);
         }
     }
 }
+
+
 
 class WhatsAppController extends Controller
 {

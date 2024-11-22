@@ -123,12 +123,16 @@ body {
 }
 
 .teste::before {
+    margin-top: 10px;
+    top: 5px;
     content: '🍓🍃'; /* Adiciona emojis de morangos e folhas à esquerda */
     left: 10px; /* Alinhamento à esquerda */
 }
 
 .teste::after {
-    content: '🍃🍓'; /* Adiciona emojis de morangos e folhas à direita */
+    top: -1px;
+    transform: scaleX(-1);
+    content: '🍓🍃'; /* Adiciona emojis de morangos e folhas à direita */
     right: 10px; /* Alinhamento à direita */
 }
 
@@ -388,18 +392,19 @@ body {
     width: 50px;
     height: 160px; /* Altura maior para uniformizar */
     background: #ddd;
-    border-radius: 25px;
+    border: 2px solid red;
+    border-radius: 10px;
     position: relative;
     overflow: hidden;
-    border: 2px solid #ccc; /* Borda para uniformizar */
 }
 
 .thermometer-fill {
     background: #f44336;
     width: 100%;
     position: absolute;
+    border: 2px solid red;
     bottom: 0;
-    border-radius: 25px;
+    border-radius: 10px;
     transition: height 0.5s ease;
     height: 30%; /* Ajuste inicial; altura será controlada pelo valor de temperatura */
 }
@@ -408,7 +413,7 @@ body {
     background: #f44336;
     width: 60px;
     height: 60px;
-    border-radius: 50%;
+    border-radius: 10px;
     position: absolute;
     bottom: -20px;
     left: 50%;
@@ -457,7 +462,7 @@ body {
     width: 50px; /* Ajuste da largura para se alinhar melhor */
     height: 160px; /* Altura para ocupar o mesmo espaço dos outros */
     background: #8B4513; /* Cor de solo */
-    border-radius: 25px; /* Bordas arredondadas para combinar com o termômetro */
+    border-radius: 10px; /* Bordas arredondadas para combinar com o termômetro */
     overflow: hidden;
     border: 2px solid #654321; /* Borda para dar mais contraste */
 }
@@ -468,7 +473,7 @@ body {
     height: 50%; /* Altura inicial para o nível de umidade */
     background: #00aaff; /* Cor da "água" */
     bottom: 0;
-    border-radius: 25px; /* Bordas arredondadas */
+    border-radius: 10px; /* Bordas arredondadas */
     transition: height 0.5s ease;
 }
 

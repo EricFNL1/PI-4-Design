@@ -10,7 +10,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="dark-theme">
     <div class="container my-4 page2">
         <h1 class="text-center mb-5">Logs de Monitoramento</h1>
 
@@ -59,15 +59,47 @@
             </tbody>
         </table>
 
-        <!-- Controle de Paginação -->
-        <div class="d-flex justify-content-center">
-            {{ $logs->appends(request()->query())->links() }}
+        @if ($logs->hasPages())
+        <div class="d-flex justify-content-center mt-4">
+            {{ $logs->links('pagination::bootstrap-4') }}
         </div>
+        @endif
+
 
         <div class="text-center my-4">
-            <a href="/" class="btn btn-secondary">Voltar para Home</a>
+            <a href="{{ route('index') }}" class="btn btn-secondary">Voltar para Home</a>
         </div>
     </div>
+
+
+<script>
+    function saveSensorData() {
+        fetch('/fetch-save-sensor-data')
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    alert(data.message);
+                } else if (data.error) {
+                    alert(data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao salvar dados:', error);
+                alert('Erro ao salvar os dados do sensor.');
+            });
+    }
+</script>
+<script src="script.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const isDarkThemeEnabled = localStorage.getItem('dark-theme-enabled') === 'true';
+
+        if (isDarkThemeEnabled) {
+            document.body.classList.add('dark-theme');
+            document.querySelector('#themeToggle').classList.add('dark');
+        }
+    });
+</script>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

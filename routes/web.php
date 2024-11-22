@@ -20,6 +20,42 @@ use App\Http\Controllers\GestorController;
 use App\Http\Controllers\DadosController;
 use App\Http\Controllers\WhatsAppController;
 
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+Route::get('/send-test-message', [WhatsAppController::class, 'sendTestMessage']);
+
+Route::get('/send-status', [WhatsAppController::class, 'sendStatus']);
+Route::get('/send-alert', [WhatsAppController::class, 'sendAlert']);
+
+Route::get('/sensor-data', [SensorDataController::class, 'fetchData']);
+
+
+Route::get('/logs', [LogController::class, 'index'])->name('logs');
+
+Route::get('/fetch-data', [SensorDataController::class, 'fetchAndStore']);
+
+
+Route::get('/logs', [LogController::class, 'index']);
+
+Route::get('/sensor-data', [SensorDataController::class, 'fetchSensorData']);
+Route::get('/send-status', [WhatsAppController::class, 'sendStatus'])->name('send-status');
+
+Route::get('/fetch-data', [ArduinoController::class, 'fetchAndSaveSensorData']);
+use App\Models\SensorData;
+
+
+Route::get('/sensor-data', function (Request $request) {
+    $days = $request->get('days', 7);
+    $startDate = now()->subDays($days);
+    $data = SensorData::where('created_at', '>=', $startDate)->get();
+    return response()->json($data);
+});
+
+Route::post('/sensor-data', [SensorDataController::class, 'store']);
+
+// Rota para envio automático de alertas
+Route::get('/send-alert', [WhatsAppController::class, 'sendAlert'])->name('send-alert');
+
 Route::get('/sensor-data', [SensorDataController::class, 'getSensorData'])->name('sensor.data');
 
 Route::get('/dados-esp32', [ArduinoController::class, 'getSensorData']);
@@ -33,7 +69,6 @@ Route::get('/test-whatsapp-alert', [WhatsAppController::class, 'sendAlert']);
 
 Route::get('/fetch-sensor-data', [ArduinoController::class, 'fetchAndSaveSensorData']);
 
-Route::get('/logs', [LogController::class, 'index'])->name('logs');
 
 
 // Adicione essas rotas no web.php para testar diretamente cada função
@@ -93,10 +128,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/sensores', [SensorController::class, 'index']);
     Route::post('/sensores', [SensorController::class, 'store'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/weather-from-ip', [WeatherInfoController::class, 'getWeatherFromIP'])->middleware('auth');
-    Route::get('/dashboard', [DashboardController::class, 'showDashboard'])->name('dashboard')->middleware('auth');
-
 
     
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

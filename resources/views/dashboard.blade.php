@@ -4,31 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard de Monitoramento</title>
-    
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="styledashboard.css">
-    <link rel="icon" href="img/fundologin.jpg" type="image/x-icon" loading="lazy">
-
     <style>
-        /* Ajustando a altura dos gráficos para torná-los mais compactos */
-        .chart-container {
-            height: 300px; /* Define uma altura fixa para os gráficos */
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
         }
-        canvas {
-            display: block;
-            height: 100% !important; /* Garantir que o gráfico ocupe a altura total do container */
+        .chart-container {
+            height: 300px;
+        }
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+        h1 {
+            color: #343a40;
         }
     </style>
 </head>
-<body>
-    <div class="container page1 my-4">
+<body class="dark-theme">
+    <div class="container my-4">
         <h1 class="text-center mb-4">Dashboard de Monitoramento</h1>
 
-        <!-- Filtro de Período -->
+        <!-- Filtro de período -->
         <div class="row mb-4">
             <div class="col-md-6 offset-md-3 text-center">
                 <label for="periodSelect" class="form-label">Selecionar Período:</label>
@@ -39,9 +38,9 @@
             </div>
         </div>
 
-        <!-- Gráficos em linha -->
+        <!-- Gráficos -->
         <div class="row">
-            <div class="col-lg-4 col-md-6 mb-4">
+            <div class="col-lg-4 mb-4">
                 <div class="card">
                     <div class="card-body chart-container">
                         <h5 class="card-title text-center">Temperatura (°C)</h5>
@@ -49,7 +48,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 mb-4">
+            <div class="col-lg-4 mb-4">
                 <div class="card">
                     <div class="card-body chart-container">
                         <h5 class="card-title text-center">Umidade Relativa (%)</h5>
@@ -57,7 +56,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 mb-4">
+            <div class="col-lg-4 mb-4">
                 <div class="card">
                     <div class="card-body chart-container">
                         <h5 class="card-title text-center">Umidade do Solo (%)</h5>
@@ -69,99 +68,121 @@
 
         <!-- Botão Voltar -->
         <div class="text-center mt-4">
-            <a href="/" class="btn btn-primary">Voltar para Home</a>
+            <a href="{{ route('index') }}" class="btn btn-primary">Voltar para Home</a>
         </div>
     </div>
 
     <script>
-        // Inicialização dos gráficos
-        const ctxTemp = document.getElementById('temperatureChart').getContext('2d');
-        const ctxHumidity = document.getElementById('humidityChart').getContext('2d');
-        const ctxSoilMoisture = document.getElementById('soilMoistureChart').getContext('2d');
+        const chartData = @json($chartData);
 
-        let temperatureChart, humidityChart, soilMoistureChart;
-
-        function createChart(ctx, label, borderColor) {
-            return new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: [], // Inicialmente vazio
-                    datasets: [{
-                        label: label,
-                        data: [],
-                        borderColor: borderColor,
-                        backgroundColor: 'rgba(0, 0, 0, 0.05)',
-                        fill: true,
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Data'
-                            }
-                        },
-                        y: {
-                            title: {
-                                display: true,
-                                text: label
-                            }
-                        }
-                    }
+        // Gráfico de Temperatura
+        new Chart(document.getElementById('temperatureChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: chartData.labels,
+                datasets: [{
+                    label: 'Temperatura (°C)',
+                    data: chartData.temperature,
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    fill: true,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { title: { display: true, text: 'Data' } },
+                    y: { title: { display: true, text: 'Temperatura (°C)' } }
                 }
-            });
-        }
-
-        function fetchData(days) {
-            fetch(`/sensor-data?days=${days}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Erro ao buscar dados do banco');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (data && data.length > 0) {
-                        const labels = data.map(entry => new Date(entry.created_at).toLocaleString('pt-BR'));
-                        const temperatureData = data.map(entry => entry.temperature);
-                        const humidityData = data.map(entry => entry.humidity);
-                        const soilMoistureData = data.map(entry => entry.soil_moisture);
-
-                        updateChart(temperatureChart, labels, temperatureData);
-                        updateChart(humidityChart, labels, humidityData);
-                        updateChart(soilMoistureChart, labels, soilMoistureData);
-                    } else {
-                        console.error('Nenhum dado disponível.');
-                    }
-                })
-                .catch(error => console.error(error.message));
-        }
-
-        function updateChart(chart, labels, data) {
-            chart.data.labels = labels;
-            chart.data.datasets[0].data = data;
-            chart.update();
-        }
-
-        // Evento para mudança de período
-        document.getElementById('periodSelect').addEventListener('change', function () {
-            const selectedPeriod = this.value;
-            fetchData(selectedPeriod);
+            }
         });
 
-        // Inicialização
-        temperatureChart = createChart(ctxTemp, 'Temperatura (°C)', 'rgba(255, 99, 132, 1)');
-        humidityChart = createChart(ctxHumidity, 'Umidade Relativa (%)', 'rgba(54, 162, 235, 1)');
-        soilMoistureChart = createChart(ctxSoilMoisture, 'Umidade do Solo (%)', 'rgba(75, 192, 192, 1)');
+        // Gráfico de Umidade Relativa
+        new Chart(document.getElementById('humidityChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: chartData.labels,
+                datasets: [{
+                    label: 'Umidade Relativa (%)',
+                    data: chartData.humidity,
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    fill: true,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { title: { display: true, text: 'Data' } },
+                    y: { title: { display: true, text: 'Umidade Relativa (%)' } }
+                }
+            }
+        });
 
-        // Carregar dados iniciais (últimos 7 dias)
-        fetchData(7);
+        // Gráfico de Umidade do Solo
+        new Chart(document.getElementById('soilMoistureChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: chartData.labels,
+                datasets: [{
+                    label: 'Umidade do Solo (%)',
+                    data: chartData.soil_moisture,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    fill: true,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { title: { display: true, text: 'Data' } },
+                    y: { title: { display: true, text: 'Umidade do Solo (%)' } }
+                }
+            }
+        });
+
+        // Atualizar dados ao selecionar o período
+        document.getElementById('periodSelect').addEventListener('change', function () {
+            const days = this.value;
+
+            fetch(`/dashboard-data?days=${days}`)
+                .then(response => response.json())
+                .then(data => {
+                    chartData.labels = data.labels;
+                    chartData.temperature = data.temperature;
+                    chartData.humidity = data.humidity;
+                    chartData.soil_moisture = data.soil_moisture;
+
+                    // Atualizar gráficos
+                    temperatureChart.data.labels = chartData.labels;
+                    temperatureChart.data.datasets[0].data = chartData.temperature;
+                    temperatureChart.update();
+
+                    humidityChart.data.labels = chartData.labels;
+                    humidityChart.data.datasets[0].data = chartData.humidity;
+                    humidityChart.update();
+
+                    soilMoistureChart.data.labels = chartData.labels;
+                    soilMoistureChart.data.datasets[0].data = chartData.soil_moisture;
+                    soilMoistureChart.update();
+                })
+                .catch(error => console.error('Erro ao buscar dados:', error));
+        });
     </script>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const isDarkThemeEnabled = localStorage.getItem('dark-theme-enabled') === 'true';
+
+        if (isDarkThemeEnabled) {
+            document.body.classList.add('dark-theme');
+            document.querySelector('#themeToggle').classList.add('dark');
+        }
+    });
+</script>
 </body>
 </html>

@@ -1,22 +1,32 @@
 <?php
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use App\Models\SensorData;
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\SensorData;
+use Carbon\Carbon;
 
 class SensorDataController extends Controller
 {
-    public function getSensorData(Request $request)
+    public function fetchData(Request $request)
     {
-        $days = $request->query('days', 7); // Obtém o período (dias) enviado pela query string, com padrão de 7 dias.
+        // Número de dias enviados pelo frontend
+        $days = $request->query('days', 7);
 
-        // Busca os dados no banco de dados, filtrando pelo período definido.
-        $sensorData = SensorData::where('created_at', '>=', now()->subDays($days))
-            ->orderBy('created_at', 'asc')
-            ->get(['temperature', 'humidity', 'soil_moisture', 'created_at']); // Inclui apenas as colunas necessárias.
+        // Calcula a data inicial com base no número de dias
+        $startDate = Carbon::now()->subDays($days);
 
-        // Retorna os dados como JSON para consumo pelo front-end.
-        return response()->json($sensorData);
+        // Filtra os dados no banco de dados
+        $data = SensorData::where('created_at', '>=', $startDate)
+                          ->orderBy('created_at', 'asc')
+                          ->get();
+
+        // Retorna os dados como JSON
+        return response()->json($data);
     }
 }

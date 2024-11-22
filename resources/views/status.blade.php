@@ -8,7 +8,7 @@
     <link rel="icon" href="img/fundologin.jpg" type="image/x-icon" loading="lazy">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="dark-theme">
     <div class="container my-4 page3">
         <h1 class="text-center">Status dos Equipamentos</h1>
 
@@ -109,6 +109,18 @@
                     document.getElementById('soil-moisture-status').className = 'badge bg-danger';
                 });
         }
+
+        <script src="script.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const isDarkThemeEnabled = localStorage.getItem('dark-theme-enabled') === 'true';
+
+        if (isDarkThemeEnabled) {
+            document.body.classList.add('dark-theme');
+            document.querySelector('#themeToggle').classList.add('dark');
+        }
+    });
+</script>
 
         // Atualiza o status dos equipamentos a cada 5 segundos
         setInterval(updateEquipmentStatus, 5000);

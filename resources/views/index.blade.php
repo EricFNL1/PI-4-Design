@@ -27,33 +27,40 @@
                     <h3 class="text-center">Menu de Itens</h3>
 
                     <!-- Menu Items -->
-                    <ul class="nav flex-column text-center">
+                    <ul class="nav flex-column">
                         <li class="nav-item mt-3">
-                            <a class="nav-link active text-dark" href="#">Home</a>
+                            <a class="nav-link active text-dark" href="#"><i class="fa fa-home"></i> Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="{{ route('dashboard') }}">Detalhamento</a>
+                            <a class="nav-link text-dark" href="{{ route('dashboard') }}"><i class="fa fa-pie-chart"></i> Detalhamento</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="{{ route('logs') }}">Log & Histórico</a>
+                            <a class="nav-link text-dark" href="{{ route('logs') }}"><i class="fa fa-tachometer"></i> Log & Histórico</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="{{ route('status') }}">Status</a>
+                            <a class="nav-link text-dark" href="{{ route('status') }}"><i class="fa fa-toggle-on"></i> Status</a>
                         </li>
                     </ul>
 
                     
-                    <div class="text-center mt-1">
-                        <a href="{{ route('advanced.settings')}}" class="text-dark">Fases da plantação<i class="bi bi-gear-fill"></i></a>
-                    </div>
+                    <!--<div class="text-center mt-1">
+                        <a href="{{ route('advanced.settings')}}" class="text-dark"><i class="fa fa-info-circle"></i> Fases da plantação</a>
+                    </div>-->
                     <!-- Botão de Sair -->
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                     <br>
+                     <br>
+                     <br>
+                     <br>
+                     <br>
+                     <br>
+                     <br>
+                    <form id="logout-form" class="mt-4" action="{{ route('logout') }}" method="POST" style="display: none;">
     @csrf
 </form>
 
 <div class="text-center mt-3">
 <a href="#" class="btn btn-danger w-75" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-    Sair <i class="bi bi-box-arrow-right"></i>
+<i class="fa-solid fa-power-off"></i> <i class="bi bi-box-arrow-right"></i>
 </a>
 </div>
                     
@@ -76,7 +83,7 @@
                 <li><a class="dropdown-item" href="{{ route('dashboard') }}">Detalhamento</a></li>
                 <li><a class="dropdown-item" href="{{ route('logs') }}">Log & Histórico</a></li>
                 <li><a class="dropdown-item" href="{{ route('status') }}">Status</a></li>
-                <li><a class="dropdown-item" href="{{ route('advanced.settings')}}">Fases da plantação</a></li>
+                <li><a class="dropdown-item" href="{{ route('advanced.settings')}}"> <i class="fas fa-info-circle"></i> Fases da plantação</a></li>
                 <li class="text-center mt-3">
                     <a href="#" class="btn btn-danger w-75" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         Sair <i class="bi bi-box-arrow-right"></i>
@@ -97,7 +104,7 @@
                 <div class="col-md-4">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h3 class="text-center">Temperatura</h3>
+                            <h3 class="text-center">Temperatura <i class="fa-solid fa-temperature-three-quarters"></i></h3>
                             <div class="thermometer-container">
                                 <div class="thermometer">
                                     <div class="thermometer-fill" id="temperature-fill" style="height: 50%; transition: height 0.5s ease;"></div>
@@ -112,7 +119,7 @@
                 <div class="col-md-4">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h3 class="text-center">Umidade</h3>
+                            <h3 class="text-center">Umidade <i class="fa-solid fa-droplet"></i></h3>
                             <div class="aquarium-container">
                                 <div class="aquarium">
                                     <div class="water-level" id="humidity-fill" style="height: 50%; transition: height 0.5s ease;"></div>
@@ -126,7 +133,7 @@
                 <div class="col-md-4">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h3 class="text-center">Umidade do Solo</h3>
+                            <h3 class="text-center">Umidade do Solo <i class="fa-solid fa-spa"></i></h3>
                             <div class="humidity-meter">
                                 <div class="gauge">
                                     <div class="gauge-cover" id="soil-moisture-fill" style="height: 50%; transition: height 0.5s ease;"></div>
@@ -151,7 +158,7 @@
             <!-- Card de Configurações -->
             <div class="card mb-4 config-card">
                 <div class="card-body text-center">
-                <h5 class="card-title">Configurações</h5>
+                <h5 class="card-title">Configurações <i class="fa fa-cog"></i></h5>
             <div class="d-flex justify-content-around flex-wrap">
                 <div class="icon-container">
                     <button id="themeToggle" class="theme-toggle-btn"></button>
@@ -183,9 +190,14 @@
                         <span class="iconify" data-icon="mdi:water-pump-off" data-width="40" data-height="40"></span>
                     </a>
                         </div>
-                        <div class="text-center mt-4">
+                        <div class="text-center mt-2">
     <p id="modeStatus">Modo Atual: Manual</p>
     <button id="modeToggle" onclick="toggleMode()">Alternar Modo</button>
+</div>
+<div class="text-center mt-2">
+    <button id="sendWhatsAppStatus" class="btn btn-success">
+        <i class="fab fa-whatsapp"></i> Enviar Status pelo WhatsApp
+    </button>
 </div>
 
 
@@ -196,16 +208,18 @@
             <!-- Card de Informações do Clima -->
             <div class="card mb-4" id="weatherCard">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Localização</h5>
+                    <h5 class="card-title">Localização <i class="fa fa-map"></i></h5>
                     <div class="text-center">
                         <p class="mb-0"><strong>Horário:</strong> <span id="localTime" style="font-size: 1.2rem; color: #f44336;"></span></p>
                     </div>
                 </div>
-                <div id="map" style="height: 300px; width: 100%;"></div>
+                <div id="map" style="height: 230px; width: 100%;"></div>
             </div>
         </div>
     </div>
 </div>
+
+
 
                     
             </main>
@@ -417,8 +431,63 @@ function toggleFan() {
     }
 </script>
 
+<script>
+    document.getElementById('sendWhatsAppStatus').addEventListener('click', function() {
+        fetch('/send-status')
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    alert(data.message); // Mensagem de sucesso
+                } else if (data.error) {
+                    alert(data.error); // Mensagem de erro
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao enviar status:', error);
+                alert('Erro ao enviar status. Verifique a conexão com o servidor.');
+            });
+    });
+</script>
 
+<script>
 
+function sendSensorData(temperature, humidity, soilMoisture) {
+    fetch('/sensor-data', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+        },
+        body: JSON.stringify({
+            temperature: temperature,
+            humidity: humidity,
+            soil_moisture: soilMoisture,
+        }),
+    })
+    .then(response => response.json())
+    .then(data => console.log('Dados enviados:', data))
+    .catch(error => console.error('Erro ao enviar dados:', error));
+}
+
+</script>
+
+<script>
+    document.getElementById('sendWhatsAppStatus').addEventListener('click', function () {
+        fetch('/send-whatsapp-status')
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    alert(data.message);
+                } else if (data.error) {
+                    alert(data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao enviar status:', error);
+                alert('Erro ao enviar status. Verifique a conexão com o servidor.');
+            });
+    });
+</script>
 
 
 
